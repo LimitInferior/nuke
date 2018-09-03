@@ -1,0 +1,6 @@
+[package]
+name = "nuke"
+version = "0.1.0"
+authors = ["Roman <roman.akberov@protonmail.com>"]
+
+[dependencies]
