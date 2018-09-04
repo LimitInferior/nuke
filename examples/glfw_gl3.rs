@@ -3,24 +3,23 @@ extern crate glfw;
 extern crate libc;
 extern crate nuke;
 
-use nuke::*;
-use glfw::{Context, Key, Action};
 use gl::types::*;
+use glfw::{Action, Context, Key};
+use nuke::*;
 
-use std::sync::mpsc::Receiver;
 use std::ffi::CString;
+use std::mem;
 use std::ptr;
 use std::str;
-use std::mem;
 
 macro_rules! c_str {
     ($s:expr) => {
         concat!($s, "\0").as_ptr() as *const i8
-    }
+    };
 }
 
 macro_rules! offset_of {
-    ($ty: ty, $field: ident) => {
+    ($ty:ty, $field:ident) => {
         unsafe {
             // Work with an actual instance of the type since using a null pointer is UB
             let addr: $ty = mem::uninitialized();
@@ -32,8 +31,8 @@ macro_rules! offset_of {
 }
 
 const TEXT_MAX: usize = 256;
-const DOUBLE_CLICK_LO: f32 = 0.02;
-const DOUBLE_CLICK_HI: f32 = 0.2;
+const DOUBLE_CLICK_LO: f64 = 0.02;
+const DOUBLE_CLICK_HI: f64 = 0.2;
 
 struct Device {
     cmds: nk_buffer,
@@ -110,9 +109,30 @@ impl Device {
         gl::EnableVertexAttribArray(dev.attrib_uv as GLuint);
         gl::EnableVertexAttribArray(dev.attrib_col as GLuint);
 
-        gl::VertexAttribPointer(dev.attrib_pos as GLuint, 2, gl::FLOAT, gl::FALSE, vs, vp as _);
-        gl::VertexAttribPointer(dev.attrib_uv as GLuint, 2, gl::FLOAT, gl::FALSE, vs, vt as _);
-        gl::VertexAttribPointer(dev.attrib_col as GLuint, 4, gl::UNSIGNED_BYTE, gl::TRUE, vs, vc as _);
+        gl::VertexAttribPointer(
+            dev.attrib_pos as GLuint,
+            2,
+            gl::FLOAT,
+            gl::FALSE,
+            vs,
+            vp as _,
+        );
+        gl::VertexAttribPointer(
+            dev.attrib_uv as GLuint,
+            2,
+            gl::FLOAT,
+            gl::FALSE,
+            vs,
+            vt as _,
+        );
+        gl::VertexAttribPointer(
+            dev.attrib_col as GLuint,
+            4,
+            gl::UNSIGNED_BYTE,
+            gl::TRUE,
+            vs,
+            vc as _,
+        );
         gl::BindTexture(gl::TEXTURE_2D, 0);
         gl::BindBuffer(gl::ARRAY_BUFFER, 0);
         gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, 0);
@@ -120,13 +140,27 @@ impl Device {
         dev
     }
 
-    unsafe fn upload_atlas(&mut self, image: *const libc::c_void, width: libc::c_int, height: libc::c_int) {
+    unsafe fn upload_atlas(
+        &mut self,
+        image: *const libc::c_void,
+        width: libc::c_int,
+        height: libc::c_int,
+    ) {
         gl::GenTextures(1, &mut self.font_tex);
         gl::BindTexture(gl::TEXTURE_2D, self.font_tex);
         gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::LINEAR as GLint);
         gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR as GLint);
-        gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RGBA as GLint, width as GLsizei, height as GLsizei, 0,
-                    gl::RGBA, gl::UNSIGNED_BYTE, image as _);
+        gl::TexImage2D(
+            gl::TEXTURE_2D,
+            0,
+            gl::RGBA as GLint,
+            width as GLsizei,
+            height as GLsizei,
+            0,
+            gl::RGBA,
+            gl::UNSIGNED_BYTE,
+            image as _,
+        );
     }
 }
 
@@ -157,17 +191,19 @@ fn pressed(action: Action) -> i32 {
 }
 
 impl GlfwContext {
-    unsafe fn new(window: glfw::Window, max_vertex_buffer: usize, max_element_buffer: usize) -> Self {
+    unsafe fn new(
+        window: glfw::Window,
+    ) -> Self {
         let mut context: nk_context = mem::zeroed();
         nk_init_default(&mut context, ptr::null());
-    // if (init_state == NK_GLFW3_INSTALL_CALLBACKS) {
-    //     glfwSetScrollCallback(win, nk_gflw3_scroll_callback);
-    //     glfwSetCharCallback(win, nk_glfw3_char_callback);
-    //     glfwSetMouseButtonCallback(win, nk_glfw3_mouse_button_callback);
-    // }
-    // glfw.ctx.clip.copy = nk_glfw3_clipbard_copy;
-    // glfw.ctx.clip.paste = nk_glfw3_clipbard_paste;
-    // glfw.ctx.clip.userdata = nk_handle_ptr(0);
+        // if (init_state == NK_GLFW3_INSTALL_CALLBACKS) {
+        //     glfwSetScrollCallback(win, nk_gflw3_scroll_callback);
+        //     glfwSetCharCallback(win, nk_glfw3_char_callback);
+        //     glfwSetMouseButtonCallback(win, nk_glfw3_mouse_button_callback);
+        // }
+        // glfw.ctx.clip.copy = nk_glfw3_clipbard_copy;
+        // glfw.ctx.clip.paste = nk_glfw3_clipbard_paste;
+        // glfw.ctx.clip.userdata = nk_handle_ptr(0);
         let mut device = Device::new();
         let mut atlas: nk_font_atlas = mem::zeroed();
         nk_font_atlas_init_default(&mut atlas);
@@ -175,7 +211,11 @@ impl GlfwContext {
         let (mut w, mut h) = (0, 0);
         let image = nk_font_atlas_bake(&mut atlas, &mut w, &mut h, NK_FONT_ATLAS_RGBA32);
         device.upload_atlas(image, w, h);
-        nk_font_atlas_end(&mut atlas, nk_handle_id(device.font_tex as i32), &mut device.null);
+        nk_font_atlas_end(
+            &mut atlas,
+            nk_handle_id(device.font_tex as i32),
+            &mut device.null,
+        );
         if atlas.default_font != ptr::null_mut() {
             nk_style_set_font(&mut context, &(*atlas.default_font).handle);
         }
@@ -209,41 +249,84 @@ impl GlfwContext {
         self.fb_scale.y = fh as f32 / h as f32;
         let ctx = &mut self.context;
         nk_input_begin(ctx);
-        for i in 0 .. self.text_len {
+        for i in 0..self.text_len {
             nk_input_unicode(ctx, self.text[i]);
         }
-// #ifdef NK_GLFW_GL3_MOUSE_GRABBING
-//     /* optional grabbing behavior */
-//     if (ctx->input.mouse.grab)
-//         glfwSetInputMode(glfw.win, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-//     else if (ctx->input.mouse.ungrab)
-//         glfwSetInputMode(glfw.win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-// #endif
+        // #ifdef NK_GLFW_GL3_MOUSE_GRABBING
+        //     /* optional grabbing behavior */
+        //     if (ctx->input.mouse.grab)
+        //         glfwSetInputMode(glfw.win, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        //     else if (ctx->input.mouse.ungrab)
+        //         glfwSetInputMode(glfw.win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        // #endif
 
         nk_input_key(ctx, NK_KEY_DEL, pressed(self.window.get_key(Key::Delete)));
         nk_input_key(ctx, NK_KEY_ENTER, pressed(self.window.get_key(Key::Enter)));
         nk_input_key(ctx, NK_KEY_TAB, pressed(self.window.get_key(Key::Tab)));
-        nk_input_key(ctx, NK_KEY_BACKSPACE, pressed(self.window.get_key(Key::Backspace)));
+        nk_input_key(
+            ctx,
+            NK_KEY_BACKSPACE,
+            pressed(self.window.get_key(Key::Backspace)),
+        );
         nk_input_key(ctx, NK_KEY_UP, pressed(self.window.get_key(Key::Up)));
         nk_input_key(ctx, NK_KEY_DOWN, pressed(self.window.get_key(Key::Down)));
-        nk_input_key(ctx, NK_KEY_TEXT_START, pressed(self.window.get_key(Key::Home)));
+        nk_input_key(
+            ctx,
+            NK_KEY_TEXT_START,
+            pressed(self.window.get_key(Key::Home)),
+        );
         nk_input_key(ctx, NK_KEY_TEXT_END, pressed(self.window.get_key(Key::End)));
-        nk_input_key(ctx, NK_KEY_SCROLL_START, pressed(self.window.get_key(Key::Home)));
-        nk_input_key(ctx, NK_KEY_SCROLL_END, pressed(self.window.get_key(Key::End)));
-        nk_input_key(ctx, NK_KEY_SCROLL_DOWN, pressed(self.window.get_key(Key::Down)));
+        nk_input_key(
+            ctx,
+            NK_KEY_SCROLL_START,
+            pressed(self.window.get_key(Key::Home)),
+        );
+        nk_input_key(
+            ctx,
+            NK_KEY_SCROLL_END,
+            pressed(self.window.get_key(Key::End)),
+        );
+        nk_input_key(
+            ctx,
+            NK_KEY_SCROLL_DOWN,
+            pressed(self.window.get_key(Key::Down)),
+        );
         nk_input_key(ctx, NK_KEY_SCROLL_UP, pressed(self.window.get_key(Key::Up)));
-        nk_input_key(ctx, NK_KEY_SHIFT, pressed(self.window.get_key(Key::LeftShift)) | pressed(self.window.get_key(Key::RightShift)));
+        nk_input_key(
+            ctx,
+            NK_KEY_SHIFT,
+            pressed(self.window.get_key(Key::LeftShift))
+                | pressed(self.window.get_key(Key::RightShift)),
+        );
 
-        if pressed(self.window.get_key(Key::LeftControl)) | pressed(self.window.get_key(Key::RightControl)) != 0 {
+        if pressed(self.window.get_key(Key::LeftControl))
+            | pressed(self.window.get_key(Key::RightControl)) != 0
+        {
             nk_input_key(ctx, NK_KEY_COPY, pressed(self.window.get_key(Key::C)));
             nk_input_key(ctx, NK_KEY_PASTE, pressed(self.window.get_key(Key::V)));
             nk_input_key(ctx, NK_KEY_CUT, pressed(self.window.get_key(Key::X)));
             nk_input_key(ctx, NK_KEY_TEXT_UNDO, pressed(self.window.get_key(Key::Z)));
             nk_input_key(ctx, NK_KEY_TEXT_REDO, pressed(self.window.get_key(Key::R)));
-            nk_input_key(ctx, NK_KEY_TEXT_WORD_LEFT, pressed(self.window.get_key(Key::Left)));
-            nk_input_key(ctx, NK_KEY_TEXT_WORD_RIGHT, pressed(self.window.get_key(Key::Right)));
-            nk_input_key(ctx, NK_KEY_TEXT_LINE_START, pressed(self.window.get_key(Key::B)));
-            nk_input_key(ctx, NK_KEY_TEXT_LINE_END, pressed(self.window.get_key(Key::E)));
+            nk_input_key(
+                ctx,
+                NK_KEY_TEXT_WORD_LEFT,
+                pressed(self.window.get_key(Key::Left)),
+            );
+            nk_input_key(
+                ctx,
+                NK_KEY_TEXT_WORD_RIGHT,
+                pressed(self.window.get_key(Key::Right)),
+            );
+            nk_input_key(
+                ctx,
+                NK_KEY_TEXT_LINE_START,
+                pressed(self.window.get_key(Key::B)),
+            );
+            nk_input_key(
+                ctx,
+                NK_KEY_TEXT_LINE_END,
+                pressed(self.window.get_key(Key::E)),
+            );
         } else {
             nk_input_key(ctx, NK_KEY_LEFT, pressed(self.window.get_key(Key::Left)));
             nk_input_key(ctx, NK_KEY_RIGHT, pressed(self.window.get_key(Key::Right)));
@@ -256,21 +339,209 @@ impl GlfwContext {
         let (x, y) = self.window.get_cursor_pos();
         let (x, y) = (x as i32, y as i32);
         nk_input_motion(ctx, x, y);
-    // #ifdef NK_GLFW_GL3_MOUSE_GRABBING
-    //     if (ctx->input.mouse.grabbed) {
-    //         glfwSetCursorPos(glfw.win, ctx->input.mouse.prev.x, ctx->input.mouse.prev.y);
-    //         ctx->input.mouse.pos.x = ctx->input.mouse.prev.x;
-    //         ctx->input.mouse.pos.y = ctx->input.mouse.prev.y;
-    //     }
-    // #endif
-        nk_input_button(ctx, NK_BUTTON_LEFT, x, y, pressed(self.window.get_mouse_button(glfw::MouseButtonLeft)));
-        nk_input_button(ctx, NK_BUTTON_MIDDLE, x, y, pressed(self.window.get_mouse_button(glfw::MouseButtonMiddle)));
-        nk_input_button(ctx, NK_BUTTON_RIGHT, x, y, pressed(self.window.get_mouse_button(glfw::MouseButtonRight)));
-        nk_input_button(ctx, NK_BUTTON_DOUBLE, self.double_click_pos.x as i32, self.double_click_pos.y as i32, self.is_double_click_down);
+        // #ifdef NK_GLFW_GL3_MOUSE_GRABBING
+        //     if (ctx->input.mouse.grabbed) {
+        //         glfwSetCursorPos(glfw.win, ctx->input.mouse.prev.x, ctx->input.mouse.prev.y);
+        //         ctx->input.mouse.pos.x = ctx->input.mouse.prev.x;
+        //         ctx->input.mouse.pos.y = ctx->input.mouse.prev.y;
+        //     }
+        // #endif
+        nk_input_button(
+            ctx,
+            NK_BUTTON_LEFT,
+            x,
+            y,
+            pressed(self.window.get_mouse_button(glfw::MouseButtonLeft)),
+        );
+        nk_input_button(
+            ctx,
+            NK_BUTTON_MIDDLE,
+            x,
+            y,
+            pressed(self.window.get_mouse_button(glfw::MouseButtonMiddle)),
+        );
+        nk_input_button(
+            ctx,
+            NK_BUTTON_RIGHT,
+            x,
+            y,
+            pressed(self.window.get_mouse_button(glfw::MouseButtonRight)),
+        );
+        nk_input_button(
+            ctx,
+            NK_BUTTON_DOUBLE,
+            self.double_click_pos.x as i32,
+            self.double_click_pos.y as i32,
+            self.is_double_click_down,
+        );
         nk_input_scroll(ctx, self.scroll);
         nk_input_end(ctx);
         self.text_len = 0;
         self.scroll = nk_vec2(0.0, 0.0);
+    }
+
+    unsafe fn render(&mut self, aa: nk_anti_aliasing) {
+        let mut ortho = [
+            [2.0, 0.0, 0.0, 0.0],
+            [0.0, -2.0, 0.0, 0.0],
+            [0.0, 0.0, -1.0, 0.0],
+            [-1.0, 1.0, 0.0, 1.0],
+        ];
+        ortho[0][0] /= self.width as GLfloat;
+        ortho[1][1] /= self.height as GLfloat;
+
+        /* setup global state */
+        gl::Enable(gl::BLEND);
+        gl::BlendEquation(gl::FUNC_ADD);
+        gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
+        gl::Disable(gl::CULL_FACE);
+        gl::Disable(gl::DEPTH_TEST);
+        gl::Enable(gl::SCISSOR_TEST);
+        gl::ActiveTexture(gl::TEXTURE0);
+
+        /* setup program */
+        gl::UseProgram(self.device.prog);
+        gl::Uniform1i(self.device.uniform_tex, 0);
+        gl::UniformMatrix4fv(
+            self.device.uniform_proj,
+            1,
+            gl::FALSE,
+            ortho.as_ptr() as *const GLfloat,
+        );
+        gl::Viewport(
+            0,
+            0,
+            self.display_width as GLsizei,
+            self.display_height as GLsizei,
+        );
+        {
+            /* allocate vertex and element buffer */
+            gl::BindVertexArray(self.device.vao);
+            gl::BindBuffer(gl::ARRAY_BUFFER, self.device.vbo);
+            gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, self.device.ebo);
+            gl::BufferData(
+                gl::ARRAY_BUFFER,
+                MAX_VERTEX_BUFFER as GLsizeiptr,
+                ptr::null(),
+                gl::STREAM_DRAW,
+            );
+            gl::BufferData(
+                gl::ELEMENT_ARRAY_BUFFER,
+                MAX_ELEMENT_BUFFER as GLsizeiptr,
+                ptr::null(),
+                gl::STREAM_DRAW,
+            );
+
+            /* load draw vertices & elements directly into vertex + element buffer */
+            let vertices = gl::MapBuffer(gl::ARRAY_BUFFER, gl::WRITE_ONLY);
+            let elements = gl::MapBuffer(gl::ELEMENT_ARRAY_BUFFER, gl::WRITE_ONLY);
+            {
+                /* fill convert configuration */
+                let mut config = mem::zeroed::<nk_convert_config>();
+                let vertex_layout: [nk_draw_vertex_layout_element; 4] = [
+                    nk_draw_vertex_layout_element {
+                        attribute: NK_VERTEX_POSITION,
+                        format: NK_FORMAT_FLOAT,
+                        offset: offset_of!(Vertex, position) as u64,
+                    },
+                    nk_draw_vertex_layout_element {
+                        attribute: NK_VERTEX_TEXCOORD,
+                        format: NK_FORMAT_FLOAT,
+                        offset: offset_of!(Vertex, uv) as u64,
+                    },
+                    nk_draw_vertex_layout_element {
+                        attribute: NK_VERTEX_COLOR,
+                        format: NK_FORMAT_R8G8B8A8,
+                        offset: offset_of!(Vertex, col) as u64,
+                    },
+                    nk_draw_vertex_layout_element {
+                        attribute: NK_VERTEX_ATTRIBUTE_COUNT,
+                        format: NK_FORMAT_COUNT,
+                        offset: 0,
+                    },
+                ];
+                config.vertex_layout = vertex_layout.as_ptr();
+                config.vertex_size = mem::size_of::<Vertex>() as u64;
+                config.vertex_alignment = mem::align_of::<Vertex>() as u64;
+                config.null = self.device.null;
+                config.circle_segment_count = 22;
+                config.curve_segment_count = 22;
+                config.arc_segment_count = 22;
+                config.global_alpha = 1.0;
+                config.shape_AA = aa;
+                config.line_AA = aa;
+
+                let mut vbuf = mem::zeroed();
+                let mut ebuf = mem::zeroed();
+                /* setup buffers to load vertices and elements */
+                nk_buffer_init_fixed(&mut vbuf, vertices as _, MAX_VERTEX_BUFFER as _);
+                nk_buffer_init_fixed(&mut ebuf, elements as _, MAX_ELEMENT_BUFFER as _);
+                nk_convert(
+                    &mut self.context,
+                    &mut self.device.cmds,
+                    &mut vbuf,
+                    &mut ebuf,
+                    &config,
+                );
+            }
+            gl::UnmapBuffer(gl::ARRAY_BUFFER);
+            gl::UnmapBuffer(gl::ELEMENT_ARRAY_BUFFER);
+            let mut offset = ptr::null();
+            /* iterate over and execute each draw command */
+            let mut cmd = nk__draw_begin(&mut self.context, &mut self.device.cmds);
+            while cmd != ptr::null() {
+                if (*cmd).elem_count != 0 {
+                    gl::BindTexture(gl::TEXTURE_2D, (*cmd).texture.id as GLuint);
+                    gl::Scissor(
+                        ((*cmd).clip_rect.x * self.fb_scale.x) as GLint,
+                        ((self.height - ((*cmd).clip_rect.y + (*cmd).clip_rect.h) as GLint) as f32
+                            * self.fb_scale.y) as GLint,
+                        ((*cmd).clip_rect.w * self.fb_scale.x) as GLint,
+                        ((*cmd).clip_rect.h * self.fb_scale.y) as GLint,
+                    );
+                    gl::DrawElements(
+                        gl::TRIANGLES,
+                        (*cmd).elem_count as GLsizei,
+                        gl::UNSIGNED_SHORT,
+                        offset,
+                    );
+                    offset = offset.offset((*cmd).elem_count as isize);
+                }
+                cmd = nk__draw_next(cmd, &mut self.device.cmds, &mut self.context);
+            }
+            nk_clear(&mut self.context);
+        }
+
+        /* default OpenGL state */
+        gl::UseProgram(0);
+        gl::BindBuffer(gl::ARRAY_BUFFER, 0);
+        gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, 0);
+        gl::BindVertexArray(0);
+        gl::Disable(gl::BLEND);
+        gl::Disable(gl::SCISSOR_TEST);
+    }
+
+    unsafe fn on_mouse_button(
+        &mut self,
+        button: glfw::MouseButton,
+        action: Action,
+        modifiers: glfw::Modifiers,
+        time: f64,
+    ) {
+        // if button != glfw::MouseButtonLeft {
+        //     return;
+        // }
+        // let (x, y) = self.window.get_cursor_pos();
+        // if action == Action::Press {
+        //     let dt = time - self.last_button_click;
+        //     if dt > DOUBLE_CLICK_LO && dt < DOUBLE_CLICK_HI {
+        //         self.is_double_click_down = 1;
+        //         self.double_click_pos = nk_vec2(x as f32, y as f32);
+        //     }
+        //     self.last_button_click = time;
+        // } else {
+        //     self.is_double_click_down = 0;
+        // }
     }
 }
 
@@ -320,106 +591,116 @@ pub fn main() {
     // ------------------------------
     let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
     glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
-    glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
+    glfw.window_hint(glfw::WindowHint::OpenGlProfile(
+        glfw::OpenGlProfileHint::Core,
+    ));
     #[cfg(target_os = "macos")]
     glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
-
     // glfw window creation
     // --------------------
-    let (mut window, events) = glfw.create_window(WINDOW_WIDTH, WINDOW_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
-        .expect("Failed to create GLFW window");
+    let (mut window, events) =
+        glfw.create_window(
+            WINDOW_WIDTH,
+            WINDOW_HEIGHT,
+            "Demo",
+            glfw::WindowMode::Windowed,
+        ).expect("Failed to create GLFW window");
 
     window.make_current();
     window.set_key_polling(true);
     window.set_framebuffer_size_polling(true);
+
     let mut bg = nk_colorf {
-        r: 0.10, 
+        r: 0.10,
         g: 0.18,
         b: 0.24,
         a: 1.0,
     };
-    // gl: load all OpenGL function pointers
-    // ---------------------------------------
     gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
     unsafe {
-        let mut context = GlfwContext::new(window, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
-        // render loop
-        // -----------
-        while !context.window.should_close() {
-            process_events(&mut context.window, &events);
-            context.new_frame();
-            // events
-            // -----
-        {
-            let ctx = &mut context.context;
-            if nk_begin(ctx, c_str!("Demo"), nk_rect(50.0, 50.0, 230.0, 250.0), NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_SCALABLE | NK_WINDOW_MINIMIZABLE | NK_WINDOW_TITLE) != 0 {
-                // #[derive(PartialEq)]
-                // enum Op {
-                //     EASY, 
-                //     HARD
-                // }
-                // let mut op = Op::EASY;
-                // let mut property = 20;
-                // nk_layout_row_static(ctx, 30.0, 80, 1);
-                // if nk_button_label(ctx, c_str!("button")) != 0 {
-                //     println!("button pressed");
-                // }
-                // nk_layout_row_dynamic(ctx, 30.0, 2);
-                // if nk_option_label(ctx, c_str!("easy"), if op == Op::EASY { 1 } else { 0 }) != 0 {
-                //     op = Op::EASY;
-                // }
-                // if nk_option_label(ctx, c_str!("hard"), if op == Op::HARD { 1 } else { 0 }) != 0 {
-                //     op = Op::HARD;
-                // }
-                // nk_layout_row_dynamic(ctx, 25.0, 1);
-                // nk_property_int(ctx, c_str!("Compression:"), 0, &mut property, 100, 10, 1.0);
-
-                // nk_layout_row_dynamic(ctx, 20.0, 1);
-                // nk_label(ctx, c_str!("background:"), NK_TEXT_LEFT);
-                // nk_layout_row_dynamic(ctx, 25.0, 1);
-                // if nk_combo_begin_color(ctx, nk_rgb_cf(bg), nk_vec2(nk_widget_width(ctx), 400.0)) != 0 {
-                //     nk_layout_row_dynamic(ctx, 120.0, 1);
-                //     bg = nk_color_picker(ctx, bg, NK_RGBA);
-                //     nk_layout_row_dynamic(ctx, 25.0, 1);
-                //     bg.r = nk_propertyf(ctx, c_str!("#R:"), 0.0, bg.r, 1.0, 0.01, 0.005);
-                //     bg.g = nk_propertyf(ctx, c_str!("#G:"), 0.0, bg.g, 1.0, 0.01, 0.005);
-                //     bg.b = nk_propertyf(ctx, c_str!("#B:"), 0.0, bg.b, 1.0, 0.01, 0.005);
-                //     bg.a = nk_propertyf(ctx, c_str!("#A:"), 0.0, bg.a, 1.0, 0.01, 0.005);
-                //     nk_combo_end(ctx);
-                // }
-            }
-            nk_end(ctx);
+        let mut context = GlfwContext::new(window);
+        #[derive(PartialEq)]
+        enum Op {
+            EASY,
+            HARD,
         }
-            // render
-            // ------
-                gl::ClearColor(bg.r, bg.g, bg.b, bg.a);
-                gl::Clear(gl::COLOR_BUFFER_BIT);
+        let mut op = Op::EASY;
+        let mut property = 20;
+        while !context.window.should_close() {
+            for (_, event) in glfw::flush_messages(&events) {
+                match event {
+                    glfw::WindowEvent::FramebufferSize(width, height) => {
+                        // make sure the viewport matches the new window dimensions; note that width and
+                        // height will be significantly larger than specified on retina displays.
+                        gl::Viewport(0, 0, width, height)
+                    }
+                    glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => {
+                        context.window.set_should_close(true)
+                    }
+                    glfw::WindowEvent::MouseButton(button, action, modifiers) => {
+                        context.on_mouse_button(button, action, modifiers, glfw.get_time());
+                    }
+                    _ => {}
+                }
+            }
+            context.new_frame();
+            {
+                let ctx = &mut context.context;
+                if nk_begin(
+                    ctx,
+                    c_str!("Demo"),
+                    nk_rect(50.0, 50.0, 230.0, 250.0),
+                    NK_WINDOW_BORDER
+                        | NK_WINDOW_MOVABLE
+                        | NK_WINDOW_SCALABLE
+                        | NK_WINDOW_MINIMIZABLE
+                        | NK_WINDOW_TITLE,
+                ) != 0
+                {
+                    nk_layout_row_static(ctx, 30.0, 80, 1);
+                    if nk_button_label(ctx, c_str!("button")) != 0 {
+                        println!("button pressed");
+                    }
+                    nk_layout_row_dynamic(ctx, 30.0, 2);
+                    if nk_option_label(ctx, c_str!("easy"), if op == Op::EASY { 1 } else { 0 }) != 0
+                    {
+                        op = Op::EASY;
+                    }
+                    if nk_option_label(ctx, c_str!("hard"), if op == Op::HARD { 1 } else { 0 }) != 0
+                    {
+                        op = Op::HARD;
+                    }
+                    nk_layout_row_dynamic(ctx, 25.0, 1);
+                    nk_property_int(ctx, c_str!("Compression:"), 0, &mut property, 100, 10, 1.0);
 
-                // draw our first triangle
-                // gl::UseProgram(shaderProgram);
-                // gl::BindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-                // gl::DrawArrays(gl::TRIANGLES, 0, 3);
-                // glBindVertexArray(0); // no need to unbind it every time
-
-            // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-            // -------------------------------------------------------------------------------
+                    nk_layout_row_dynamic(ctx, 20.0, 1);
+                    nk_label(ctx, c_str!("background:"), NK_TEXT_LEFT);
+                    nk_layout_row_dynamic(ctx, 25.0, 1);
+                    if nk_combo_begin_color(
+                        ctx,
+                        nk_rgb_cf(bg),
+                        nk_vec2(nk_widget_width(ctx), 400.0),
+                    ) != 0
+                    {
+                        nk_layout_row_dynamic(ctx, 120.0, 1);
+                        bg = nk_color_picker(ctx, bg, NK_RGBA);
+                        nk_layout_row_dynamic(ctx, 25.0, 1);
+                        bg.r = nk_propertyf(ctx, c_str!("#R:"), 0.0, bg.r, 1.0, 0.01, 0.005);
+                        bg.g = nk_propertyf(ctx, c_str!("#G:"), 0.0, bg.g, 1.0, 0.01, 0.005);
+                        bg.b = nk_propertyf(ctx, c_str!("#B:"), 0.0, bg.b, 1.0, 0.01, 0.005);
+                        bg.a = nk_propertyf(ctx, c_str!("#A:"), 0.0, bg.a, 1.0, 0.01, 0.005);
+                        nk_combo_end(ctx);
+                    }
+                }
+                nk_end(ctx);
+            }
+            let (w, h) = context.window.get_size();
+            gl::Viewport(0, 0, w, h);
+            gl::Clear(gl::COLOR_BUFFER_BIT);
+            gl::ClearColor(bg.r, bg.g, bg.b, bg.a);
+            context.render(NK_ANTI_ALIASING_ON);
             context.window.swap_buffers();
             glfw.poll_events();
-        }
-    }
-}
-
-// NOTE: not the same version as in common.rs!
-fn process_events(window: &mut glfw::Window, events: &Receiver<(f64, glfw::WindowEvent)>) {
-    for (_, event) in glfw::flush_messages(events) {
-        match event {
-            glfw::WindowEvent::FramebufferSize(width, height) => {
-                // make sure the viewport matches the new window dimensions; note that width and
-                // height will be significantly larger than specified on retina displays.
-                unsafe { gl::Viewport(0, 0, width, height) }
-            }
-            glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => window.set_should_close(true),
-            _ => {}
         }
     }
 }
