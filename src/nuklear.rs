@@ -2001,7 +2001,7 @@ pub type unnamed_16 = libc::c_uint;
 pub const NK_TT_MS_EID_SYMBOL: unnamed_17 = 0;
 /* encodingID for NK_TT_PLATFORM_ID_MICROSOFT */
 pub type unnamed_17 = libc::c_uint;
-#[no_mangle]
+
 pub unsafe fn nk_init_default(
     mut ctx: *mut nk_context,
     mut font: *const nk_user_font,
@@ -2018,7 +2018,7 @@ pub unsafe fn nk_init_default(
     alloc.free = Some(nk_mfree);
     return nk_init(ctx, &mut alloc, font);
 }
-#[no_mangle]
+
 pub unsafe fn nk_init(
     mut ctx: *mut nk_context,
     mut alloc: *mut nk_allocator,
@@ -2125,7 +2125,7 @@ unsafe fn nk_memset(mut ptr: *mut libc::c_void, mut c0: libc::c_int, mut size: n
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_init(
     mut b: *mut nk_buffer,
     mut a: *const nk_allocator,
@@ -2168,7 +2168,7 @@ unsafe fn nk_setup(mut ctx: *mut nk_context, mut font: *const nk_user_font) -> (
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_init(mut list: *mut nk_draw_list) -> () {
     let mut i: nk_size = 0i32 as nk_size;
     if list.is_null() {
@@ -2216,11 +2216,11 @@ unsafe fn nk_cos(mut x: f32) -> f32 {
     static mut a7: f32 = unsafe { -5.2302214344429959e-14f32 };
     return a0 + x * (a1 + x * (a2 + x * (a3 + x * (a4 + x * (a5 + x * (a6 + x * a7))))));
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_default(mut ctx: *mut nk_context) -> () {
     nk_style_from_table(ctx, 0 as *const nk_color);
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk_color) -> () {
     let mut style: *mut nk_style = 0 as *mut nk_style;
     let mut text: *mut nk_style_text = 0 as *mut nk_style_text;
@@ -2875,14 +2875,14 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_vec2(mut x: f32, mut y: f32) -> nk_vec2 {
     let mut ret: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     ret.x = x;
     ret.y = y;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_item_color(mut col: nk_color) -> nk_style_item {
     let mut i: nk_style_item = nk_style_item {
         type_0: NK_STYLE_ITEM_COLOR,
@@ -2901,7 +2901,7 @@ pub unsafe fn nk_style_item_color(mut col: nk_color) -> nk_style_item {
     i.data.color = col;
     return i;
 }
-#[no_mangle]
+
 pub unsafe fn nk_handle_ptr(mut ptr: *mut libc::c_void) -> nk_handle {
     let mut handle: nk_handle = nk_handle {
         ptr: 0 as *mut libc::c_void,
@@ -2909,7 +2909,7 @@ pub unsafe fn nk_handle_ptr(mut ptr: *mut libc::c_void) -> nk_handle {
     handle.ptr = ptr;
     return handle;
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgba(
     mut r: libc::c_int,
     mut g: libc::c_int,
@@ -2952,7 +2952,7 @@ pub unsafe fn nk_rgba(
     }) as nk_byte;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgb(mut r: libc::c_int, mut g: libc::c_int, mut b: libc::c_int) -> nk_color {
     let mut ret: nk_color = nk_color {
         r: 0,
@@ -2984,7 +2984,7 @@ pub unsafe fn nk_rgb(mut r: libc::c_int, mut g: libc::c_int, mut b: libc::c_int)
     ret.a = 255i32 as nk_byte;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_item_hide() -> nk_style_item {
     let mut i: nk_style_item = nk_style_item {
         type_0: NK_STYLE_ITEM_COLOR,
@@ -3185,7 +3185,7 @@ unsafe fn nk_malloc(
 ) -> *mut libc::c_void {
     return libc::malloc(size as _);
 }
-#[no_mangle]
+
 pub unsafe fn nk_init_fixed(
     mut ctx: *mut nk_context,
     mut memory: *mut libc::c_void,
@@ -3201,7 +3201,7 @@ pub unsafe fn nk_init_fixed(
         return 1i32;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_init_fixed(
     mut b: *mut nk_buffer,
     mut m: *mut libc::c_void,
@@ -3221,7 +3221,7 @@ pub unsafe fn nk_buffer_init_fixed(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_init_custom(
     mut ctx: *mut nk_context,
     mut cmds: *mut nk_buffer,
@@ -3268,7 +3268,7 @@ unsafe fn nk_pool_init_fixed(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_clear(mut ctx: *mut nk_context) -> () {
     let mut iter: *mut nk_window = 0 as *mut nk_window;
     let mut next: *mut nk_window = 0 as *mut nk_window;
@@ -3484,7 +3484,7 @@ unsafe fn nk_remove_window(mut ctx: *mut nk_context, mut win: *mut nk_window) ->
     (*win).prev = 0 as *mut nk_window;
     (*ctx).count = (*ctx).count.wrapping_sub(1);
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_reset(
     mut buffer: *mut nk_buffer,
     mut type_0: nk_buffer_allocation_type,
@@ -3523,7 +3523,7 @@ pub unsafe fn nk_buffer_reset(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_clear(mut b: *mut nk_buffer) -> () {
     if b.is_null() {
         return;
@@ -3535,7 +3535,7 @@ pub unsafe fn nk_buffer_clear(mut b: *mut nk_buffer) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_free(mut ctx: *mut nk_context) -> () {
     if ctx.is_null() {
         return;
@@ -3585,7 +3585,7 @@ unsafe fn nk_pool_free(mut pool: *mut nk_pool) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_free(mut b: *mut nk_buffer) -> () {
     if b.is_null() || (*b).memory.ptr.is_null() {
         return;
@@ -3598,7 +3598,7 @@ pub unsafe fn nk_buffer_free(mut b: *mut nk_buffer) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_set_user_data(mut ctx: *mut nk_context, mut handle: nk_handle) -> () {
     if ctx.is_null() {
         return;
@@ -3610,7 +3610,7 @@ pub unsafe fn nk_set_user_data(mut ctx: *mut nk_context, mut handle: nk_handle) 
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_begin(mut ctx: *mut nk_context) -> () {
     let mut i: libc::c_int = 0;
     let mut in_0: *mut nk_input = 0 as *mut nk_input;
@@ -3637,7 +3637,7 @@ pub unsafe fn nk_input_begin(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_motion(
     mut ctx: *mut nk_context,
     mut x: libc::c_int,
@@ -3655,7 +3655,7 @@ pub unsafe fn nk_input_motion(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_key(
     mut ctx: *mut nk_context,
     mut key: nk_keys,
@@ -3674,7 +3674,7 @@ pub unsafe fn nk_input_key(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_button(
     mut ctx: *mut nk_context,
     mut id: nk_buttons,
@@ -3700,7 +3700,7 @@ pub unsafe fn nk_input_button(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_scroll(mut ctx: *mut nk_context, mut val: nk_vec2) -> () {
     if ctx.is_null() {
         return;
@@ -3710,7 +3710,7 @@ pub unsafe fn nk_input_scroll(mut ctx: *mut nk_context, mut val: nk_vec2) -> () 
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_char(mut ctx: *mut nk_context, mut c: libc::c_char) -> () {
     let mut glyph: nk_glyph = [0; 4];
     if ctx.is_null() {
@@ -3721,7 +3721,7 @@ pub unsafe fn nk_input_char(mut ctx: *mut nk_context, mut c: libc::c_char) -> ()
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_glyph(mut ctx: *mut nk_context, mut glyph: *const libc::c_char) -> () {
     let mut len: libc::c_int = 0i32;
     let mut unicode: nk_rune = 0;
@@ -3742,7 +3742,7 @@ pub unsafe fn nk_input_glyph(mut ctx: *mut nk_context, mut glyph: *const libc::c
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_utf_encode(
     mut u: nk_rune,
     mut c: *mut libc::c_char,
@@ -3821,7 +3821,7 @@ static mut nk_utfmin: [nk_uint; 5] = unsafe {
         65536i32 as nk_uint,
     ]
 };
-#[no_mangle]
+
 pub unsafe fn nk_utf_decode(
     mut c: *const libc::c_char,
     mut u: *mut nk_rune,
@@ -3885,7 +3885,7 @@ unsafe fn nk_utf_decode_byte(mut c: libc::c_char, mut i: *mut libc::c_int) -> nk
         return 0i32 as nk_rune;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_unicode(mut ctx: *mut nk_context, mut unicode: nk_rune) -> () {
     let mut rune: nk_glyph = [0; 4];
     if ctx.is_null() {
@@ -3896,7 +3896,7 @@ pub unsafe fn nk_input_unicode(mut ctx: *mut nk_context, mut unicode: nk_rune) -
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_end(mut ctx: *mut nk_context) -> () {
     let mut in_0: *mut nk_input = 0 as *mut nk_input;
     if ctx.is_null() {
@@ -3914,7 +3914,7 @@ pub unsafe fn nk_input_end(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk__begin(mut ctx: *mut nk_context) -> *const nk_command {
     let mut iter: *mut nk_window = 0 as *mut nk_window;
     let mut buffer: *mut nk_byte = 0 as *mut nk_byte;
@@ -4041,7 +4041,7 @@ static mut nk_white: nk_color = unsafe {
         a: 255i32 as nk_byte,
     }
 };
-#[no_mangle]
+
 pub unsafe fn nk_draw_image(
     mut b: *mut nk_command_buffer,
     mut r: nk_rect,
@@ -4481,7 +4481,7 @@ unsafe fn nk_command_buffer_init(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk__next(mut ctx: *mut nk_context, mut cmd: *const nk_command) -> *const nk_command {
     let mut buffer: *mut nk_byte = 0 as *mut nk_byte;
     let mut next: *const nk_command = 0 as *const nk_command;
@@ -4496,7 +4496,7 @@ pub unsafe fn nk__next(mut ctx: *mut nk_context, mut cmd: *const nk_command) -> 
         return next;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_convert(
     mut ctx: *mut nk_context,
     mut cmds: *mut nk_buffer,
@@ -4838,7 +4838,7 @@ pub unsafe fn nk_convert(
         return res;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_rect(
     mut x: f32,
     mut y: f32,
@@ -4857,7 +4857,7 @@ pub unsafe fn nk_rect(
     r.h = h;
     return r;
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_add_image(
     mut list: *mut nk_draw_list,
     mut texture: nk_image,
@@ -5170,7 +5170,7 @@ unsafe fn nk_draw_vertex_color(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgba_fv(mut c: *const f32) -> nk_color {
     return nk_rgba_f(
         *c.offset(0isize),
@@ -5179,7 +5179,7 @@ pub unsafe fn nk_rgba_fv(mut c: *const f32) -> nk_color {
         *c.offset(3isize),
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgba_f(
     mut r: f32,
     mut g: f32,
@@ -5230,7 +5230,7 @@ pub unsafe fn nk_rgba_f(
     } * 255.0f32) as nk_byte;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_u32(mut in_0: nk_color) -> nk_uint {
     let mut out: nk_uint = in_0.r as nk_uint;
     out |= (in_0.g as nk_uint) << 8i32;
@@ -5485,7 +5485,7 @@ unsafe fn nk_draw_list_command_last(mut list: *mut nk_draw_list) -> *mut nk_draw
         as *mut libc::c_void as *mut nk_draw_command;
     return cmd.offset(-((*list).cmd_count.wrapping_sub(1i32 as libc::c_uint) as isize));
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_total(mut buffer: *mut nk_buffer) -> nk_size {
     if buffer.is_null() {
         return 0i32 as nk_size;
@@ -5493,7 +5493,7 @@ pub unsafe fn nk_buffer_total(mut buffer: *mut nk_buffer) -> nk_size {
         return (*buffer).memory.size;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_memory(mut buffer: *mut nk_buffer) -> *mut libc::c_void {
     if buffer.is_null() {
         return 0 as *mut libc::c_void;
@@ -5533,7 +5533,7 @@ unsafe fn nk_draw_list_alloc_vertices(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_fv(mut c: *mut f32, mut in_0: nk_color) -> () {
     nk_color_f(
         &mut *c.offset(0isize),
@@ -5543,7 +5543,7 @@ pub unsafe fn nk_color_fv(mut c: *mut f32, mut in_0: nk_color) -> () {
         in_0,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_f(
     mut r: *mut f32,
     mut g: *mut f32,
@@ -5557,7 +5557,7 @@ pub unsafe fn nk_color_f(
     *b = in_0.b as f32 * s;
     *a = in_0.a as f32 * s;
 }
-#[no_mangle]
+
 pub unsafe fn nk_image_is_subimage(mut img: *const nk_image) -> libc::c_int {
     return !((*img).w as libc::c_int == 0i32 && (*img).h as libc::c_int == 0i32) as libc::c_int;
 }
@@ -5612,7 +5612,7 @@ unsafe fn nk_draw_list_push_command(
         return cmd;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_add_text(
     mut list: *mut nk_draw_list,
     mut font: *const nk_user_font,
@@ -5702,7 +5702,7 @@ pub unsafe fn nk_draw_list_add_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_path_stroke(
     mut list: *mut nk_draw_list,
     mut color: nk_color,
@@ -5727,7 +5727,7 @@ pub unsafe fn nk_draw_list_path_stroke(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_path_clear(mut list: *mut nk_draw_list) -> () {
     if list.is_null() {
         return;
@@ -5738,7 +5738,7 @@ pub unsafe fn nk_draw_list_path_clear(mut list: *mut nk_draw_list) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_stroke_poly_line(
     mut list: *mut nk_draw_list,
     mut points: *const nk_vec2,
@@ -6429,7 +6429,7 @@ unsafe fn nk_inv_sqrt(mut n: f32) -> f32 {
     conv.f = conv.f * (threehalfs - x2 * conv.f * conv.f);
     return conv.f;
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_mark(
     mut buffer: *mut nk_buffer,
     mut type_0: nk_buffer_allocation_type,
@@ -6446,14 +6446,14 @@ pub unsafe fn nk_buffer_mark(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_push_userdata(
     mut list: *mut nk_draw_list,
     mut userdata: nk_handle,
 ) -> () {
     (*list).userdata = userdata;
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_path_line_to(mut list: *mut nk_draw_list, mut pos: nk_vec2) -> () {
     let mut points: *mut nk_vec2 = 0 as *mut nk_vec2;
     let mut cmd: *mut nk_draw_command = 0 as *mut nk_draw_command;
@@ -6520,7 +6520,7 @@ unsafe fn nk_draw_list_add_clip(mut list: *mut nk_draw_list, mut rect: nk_rect) 
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_path_fill(mut list: *mut nk_draw_list, mut color: nk_color) -> () {
     let mut points: *mut nk_vec2 = 0 as *mut nk_vec2;
     if list.is_null() {
@@ -6538,7 +6538,7 @@ pub unsafe fn nk_draw_list_path_fill(mut list: *mut nk_draw_list, mut color: nk_
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_fill_poly_convex(
     mut list: *mut nk_draw_list,
     mut points: *const nk_vec2,
@@ -6749,7 +6749,7 @@ pub unsafe fn nk_draw_list_fill_poly_convex(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_fill_triangle(
     mut list: *mut nk_draw_list,
     mut a: nk_vec2,
@@ -6767,7 +6767,7 @@ pub unsafe fn nk_draw_list_fill_triangle(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_stroke_triangle(
     mut list: *mut nk_draw_list,
     mut a: nk_vec2,
@@ -6786,7 +6786,7 @@ pub unsafe fn nk_draw_list_stroke_triangle(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_path_arc_to(
     mut list: *mut nk_draw_list,
     mut center: nk_vec2,
@@ -6840,7 +6840,7 @@ pub unsafe fn nk_draw_list_path_arc_to(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_fill_circle(
     mut list: *mut nk_draw_list,
     mut center: nk_vec2,
@@ -6859,7 +6859,7 @@ pub unsafe fn nk_draw_list_fill_circle(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_stroke_circle(
     mut list: *mut nk_draw_list,
     mut center: nk_vec2,
@@ -6879,7 +6879,7 @@ pub unsafe fn nk_draw_list_stroke_circle(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_fill_rect_multi_color(
     mut list: *mut nk_draw_list,
     mut rect: nk_rect,
@@ -6967,7 +6967,7 @@ pub unsafe fn nk_draw_list_fill_rect_multi_color(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_fill_rect(
     mut list: *mut nk_draw_list,
     mut rect: nk_rect,
@@ -6996,7 +6996,7 @@ pub unsafe fn nk_draw_list_fill_rect(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_path_rect_to(
     mut list: *mut nk_draw_list,
     mut a: nk_vec2,
@@ -7044,7 +7044,7 @@ pub unsafe fn nk_draw_list_path_rect_to(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_path_arc_to_fast(
     mut list: *mut nk_draw_list,
     mut center: nk_vec2,
@@ -7072,7 +7072,7 @@ pub unsafe fn nk_draw_list_path_arc_to_fast(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_stroke_rect(
     mut list: *mut nk_draw_list,
     mut rect: nk_rect,
@@ -7102,7 +7102,7 @@ pub unsafe fn nk_draw_list_stroke_rect(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_stroke_curve(
     mut list: *mut nk_draw_list,
     mut p0: nk_vec2,
@@ -7122,7 +7122,7 @@ pub unsafe fn nk_draw_list_stroke_curve(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_path_curve_to(
     mut list: *mut nk_draw_list,
     mut p2: nk_vec2,
@@ -7168,7 +7168,7 @@ unsafe fn nk_draw_list_path_last(mut list: *mut nk_draw_list) -> nk_vec2 {
     point = point.offset((*list).path_count.wrapping_sub(1i32 as libc::c_uint) as isize);
     return *point;
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_stroke_line(
     mut list: *mut nk_draw_list,
     mut a: nk_vec2,
@@ -7202,7 +7202,7 @@ pub unsafe fn nk_draw_list_stroke_line(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_list_setup(
     mut canvas: *mut nk_draw_list,
     mut config: *const nk_convert_config,
@@ -7236,14 +7236,14 @@ pub unsafe fn nk_draw_list_setup(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk__draw_begin(
     mut ctx: *const nk_context,
     mut buffer: *const nk_buffer,
 ) -> *const nk_draw_command {
     return nk__draw_list_begin(&(*ctx).draw_list, buffer);
 }
-#[no_mangle]
+
 pub unsafe fn nk__draw_list_begin(
     mut canvas: *const nk_draw_list,
     mut buffer: *const nk_buffer,
@@ -7260,14 +7260,14 @@ pub unsafe fn nk__draw_list_begin(
         return cmd;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk__draw_end(
     mut ctx: *const nk_context,
     mut buffer: *const nk_buffer,
 ) -> *const nk_draw_command {
     return nk__draw_list_end(&(*ctx).draw_list, buffer);
 }
-#[no_mangle]
+
 pub unsafe fn nk__draw_list_end(
     mut canvas: *const nk_draw_list,
     mut buffer: *const nk_buffer,
@@ -7287,7 +7287,7 @@ pub unsafe fn nk__draw_list_end(
         return end;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk__draw_next(
     mut cmd: *const nk_draw_command,
     mut buffer: *const nk_buffer,
@@ -7295,7 +7295,7 @@ pub unsafe fn nk__draw_next(
 ) -> *const nk_draw_command {
     return nk__draw_list_next(cmd, buffer, &(*ctx).draw_list);
 }
-#[no_mangle]
+
 pub unsafe fn nk__draw_list_next(
     mut cmd: *const nk_draw_command,
     mut buffer: *const nk_buffer,
@@ -7313,7 +7313,7 @@ pub unsafe fn nk__draw_list_next(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_begin(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -7322,7 +7322,7 @@ pub unsafe fn nk_begin(
 ) -> libc::c_int {
     return nk_begin_titled(ctx, title, title, bounds, flags);
 }
-#[no_mangle]
+
 pub unsafe fn nk_begin_titled(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -7925,7 +7925,7 @@ unsafe fn nk_panel_begin(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_push_scissor(mut b: *mut nk_command_buffer, mut r: nk_rect) -> () {
     let mut cmd: *mut nk_command_scissor = 0 as *mut nk_command_scissor;
     if b.is_null() {
@@ -7990,7 +7990,7 @@ unsafe fn nk_unify(
         0i32 as f32
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_fill_rect(
     mut b: *mut nk_command_buffer,
     mut rect: nk_rect,
@@ -8041,7 +8041,7 @@ pub unsafe fn nk_fill_rect(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_strlen(mut str: *const libc::c_char) -> libc::c_int {
     let mut siz: libc::c_int = 0i32;
     while !str.is_null() && {
@@ -8147,7 +8147,7 @@ unsafe fn nk_widget_text(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_draw_text(
     mut b: *mut nk_command_buffer,
     mut r: nk_rect,
@@ -8494,7 +8494,7 @@ unsafe fn nk_draw_symbol(
         0 | 13 | _ => {}
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_fill_triangle(
     mut b: *mut nk_command_buffer,
     mut x0: f32,
@@ -8545,7 +8545,7 @@ pub unsafe fn nk_fill_triangle(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_triangle_from_direction(
     mut result: *mut nk_vec2,
     mut r: nk_rect,
@@ -8612,7 +8612,7 @@ unsafe fn nk_shrink_rect(mut r: nk_rect, mut amount: f32) -> nk_rect {
     res.h = r.h - 2i32 as f32 * amount;
     return res;
 }
-#[no_mangle]
+
 pub unsafe fn nk_fill_circle(mut b: *mut nk_command_buffer, mut r: nk_rect, mut c: nk_color) -> () {
     let mut cmd: *mut nk_command_circle_filled = 0 as *mut nk_command_circle_filled;
     if b.is_null()
@@ -8685,7 +8685,7 @@ unsafe fn nk_draw_button(
     }
     return background;
 }
-#[no_mangle]
+
 pub unsafe fn nk_stroke_rect(
     mut b: *mut nk_command_buffer,
     mut rect: nk_rect,
@@ -8815,7 +8815,7 @@ unsafe fn nk_button_behavior(
         return ret;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_mouse_prev_hovering_rect(
     mut i: *const nk_input,
     mut rect: nk_rect,
@@ -8829,7 +8829,7 @@ pub unsafe fn nk_input_is_mouse_prev_hovering_rect(
             as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_mouse_pressed(mut i: *const nk_input, mut id: nk_buttons) -> libc::c_int {
     let mut b: *const nk_mouse_button = 0 as *const nk_mouse_button;
     if i.is_null() {
@@ -8843,7 +8843,7 @@ pub unsafe fn nk_input_is_mouse_pressed(mut i: *const nk_input, mut id: nk_butto
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_mouse_down(mut i: *const nk_input, mut id: nk_buttons) -> libc::c_int {
     if i.is_null() {
         return nk_false as libc::c_int;
@@ -8851,7 +8851,7 @@ pub unsafe fn nk_input_is_mouse_down(mut i: *const nk_input, mut id: nk_buttons)
         return (*i).mouse.buttons[id as usize].down;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_has_mouse_click_in_rect(
     mut i: *const nk_input,
     mut id: nk_buttons,
@@ -8872,7 +8872,7 @@ pub unsafe fn nk_input_has_mouse_click_in_rect(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_mouse_hovering_rect(
     mut i: *const nk_input,
     mut rect: nk_rect,
@@ -8905,7 +8905,7 @@ unsafe fn nk_panel_is_nonblock(mut type_0: nk_panel_type) -> libc::c_int {
         0i32
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_reset_min_row_height(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -8940,7 +8940,7 @@ unsafe fn nk_panel_get_border(
         return 0i32 as f32;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_has_mouse_click_down_in_rect(
     mut i: *const nk_input,
     mut id: nk_buttons,
@@ -9121,7 +9121,7 @@ unsafe fn nk_find_window(
     }
     return 0 as *mut nk_window;
 }
-#[no_mangle]
+
 pub unsafe fn nk_stricmpn(
     mut s1: *const libc::c_char,
     mut s2: *const libc::c_char,
@@ -9182,7 +9182,7 @@ pub unsafe fn nk_stricmpn(
     }
     return 0i32;
 }
-#[no_mangle]
+
 pub unsafe fn nk_murmur_hash(
     mut key: *const libc::c_void,
     mut len: libc::c_int,
@@ -9269,7 +9269,7 @@ pub unsafe fn nk_murmur_hash(
         return h1;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_end(mut ctx: *mut nk_context) -> () {
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
     if ctx.is_null() || (*ctx).current.is_null() {
@@ -9782,7 +9782,7 @@ unsafe fn nk_panel_get_border_color(
         1 | _ => return (*style).window.border_color,
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_is_hovered(mut ctx: *mut nk_context) -> libc::c_int {
     if ctx.is_null() || (*ctx).current.is_null() {
         return 0i32;
@@ -10185,7 +10185,7 @@ unsafe fn nk_scrollbar_behavior(
         return scroll_offset;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_key_pressed(mut i: *const nk_input, mut key: nk_keys) -> libc::c_int {
     let mut k: *const nk_key = 0 as *const nk_key;
     if i.is_null() {
@@ -10385,7 +10385,7 @@ unsafe fn nk_do_scrollbarv(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_find(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10400,7 +10400,7 @@ pub unsafe fn nk_window_find(
     );
     return nk_find_window(ctx, title_hash, name);
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_bounds(mut ctx: *const nk_context) -> nk_rect {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_rect(
@@ -10413,7 +10413,7 @@ pub unsafe fn nk_window_get_bounds(mut ctx: *const nk_context) -> nk_rect {
         return (*(*ctx).current).bounds;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_position(mut ctx: *const nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_vec2(0i32 as f32, 0i32 as f32);
@@ -10421,7 +10421,7 @@ pub unsafe fn nk_window_get_position(mut ctx: *const nk_context) -> nk_vec2 {
         return nk_vec2((*(*ctx).current).bounds.x, (*(*ctx).current).bounds.y);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_size(mut ctx: *const nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_vec2(0i32 as f32, 0i32 as f32);
@@ -10429,7 +10429,7 @@ pub unsafe fn nk_window_get_size(mut ctx: *const nk_context) -> nk_vec2 {
         return nk_vec2((*(*ctx).current).bounds.w, (*(*ctx).current).bounds.h);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_width(mut ctx: *const nk_context) -> f32 {
     if ctx.is_null() || (*ctx).current.is_null() {
         return 0i32 as f32;
@@ -10437,7 +10437,7 @@ pub unsafe fn nk_window_get_width(mut ctx: *const nk_context) -> f32 {
         return (*(*ctx).current).bounds.w;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_height(mut ctx: *const nk_context) -> f32 {
     if ctx.is_null() || (*ctx).current.is_null() {
         return 0i32 as f32;
@@ -10445,7 +10445,7 @@ pub unsafe fn nk_window_get_height(mut ctx: *const nk_context) -> f32 {
         return (*(*ctx).current).bounds.h;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_panel(mut ctx: *mut nk_context) -> *mut nk_panel {
     if ctx.is_null() || (*ctx).current.is_null() {
         return 0 as *mut nk_panel;
@@ -10453,7 +10453,7 @@ pub unsafe fn nk_window_get_panel(mut ctx: *mut nk_context) -> *mut nk_panel {
         return (*(*ctx).current).layout;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_content_region(mut ctx: *mut nk_context) -> nk_rect {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_rect(
@@ -10466,7 +10466,7 @@ pub unsafe fn nk_window_get_content_region(mut ctx: *mut nk_context) -> nk_rect 
         return (*(*(*ctx).current).layout).clip;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_content_region_min(mut ctx: *mut nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_vec2(0i32 as f32, 0i32 as f32);
@@ -10477,7 +10477,7 @@ pub unsafe fn nk_window_get_content_region_min(mut ctx: *mut nk_context) -> nk_v
         );
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_content_region_max(mut ctx: *mut nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_vec2(0i32 as f32, 0i32 as f32);
@@ -10488,7 +10488,7 @@ pub unsafe fn nk_window_get_content_region_max(mut ctx: *mut nk_context) -> nk_v
         );
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_content_region_size(mut ctx: *mut nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_vec2(0i32 as f32, 0i32 as f32);
@@ -10499,7 +10499,7 @@ pub unsafe fn nk_window_get_content_region_size(mut ctx: *mut nk_context) -> nk_
         );
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_get_canvas(mut ctx: *mut nk_context) -> *mut nk_command_buffer {
     if ctx.is_null() || (*ctx).current.is_null() {
         return 0 as *mut nk_command_buffer;
@@ -10507,7 +10507,7 @@ pub unsafe fn nk_window_get_canvas(mut ctx: *mut nk_context) -> *mut nk_command_
         return &mut (*(*ctx).current).buffer as *mut nk_command_buffer;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_has_focus(mut ctx: *const nk_context) -> libc::c_int {
     if ctx.is_null() || (*ctx).current.is_null() {
         return 0i32;
@@ -10515,7 +10515,7 @@ pub unsafe fn nk_window_has_focus(mut ctx: *const nk_context) -> libc::c_int {
         return ((*ctx).current == (*ctx).active) as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_is_collapsed(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10541,7 +10541,7 @@ pub unsafe fn nk_window_is_collapsed(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_is_closed(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10566,7 +10566,7 @@ pub unsafe fn nk_window_is_closed(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_is_hidden(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10591,7 +10591,7 @@ pub unsafe fn nk_window_is_hidden(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_is_active(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10616,7 +10616,7 @@ pub unsafe fn nk_window_is_active(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_is_any_hovered(mut ctx: *mut nk_context) -> libc::c_int {
     let mut iter: *mut nk_window = 0 as *mut nk_window;
     if ctx.is_null() {
@@ -10649,7 +10649,7 @@ pub unsafe fn nk_window_is_any_hovered(mut ctx: *mut nk_context) -> libc::c_int 
         return 0i32;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_item_is_any_active(mut ctx: *mut nk_context) -> libc::c_int {
     let mut any_hovered: libc::c_int = nk_window_is_any_hovered(ctx);
     let mut any_active: libc::c_int = ((*ctx).last_widget_state
@@ -10657,7 +10657,7 @@ pub unsafe fn nk_item_is_any_active(mut ctx: *mut nk_context) -> libc::c_int {
         as libc::c_int;
     return (0 != any_hovered || 0 != any_active) as libc::c_int;
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_set_bounds(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10676,7 +10676,7 @@ pub unsafe fn nk_window_set_bounds(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_set_position(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10691,7 +10691,7 @@ pub unsafe fn nk_window_set_position(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_set_size(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10706,7 +10706,7 @@ pub unsafe fn nk_window_set_size(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_set_focus(mut ctx: *mut nk_context, mut name: *const libc::c_char) -> () {
     let mut title_len: libc::c_int = 0;
     let mut title_hash: nk_hash = 0;
@@ -10729,7 +10729,7 @@ pub unsafe fn nk_window_set_focus(mut ctx: *mut nk_context, mut name: *const lib
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_close(mut ctx: *mut nk_context, mut name: *const libc::c_char) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     if ctx.is_null() {
@@ -10747,7 +10747,7 @@ pub unsafe fn nk_window_close(mut ctx: *mut nk_context, mut name: *const libc::c
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_collapse(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10778,7 +10778,7 @@ pub unsafe fn nk_window_collapse(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_collapse_if(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10792,7 +10792,7 @@ pub unsafe fn nk_window_collapse_if(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_show(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10823,7 +10823,7 @@ pub unsafe fn nk_window_show(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_window_show_if(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -10837,7 +10837,7 @@ pub unsafe fn nk_window_show_if(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_set_min_row_height(
     mut ctx: *mut nk_context,
     mut height: f32,
@@ -10853,7 +10853,7 @@ pub unsafe fn nk_layout_set_min_row_height(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_widget_bounds(mut ctx: *mut nk_context) -> nk_rect {
     let mut ret: nk_rect = nk_rect {
         x: 0.,
@@ -10875,7 +10875,7 @@ pub unsafe fn nk_layout_widget_bounds(mut ctx: *mut nk_context) -> nk_rect {
     ret.h = (*layout).row.height;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_ratio_from_pixel(
     mut ctx: *mut nk_context,
     mut pixel_width: f32,
@@ -10899,7 +10899,7 @@ pub unsafe fn nk_layout_ratio_from_pixel(
         };
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_dynamic(
     mut ctx: *mut nk_context,
     mut height: f32,
@@ -10994,7 +10994,7 @@ unsafe fn nk_panel_layout(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_static(
     mut ctx: *mut nk_context,
     mut height: f32,
@@ -11003,7 +11003,7 @@ pub unsafe fn nk_layout_row_static(
 ) -> () {
     nk_row_layout(ctx, NK_STATIC, height, cols, item_width);
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_begin(
     mut ctx: *mut nk_context,
     mut fmt: nk_layout_format,
@@ -11031,7 +11031,7 @@ pub unsafe fn nk_layout_row_begin(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_push(
     mut ctx: *mut nk_context,
     mut ratio_or_width: f32,
@@ -11077,7 +11077,7 @@ pub unsafe fn nk_layout_row_push(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_end(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11099,7 +11099,7 @@ pub unsafe fn nk_layout_row_end(mut ctx: *mut nk_context) -> () {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row(
     mut ctx: *mut nk_context,
     mut fmt: nk_layout_format,
@@ -11160,7 +11160,7 @@ pub unsafe fn nk_layout_row(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_template_begin(
     mut ctx: *mut nk_context,
     mut height: f32,
@@ -11187,7 +11187,7 @@ pub unsafe fn nk_layout_row_template_begin(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_template_push_dynamic(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11209,7 +11209,7 @@ pub unsafe fn nk_layout_row_template_push_dynamic(mut ctx: *mut nk_context) -> (
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_template_push_variable(
     mut ctx: *mut nk_context,
     mut min_width: f32,
@@ -11234,7 +11234,7 @@ pub unsafe fn nk_layout_row_template_push_variable(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_template_push_static(
     mut ctx: *mut nk_context,
     mut width: f32,
@@ -11259,7 +11259,7 @@ pub unsafe fn nk_layout_row_template_push_static(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_row_template_end(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11362,7 +11362,7 @@ unsafe fn nk_layout_row_calculate_usable_space(
     panel_space = total_space - panel_padding - panel_spacing;
     return panel_space;
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_space_begin(
     mut ctx: *mut nk_context,
     mut fmt: nk_layout_format,
@@ -11389,7 +11389,7 @@ pub unsafe fn nk_layout_space_begin(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_space_push(mut ctx: *mut nk_context, mut rect: nk_rect) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11402,7 +11402,7 @@ pub unsafe fn nk_layout_space_push(mut ctx: *mut nk_context, mut rect: nk_rect) 
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_space_end(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11421,7 +11421,7 @@ pub unsafe fn nk_layout_space_end(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_space_bounds(mut ctx: *mut nk_context) -> nk_rect {
     let mut ret: nk_rect = nk_rect {
         x: 0.,
@@ -11439,7 +11439,7 @@ pub unsafe fn nk_layout_space_bounds(mut ctx: *mut nk_context) -> nk_rect {
     ret.h = (*layout).row.height;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_space_to_screen(mut ctx: *mut nk_context, mut ret: nk_vec2) -> nk_vec2 {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11449,7 +11449,7 @@ pub unsafe fn nk_layout_space_to_screen(mut ctx: *mut nk_context, mut ret: nk_ve
     ret.y += (*layout).at_y - *(*layout).offset_y as f32;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_space_to_local(mut ctx: *mut nk_context, mut ret: nk_vec2) -> nk_vec2 {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11459,7 +11459,7 @@ pub unsafe fn nk_layout_space_to_local(mut ctx: *mut nk_context, mut ret: nk_vec
     ret.y += -(*layout).at_y + *(*layout).offset_y as f32;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_space_rect_to_screen(
     mut ctx: *mut nk_context,
     mut ret: nk_rect,
@@ -11472,7 +11472,7 @@ pub unsafe fn nk_layout_space_rect_to_screen(
     ret.y += (*layout).at_y - *(*layout).offset_y as f32;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_layout_space_rect_to_local(mut ctx: *mut nk_context, mut ret: nk_rect) -> nk_rect {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11482,7 +11482,7 @@ pub unsafe fn nk_layout_space_rect_to_local(mut ctx: *mut nk_context, mut ret: n
     ret.y += -(*layout).at_y + *(*layout).offset_y as f32;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_group_begin(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -11490,7 +11490,7 @@ pub unsafe fn nk_group_begin(
 ) -> libc::c_int {
     return nk_group_begin_titled(ctx, title, title, flags);
 }
-#[no_mangle]
+
 pub unsafe fn nk_group_begin_titled(
     mut ctx: *mut nk_context,
     mut id: *const libc::c_char,
@@ -11538,7 +11538,7 @@ pub unsafe fn nk_group_begin_titled(
         return nk_group_scrolled_offset_begin(ctx, x_offset, y_offset, title, flags);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_group_scrolled_offset_begin(
     mut ctx: *mut nk_context,
     mut x_offset: *mut nk_uint,
@@ -11695,7 +11695,7 @@ pub unsafe fn nk_group_scrolled_offset_begin(
         return 1i32;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_group_scrolled_end(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut parent: *mut nk_panel = 0 as *mut nk_panel;
@@ -12111,11 +12111,11 @@ unsafe fn nk_push_table(mut win: *mut nk_window, mut tbl: *mut nk_table) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_group_end(mut ctx: *mut nk_context) -> () {
     nk_group_scrolled_end(ctx);
 }
-#[no_mangle]
+
 pub unsafe fn nk_group_scrolled_begin(
     mut ctx: *mut nk_context,
     mut scroll: *mut nk_scroll,
@@ -12124,7 +12124,7 @@ pub unsafe fn nk_group_scrolled_begin(
 ) -> libc::c_int {
     return nk_group_scrolled_offset_begin(ctx, &mut (*scroll).x, &mut (*scroll).y, title, flags);
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_push_hashed(
     mut ctx: *mut nk_context,
     mut type_0: nk_tree_type,
@@ -12359,7 +12359,7 @@ unsafe fn nk_tree_state_base(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget(
     mut bounds: *mut nk_rect,
     mut ctx: *const nk_context,
@@ -12426,7 +12426,7 @@ pub unsafe fn nk_widget(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_image_push_hashed(
     mut ctx: *mut nk_context,
     mut type_0: nk_tree_type,
@@ -12439,11 +12439,11 @@ pub unsafe fn nk_tree_image_push_hashed(
 ) -> libc::c_int {
     return nk_tree_base(ctx, type_0, &mut img, title, initial_state, hash, len, seed);
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_pop(mut ctx: *mut nk_context) -> () {
     nk_tree_state_pop(ctx);
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_state_pop(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -12458,7 +12458,7 @@ pub unsafe fn nk_tree_state_pop(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_state_push(
     mut ctx: *mut nk_context,
     mut type_0: nk_tree_type,
@@ -12467,7 +12467,7 @@ pub unsafe fn nk_tree_state_push(
 ) -> libc::c_int {
     return nk_tree_state_base(ctx, type_0, 0 as *mut nk_image, title, state);
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_state_image_push(
     mut ctx: *mut nk_context,
     mut type_0: nk_tree_type,
@@ -12477,7 +12477,7 @@ pub unsafe fn nk_tree_state_image_push(
 ) -> libc::c_int {
     return nk_tree_state_base(ctx, type_0, &mut img, title, state);
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_element_push_hashed(
     mut ctx: *mut nk_context,
     mut type_0: nk_tree_type,
@@ -12979,7 +12979,7 @@ unsafe fn nk_do_selectable_image(
         return (old_value != *value) as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_element_image_push_hashed(
     mut ctx: *mut nk_context,
     mut type_0: nk_tree_type,
@@ -13003,11 +13003,11 @@ pub unsafe fn nk_tree_element_image_push_hashed(
         seed,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_tree_element_pop(mut ctx: *mut nk_context) -> () {
     nk_tree_state_pop(ctx);
 }
-#[no_mangle]
+
 pub unsafe fn nk_list_view_begin(
     mut ctx: *mut nk_context,
     mut view: *mut nk_list_view,
@@ -13099,7 +13099,7 @@ unsafe fn nk_iceilf(mut x: f32) -> libc::c_int {
         return if r > 0.0f32 { t + 1i32 } else { t };
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_list_view_end(mut view: *mut nk_list_view) -> () {
     let mut ctx: *mut nk_context = 0 as *mut nk_context;
     let mut win: *mut nk_window = 0 as *mut nk_window;
@@ -13116,7 +13116,7 @@ pub unsafe fn nk_list_view_end(mut view: *mut nk_list_view) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_fitting(
     mut bounds: *mut nk_rect,
     mut ctx: *mut nk_context,
@@ -13150,7 +13150,7 @@ pub unsafe fn nk_widget_fitting(
         return state;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_bounds(mut ctx: *mut nk_context) -> nk_rect {
     let mut bounds: nk_rect = nk_rect {
         x: 0.,
@@ -13195,7 +13195,7 @@ unsafe fn nk_layout_peek(mut bounds: *mut nk_rect, mut ctx: *mut nk_context) -> 
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_position(mut ctx: *mut nk_context) -> nk_vec2 {
     let mut bounds: nk_rect = nk_rect {
         x: 0.,
@@ -13210,7 +13210,7 @@ pub unsafe fn nk_widget_position(mut ctx: *mut nk_context) -> nk_vec2 {
         return nk_vec2(bounds.x, bounds.y);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_size(mut ctx: *mut nk_context) -> nk_vec2 {
     let mut bounds: nk_rect = nk_rect {
         x: 0.,
@@ -13225,7 +13225,7 @@ pub unsafe fn nk_widget_size(mut ctx: *mut nk_context) -> nk_vec2 {
         return nk_vec2(bounds.w, bounds.h);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_width(mut ctx: *mut nk_context) -> f32 {
     let mut bounds: nk_rect = nk_rect {
         x: 0.,
@@ -13240,7 +13240,7 @@ pub unsafe fn nk_widget_width(mut ctx: *mut nk_context) -> f32 {
         return bounds.w;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_height(mut ctx: *mut nk_context) -> f32 {
     let mut bounds: nk_rect = nk_rect {
         x: 0.,
@@ -13255,7 +13255,7 @@ pub unsafe fn nk_widget_height(mut ctx: *mut nk_context) -> f32 {
         return bounds.h;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_is_hovered(mut ctx: *mut nk_context) -> libc::c_int {
     let mut c: nk_rect = nk_rect {
         x: 0.,
@@ -13303,7 +13303,7 @@ pub unsafe fn nk_widget_is_hovered(mut ctx: *mut nk_context) -> libc::c_int {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_is_mouse_clicked(
     mut ctx: *mut nk_context,
     mut btn: nk_buttons,
@@ -13354,7 +13354,7 @@ pub unsafe fn nk_widget_is_mouse_clicked(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_mouse_clicked(
     mut i: *const nk_input,
     mut id: nk_buttons,
@@ -13368,7 +13368,7 @@ pub unsafe fn nk_input_mouse_clicked(
         return nk_input_is_mouse_click_in_rect(i, id, rect);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_mouse_click_in_rect(
     mut i: *const nk_input,
     mut id: nk_buttons,
@@ -13388,7 +13388,7 @@ pub unsafe fn nk_input_is_mouse_click_in_rect(
         };
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_widget_has_mouse_click_down(
     mut ctx: *mut nk_context,
     mut btn: nk_buttons,
@@ -13440,7 +13440,7 @@ pub unsafe fn nk_widget_has_mouse_click_down(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_spacing(mut ctx: *mut nk_context, mut cols: libc::c_int) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -13485,7 +13485,7 @@ pub unsafe fn nk_spacing(mut ctx: *mut nk_context, mut cols: libc::c_int) -> () 
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_text(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -13499,7 +13499,7 @@ pub unsafe fn nk_text(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_text_colored(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -13554,7 +13554,7 @@ pub unsafe fn nk_text_colored(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_text_wrap(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -13567,7 +13567,7 @@ pub unsafe fn nk_text_wrap(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_text_wrap_colored(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -13718,7 +13718,7 @@ unsafe fn nk_widget_text_wrap(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_label(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -13726,7 +13726,7 @@ pub unsafe fn nk_label(
 ) -> () {
     nk_text(ctx, str, nk_strlen(str), alignment);
 }
-#[no_mangle]
+
 pub unsafe fn nk_label_colored(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -13735,11 +13735,11 @@ pub unsafe fn nk_label_colored(
 ) -> () {
     nk_text_colored(ctx, str, nk_strlen(str), align, color);
 }
-#[no_mangle]
+
 pub unsafe fn nk_label_wrap(mut ctx: *mut nk_context, mut str: *const libc::c_char) -> () {
     nk_text_wrap(ctx, str, nk_strlen(str));
 }
-#[no_mangle]
+
 pub unsafe fn nk_label_colored_wrap(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -13747,7 +13747,7 @@ pub unsafe fn nk_label_colored_wrap(
 ) -> () {
     nk_text_wrap_colored(ctx, str, nk_strlen(str), color);
 }
-#[no_mangle]
+
 pub unsafe fn nk_image(mut ctx: *mut nk_context, mut img: nk_image) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut bounds: nk_rect = nk_rect {
@@ -13768,7 +13768,7 @@ pub unsafe fn nk_image(mut ctx: *mut nk_context, mut img: nk_image) -> () {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_image_color(mut ctx: *mut nk_context, mut img: nk_image, mut col: nk_color) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut bounds: nk_rect = nk_rect {
@@ -13789,7 +13789,7 @@ pub unsafe fn nk_image_color(mut ctx: *mut nk_context, mut img: nk_image, mut co
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_text(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -13801,7 +13801,7 @@ pub unsafe fn nk_button_text(
         return nk_button_text_styled(ctx, &mut (*ctx).style.button, title, len);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_text_styled(
     mut ctx: *mut nk_context,
     mut style: *const nk_style_button,
@@ -13940,14 +13940,14 @@ unsafe fn nk_draw_button_text(
     text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
     nk_widget_text(out, *content, txt, len, &mut text, text_alignment, font);
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_label(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
 ) -> libc::c_int {
     return nk_button_text(ctx, title, nk_strlen(title));
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_color(mut ctx: *mut nk_context, mut color: nk_color) -> libc::c_int {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -14087,7 +14087,7 @@ pub unsafe fn nk_button_color(mut ctx: *mut nk_context, mut color: nk_color) -> 
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_symbol(
     mut ctx: *mut nk_context,
     mut symbol: nk_symbol_type,
@@ -14098,7 +14098,7 @@ pub unsafe fn nk_button_symbol(
         return nk_button_symbol_styled(ctx, &mut (*ctx).style.button, symbol);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_symbol_styled(
     mut ctx: *mut nk_context,
     mut style: *const nk_style_button,
@@ -14143,7 +14143,7 @@ pub unsafe fn nk_button_symbol_styled(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_image(mut ctx: *mut nk_context, mut img: nk_image) -> libc::c_int {
     if ctx.is_null() {
         return 0i32;
@@ -14151,7 +14151,7 @@ pub unsafe fn nk_button_image(mut ctx: *mut nk_context, mut img: nk_image) -> li
         return nk_button_image_styled(ctx, &mut (*ctx).style.button, img);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_image_styled(
     mut ctx: *mut nk_context,
     mut style: *const nk_style_button,
@@ -14240,7 +14240,7 @@ unsafe fn nk_draw_button_image(
     nk_draw_button(out, bounds, state, style);
     nk_draw_image(out, *content, img, nk_white);
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_symbol_label(
     mut ctx: *mut nk_context,
     mut symbol: nk_symbol_type,
@@ -14249,7 +14249,7 @@ pub unsafe fn nk_button_symbol_label(
 ) -> libc::c_int {
     return nk_button_symbol_text(ctx, symbol, label, nk_strlen(label), align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_symbol_text(
     mut ctx: *mut nk_context,
     mut symbol: nk_symbol_type,
@@ -14270,7 +14270,7 @@ pub unsafe fn nk_button_symbol_text(
         );
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_symbol_text_styled(
     mut ctx: *mut nk_context,
     mut style: *const nk_style_button,
@@ -14459,7 +14459,7 @@ unsafe fn nk_draw_button_text_symbol(
         font,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_image_label(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -14468,7 +14468,7 @@ pub unsafe fn nk_button_image_label(
 ) -> libc::c_int {
     return nk_button_image_text(ctx, img, label, nk_strlen(label), align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_image_text(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -14478,7 +14478,7 @@ pub unsafe fn nk_button_image_text(
 ) -> libc::c_int {
     return nk_button_image_text_styled(ctx, &mut (*ctx).style.button, img, text, len, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_image_text_styled(
     mut ctx: *mut nk_context,
     mut style: *const nk_style_button,
@@ -14651,7 +14651,7 @@ unsafe fn nk_draw_button_text_image(
     );
     nk_draw_image(out, *image, img, nk_white);
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_label_styled(
     mut ctx: *mut nk_context,
     mut style: *const nk_style_button,
@@ -14659,7 +14659,7 @@ pub unsafe fn nk_button_label_styled(
 ) -> libc::c_int {
     return nk_button_text_styled(ctx, style, title, nk_strlen(title));
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_symbol_label_styled(
     mut ctx: *mut nk_context,
     mut style: *const nk_style_button,
@@ -14669,7 +14669,7 @@ pub unsafe fn nk_button_symbol_label_styled(
 ) -> libc::c_int {
     return nk_button_symbol_text_styled(ctx, style, symbol, title, nk_strlen(title), align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_image_label_styled(
     mut ctx: *mut nk_context,
     mut style: *const nk_style_button,
@@ -14679,7 +14679,7 @@ pub unsafe fn nk_button_image_label_styled(
 ) -> libc::c_int {
     return nk_button_image_text_styled(ctx, style, img, label, nk_strlen(label), text_alignment);
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_set_behavior(
     mut ctx: *mut nk_context,
     mut behavior: nk_button_behavior,
@@ -14691,7 +14691,7 @@ pub unsafe fn nk_button_set_behavior(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_push_behavior(
     mut ctx: *mut nk_context,
     mut behavior: nk_button_behavior,
@@ -14725,7 +14725,7 @@ pub unsafe fn nk_button_push_behavior(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_button_pop_behavior(mut ctx: *mut nk_context) -> libc::c_int {
     let mut button_stack: *mut nk_config_stack_button_behavior =
         0 as *mut nk_config_stack_button_behavior;
@@ -14746,7 +14746,7 @@ pub unsafe fn nk_button_pop_behavior(mut ctx: *mut nk_context) -> libc::c_int {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_check_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -14754,7 +14754,7 @@ pub unsafe fn nk_check_label(
 ) -> libc::c_int {
     return nk_check_text(ctx, label, nk_strlen(label), active);
 }
-#[no_mangle]
+
 pub unsafe fn nk_check_text(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -15097,7 +15097,7 @@ unsafe fn nk_toggle_behavior(
     }
     return active;
 }
-#[no_mangle]
+
 pub unsafe fn nk_check_flags_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -15106,7 +15106,7 @@ pub unsafe fn nk_check_flags_label(
 ) -> libc::c_uint {
     return nk_check_flags_text(ctx, label, nk_strlen(label), flags, value);
 }
-#[no_mangle]
+
 pub unsafe fn nk_check_flags_text(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -15127,7 +15127,7 @@ pub unsafe fn nk_check_flags_text(
         return flags;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_checkbox_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -15135,7 +15135,7 @@ pub unsafe fn nk_checkbox_label(
 ) -> libc::c_int {
     return nk_checkbox_text(ctx, label, nk_strlen(label), active);
 }
-#[no_mangle]
+
 pub unsafe fn nk_checkbox_text(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -15151,7 +15151,7 @@ pub unsafe fn nk_checkbox_text(
         return (old_val != *active) as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_checkbox_flags_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -15160,7 +15160,7 @@ pub unsafe fn nk_checkbox_flags_label(
 ) -> libc::c_int {
     return nk_checkbox_flags_text(ctx, label, nk_strlen(label), flags, value);
 }
-#[no_mangle]
+
 pub unsafe fn nk_checkbox_flags_text(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -15185,7 +15185,7 @@ pub unsafe fn nk_checkbox_flags_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_radio_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -15193,7 +15193,7 @@ pub unsafe fn nk_radio_label(
 ) -> libc::c_int {
     return nk_radio_text(ctx, label, nk_strlen(label), active);
 }
-#[no_mangle]
+
 pub unsafe fn nk_radio_text(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -15209,7 +15209,7 @@ pub unsafe fn nk_radio_text(
         return (old_value != *active) as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_option_text(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -15260,7 +15260,7 @@ pub unsafe fn nk_option_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_option_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -15268,7 +15268,7 @@ pub unsafe fn nk_option_label(
 ) -> libc::c_int {
     return nk_option_text(ctx, label, nk_strlen(label), active);
 }
-#[no_mangle]
+
 pub unsafe fn nk_selectable_label(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -15277,7 +15277,7 @@ pub unsafe fn nk_selectable_label(
 ) -> libc::c_int {
     return nk_selectable_text(ctx, str, nk_strlen(str), align, value);
 }
-#[no_mangle]
+
 pub unsafe fn nk_selectable_text(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -15332,7 +15332,7 @@ pub unsafe fn nk_selectable_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_selectable_image_label(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -15342,7 +15342,7 @@ pub unsafe fn nk_selectable_image_label(
 ) -> libc::c_int {
     return nk_selectable_image_text(ctx, img, str, nk_strlen(str), align, value);
 }
-#[no_mangle]
+
 pub unsafe fn nk_selectable_image_text(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -15399,7 +15399,7 @@ pub unsafe fn nk_selectable_image_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_selectable_symbol_label(
     mut ctx: *mut nk_context,
     mut sym: nk_symbol_type,
@@ -15409,7 +15409,7 @@ pub unsafe fn nk_selectable_symbol_label(
 ) -> libc::c_int {
     return nk_selectable_symbol_text(ctx, sym, title, nk_strlen(title), align, value);
 }
-#[no_mangle]
+
 pub unsafe fn nk_selectable_symbol_text(
     mut ctx: *mut nk_context,
     mut sym: nk_symbol_type,
@@ -15552,7 +15552,7 @@ unsafe fn nk_do_selectable_symbol(
         return (old_value != *value) as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_select_label(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -15562,7 +15562,7 @@ pub unsafe fn nk_select_label(
     nk_selectable_text(ctx, str, nk_strlen(str), align, &mut value);
     return value;
 }
-#[no_mangle]
+
 pub unsafe fn nk_select_text(
     mut ctx: *mut nk_context,
     mut str: *const libc::c_char,
@@ -15573,7 +15573,7 @@ pub unsafe fn nk_select_text(
     nk_selectable_text(ctx, str, len, align, &mut value);
     return value;
 }
-#[no_mangle]
+
 pub unsafe fn nk_select_image_label(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -15584,7 +15584,7 @@ pub unsafe fn nk_select_image_label(
     nk_selectable_image_text(ctx, img, str, nk_strlen(str), align, &mut value);
     return value;
 }
-#[no_mangle]
+
 pub unsafe fn nk_select_image_text(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -15596,7 +15596,7 @@ pub unsafe fn nk_select_image_text(
     nk_selectable_image_text(ctx, img, str, len, align, &mut value);
     return value;
 }
-#[no_mangle]
+
 pub unsafe fn nk_select_symbol_label(
     mut ctx: *mut nk_context,
     mut sym: nk_symbol_type,
@@ -15606,7 +15606,7 @@ pub unsafe fn nk_select_symbol_label(
 ) -> libc::c_int {
     return nk_select_symbol_text(ctx, sym, title, nk_strlen(title), align, value);
 }
-#[no_mangle]
+
 pub unsafe fn nk_select_symbol_text(
     mut ctx: *mut nk_context,
     mut sym: nk_symbol_type,
@@ -15618,7 +15618,7 @@ pub unsafe fn nk_select_symbol_text(
     nk_selectable_symbol_text(ctx, sym, title, title_len, align, &mut value);
     return value;
 }
-#[no_mangle]
+
 pub unsafe fn nk_slide_float(
     mut ctx: *mut nk_context,
     mut min: f32,
@@ -15629,7 +15629,7 @@ pub unsafe fn nk_slide_float(
     nk_slider_float(ctx, min, &mut val, max, step);
     return val;
 }
-#[no_mangle]
+
 pub unsafe fn nk_slider_float(
     mut ctx: *mut nk_context,
     mut min_value: f32,
@@ -15996,7 +15996,7 @@ unsafe fn nk_slider_behavior(
     }
     return slider_value;
 }
-#[no_mangle]
+
 pub unsafe fn nk_slide_int(
     mut ctx: *mut nk_context,
     mut min: libc::c_int,
@@ -16014,7 +16014,7 @@ pub unsafe fn nk_slide_int(
     );
     return value as libc::c_int;
 }
-#[no_mangle]
+
 pub unsafe fn nk_slider_int(
     mut ctx: *mut nk_context,
     mut min: libc::c_int,
@@ -16034,7 +16034,7 @@ pub unsafe fn nk_slider_int(
     *val = value as libc::c_int;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_progress(
     mut ctx: *mut nk_context,
     mut cur: *mut nk_size,
@@ -16284,7 +16284,7 @@ unsafe fn nk_pad_rect(mut r: nk_rect, mut pad: nk_vec2) -> nk_rect {
     r.h -= 2i32 as f32 * pad.y;
     return r;
 }
-#[no_mangle]
+
 pub unsafe fn nk_prog(
     mut ctx: *mut nk_context,
     mut cur: nk_size,
@@ -16294,7 +16294,7 @@ pub unsafe fn nk_prog(
     nk_progress(ctx, &mut cur, max, modifyable);
     return cur;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_picker(
     mut ctx: *mut nk_context,
     mut color: nk_colorf,
@@ -16303,7 +16303,7 @@ pub unsafe fn nk_color_picker(
     nk_color_pick(ctx, &mut color, fmt);
     return color;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_pick(
     mut ctx: *mut nk_context,
     mut color: *mut nk_colorf,
@@ -16623,7 +16623,7 @@ unsafe fn nk_draw_color_picker(
         white,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_stroke_line(
     mut b: *mut nk_command_buffer,
     mut x0: f32,
@@ -16655,7 +16655,7 @@ pub unsafe fn nk_stroke_line(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_fill_rect_multi_color(
     mut b: *mut nk_command_buffer,
     mut rect: nk_rect,
@@ -16706,7 +16706,7 @@ pub unsafe fn nk_fill_rect_multi_color(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsv_f(
     mut h: f32,
     mut s: f32,
@@ -16714,7 +16714,7 @@ pub unsafe fn nk_hsv_f(
 ) -> nk_color {
     return nk_hsva_f(h, s, v, 1.0f32);
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsva_f(
     mut h: f32,
     mut s: f32,
@@ -16724,7 +16724,7 @@ pub unsafe fn nk_hsva_f(
     let mut c: nk_colorf = nk_hsva_colorf(h, s, v, a);
     return nk_rgba_f(c.r, c.g, c.b, c.a);
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsva_colorf(
     mut h: f32,
     mut s: f32,
@@ -16791,7 +16791,7 @@ pub unsafe fn nk_hsva_colorf(
         return out;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_colorf_hsva_fv(mut hsva: *mut f32, mut in_0: nk_colorf) -> () {
     nk_colorf_hsva_f(
         &mut *hsva.offset(0isize),
@@ -16801,7 +16801,7 @@ pub unsafe fn nk_colorf_hsva_fv(mut hsva: *mut f32, mut in_0: nk_colorf) -> () {
         in_0,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_colorf_hsva_f(
     mut out_h: *mut f32,
     mut out_s: *mut f32,
@@ -16974,7 +16974,7 @@ unsafe fn nk_color_picker_behavior(
     }
     return value_changed;
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsva_colorfv(mut c: *mut f32) -> nk_colorf {
     return nk_hsva_colorf(
         *c.offset(0isize),
@@ -16983,7 +16983,7 @@ pub unsafe fn nk_hsva_colorfv(mut c: *mut f32) -> nk_colorf {
         *c.offset(3isize),
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_property_int(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -17908,7 +17908,7 @@ unsafe fn nk_do_property(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_strtod(
     mut str: *const libc::c_char,
     mut endptr: *mut *const libc::c_char,
@@ -18005,7 +18005,7 @@ unsafe fn nk_string_float_limit(
     }
     return string.ptr_offset_to(c).expect("bad offset_to") as libc::c_long as libc::c_int;
 }
-#[no_mangle]
+
 pub unsafe fn nk_strtof(
     mut str: *const libc::c_char,
     mut endptr: *mut *const libc::c_char,
@@ -18016,7 +18016,7 @@ pub unsafe fn nk_strtof(
     float_value = double_value as f32;
     return float_value;
 }
-#[no_mangle]
+
 pub unsafe fn nk_strtoi(
     mut str: *const libc::c_char,
     mut endptr: *mut *const libc::c_char,
@@ -18048,7 +18048,7 @@ pub unsafe fn nk_strtoi(
         return neg * value;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_filter_float(mut box_0: *const nk_text_edit, mut unicode: nk_rune) -> libc::c_int {
     if (unicode < '0' as i32 as libc::c_uint || unicode > '9' as i32 as libc::c_uint)
         && unicode != '.' as i32 as libc::c_uint
@@ -18059,7 +18059,7 @@ pub unsafe fn nk_filter_float(mut box_0: *const nk_text_edit, mut unicode: nk_ru
         return nk_true as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_filter_decimal(
     mut box_0: *const nk_text_edit,
     mut unicode: nk_rune,
@@ -18893,7 +18893,7 @@ unsafe fn nk_do_edit(
         return ret;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_len_char(mut s: *mut nk_str) -> libc::c_int {
     if s.is_null() || 0 == (*s).len || 0 == (*s).buffer.allocated {
         return 0i32;
@@ -18901,7 +18901,7 @@ pub unsafe fn nk_str_len_char(mut s: *mut nk_str) -> libc::c_int {
         return (*s).buffer.allocated as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_get_const(mut s: *const nk_str) -> *const libc::c_char {
     if s.is_null() || 0 == (*s).len || 0 == (*s).buffer.allocated {
         return 0 as *const libc::c_char;
@@ -19057,7 +19057,7 @@ unsafe fn nk_edit_draw_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_len(mut s: *mut nk_str) -> libc::c_int {
     if s.is_null() || 0 == (*s).len || 0 == (*s).buffer.allocated {
         return 0i32;
@@ -19156,7 +19156,7 @@ unsafe fn nk_text_calculate_text_bounds(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_text(
     mut state: *mut nk_text_edit,
     mut text: *const libc::c_char,
@@ -19326,7 +19326,7 @@ unsafe fn nk_textedit_flush_redo(mut state: *mut nk_text_undo_state) -> () {
     (*state).redo_point = 99i32 as libc::c_short;
     (*state).redo_char_point = 999i32 as libc::c_short;
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_insert_text_utf8(
     mut str: *mut nk_str,
     mut pos: libc::c_int,
@@ -19348,7 +19348,7 @@ pub unsafe fn nk_str_insert_text_utf8(
         return len;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_insert_at_rune(
     mut str: *mut nk_str,
     mut pos: libc::c_int,
@@ -19381,7 +19381,7 @@ pub unsafe fn nk_str_insert_at_rune(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_insert_at_char(
     mut s: *mut nk_str,
     mut pos: libc::c_int,
@@ -19448,7 +19448,7 @@ pub unsafe fn nk_str_insert_at_char(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_utf_len(mut str: *const libc::c_char, mut len: libc::c_int) -> libc::c_int {
     let mut text: *const libc::c_char = 0 as *const libc::c_char;
     let mut glyphs: libc::c_int = 0i32;
@@ -19474,7 +19474,7 @@ pub unsafe fn nk_utf_len(mut str: *const libc::c_char, mut len: libc::c_int) -> 
         return glyphs;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_append_text_char(
     mut s: *mut nk_str,
     mut str: *const libc::c_char,
@@ -19504,7 +19504,7 @@ pub unsafe fn nk_str_append_text_char(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_at_rune(
     mut str: *mut nk_str,
     mut pos: libc::c_int,
@@ -19544,7 +19544,7 @@ pub unsafe fn nk_str_at_rune(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_delete_selection(mut state: *mut nk_text_edit) -> () {
     /* delete the section */
     nk_textedit_clamp(state);
@@ -19569,7 +19569,7 @@ pub unsafe fn nk_textedit_delete_selection(mut state: *mut nk_text_edit) -> () {
         (*state).has_preferred_x = 0i32 as libc::c_uchar
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_delete(
     mut state: *mut nk_text_edit,
     mut where_0: libc::c_int,
@@ -19580,7 +19580,7 @@ pub unsafe fn nk_textedit_delete(
     nk_str_delete_runes(&mut (*state).string, where_0, len);
     (*state).has_preferred_x = 0i32 as libc::c_uchar;
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_delete_runes(
     mut s: *mut nk_str,
     mut pos: libc::c_int,
@@ -19630,7 +19630,7 @@ pub unsafe fn nk_str_delete_runes(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_delete_chars(
     mut s: *mut nk_str,
     mut pos: libc::c_int,
@@ -19669,7 +19669,7 @@ pub unsafe fn nk_str_delete_chars(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_remove_chars(mut s: *mut nk_str, mut len: libc::c_int) -> () {
     if s.is_null() || len < 0i32 || len as nk_size > (*s).buffer.allocated {
         return;
@@ -19698,14 +19698,14 @@ unsafe fn nk_textedit_makeundo_delete(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_rune_at(mut str: *const nk_str, mut pos: libc::c_int) -> nk_rune {
     let mut len: libc::c_int = 0;
     let mut unicode: nk_rune = 0i32 as nk_rune;
     nk_str_at_const(str, pos, &mut unicode, &mut len);
     return unicode;
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_at_const(
     mut str: *const nk_str,
     mut pos: libc::c_int,
@@ -19781,7 +19781,7 @@ unsafe fn nk_textedit_makeundo_replace(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_cut(mut state: *mut nk_text_edit) -> libc::c_int {
     /* API cut: delete selection */
     if (*state).mode as libc::c_int == NK_TEXT_EDIT_MODE_VIEW as libc::c_int {
@@ -20622,12 +20622,12 @@ unsafe fn nk_textedit_move_to_word_previous(mut state: *mut nk_text_edit) -> lib
     }
     return c;
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_select_all(mut state: *mut nk_text_edit) -> () {
     (*state).select_start = 0i32;
     (*state).select_end = (*state).string.len;
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_redo(mut state: *mut nk_text_edit) -> () {
     let mut s: *mut nk_text_undo_state = &mut (*state).undo as *mut nk_text_undo_state;
     let mut u: *mut nk_text_undo_record = 0 as *mut nk_text_undo_record;
@@ -20692,7 +20692,7 @@ pub unsafe fn nk_textedit_redo(mut state: *mut nk_text_edit) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_insert_text_runes(
     mut str: *mut nk_str,
     mut pos: libc::c_int,
@@ -20717,7 +20717,7 @@ pub unsafe fn nk_str_insert_text_runes(
         return len;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_undo(mut state: *mut nk_text_edit) -> () {
     let mut s: *mut nk_text_undo_state = &mut (*state).undo as *mut nk_text_undo_state;
     let mut u: nk_text_undo_record = nk_text_undo_record {
@@ -21188,7 +21188,7 @@ unsafe fn nk_drag_behavior(
         *state |= NK_WIDGET_STATE_LEFT as libc::c_int as libc::c_uint
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_mouse_click_down_in_rect(
     mut i: *const nk_input,
     mut id: nk_buttons,
@@ -21417,7 +21417,7 @@ unsafe fn nk_property_variant_int(
     result.step.i = step;
     return result;
 }
-#[no_mangle]
+
 pub unsafe fn nk_property_float(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -21463,7 +21463,7 @@ unsafe fn nk_property_variant_float(
     result.step.f = step;
     return result;
 }
-#[no_mangle]
+
 pub unsafe fn nk_property_double(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -21509,7 +21509,7 @@ unsafe fn nk_property_variant_double(
     result.step.d = step;
     return result;
 }
-#[no_mangle]
+
 pub unsafe fn nk_propertyi(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -21535,7 +21535,7 @@ pub unsafe fn nk_propertyi(
         return val;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_propertyf(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -21561,7 +21561,7 @@ pub unsafe fn nk_propertyf(
         return val;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_propertyd(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
@@ -21587,7 +21587,7 @@ pub unsafe fn nk_propertyd(
         return val;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_edit_string(
     mut ctx: *mut nk_context,
     mut flags: nk_flags,
@@ -21662,7 +21662,7 @@ pub unsafe fn nk_edit_string(
         return state;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_edit_buffer(
     mut ctx: *mut nk_context,
     mut flags: nk_flags,
@@ -21758,14 +21758,14 @@ pub unsafe fn nk_edit_buffer(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_filter_default(
     mut box_0: *const nk_text_edit,
     mut unicode: nk_rune,
 ) -> libc::c_int {
     return nk_true as libc::c_int;
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_init_fixed(
     mut str: *mut nk_str,
     mut memory: *mut libc::c_void,
@@ -21774,7 +21774,7 @@ pub unsafe fn nk_str_init_fixed(
     nk_buffer_init_fixed(&mut (*str).buffer, memory, size);
     (*str).len = 0i32;
 }
-#[no_mangle]
+
 pub unsafe fn nk_edit_string_zero_terminated(
     mut ctx: *mut nk_context,
     mut flags: nk_flags,
@@ -21798,7 +21798,7 @@ pub unsafe fn nk_edit_string_zero_terminated(
     ) = '\u{0}' as i32 as libc::c_char;
     return result;
 }
-#[no_mangle]
+
 pub unsafe fn nk_edit_focus(mut ctx: *mut nk_context, mut flags: nk_flags) -> () {
     let mut hash: nk_hash = 0;
     let mut win: *mut nk_window = 0 as *mut nk_window;
@@ -21815,7 +21815,7 @@ pub unsafe fn nk_edit_focus(mut ctx: *mut nk_context, mut flags: nk_flags) -> ()
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_edit_unfocus(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     if ctx.is_null() || (*ctx).current.is_null() {
@@ -21827,7 +21827,7 @@ pub unsafe fn nk_edit_unfocus(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_chart_begin(
     mut ctx: *mut nk_context,
     type_0: nk_chart_type,
@@ -21845,7 +21845,7 @@ pub unsafe fn nk_chart_begin(
         max_value,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_chart_begin_colored(
     mut ctx: *mut nk_context,
     mut type_0: nk_chart_type,
@@ -21947,7 +21947,7 @@ pub unsafe fn nk_chart_begin_colored(
         return 1i32;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_chart_add_slot(
     mut ctx: *mut nk_context,
     type_0: nk_chart_type,
@@ -21965,7 +21965,7 @@ pub unsafe fn nk_chart_add_slot(
         max_value,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_chart_add_slot_colored(
     mut ctx: *mut nk_context,
     type_0: nk_chart_type,
@@ -22004,11 +22004,11 @@ pub unsafe fn nk_chart_add_slot_colored(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_chart_push(mut ctx: *mut nk_context, mut value: f32) -> nk_flags {
     return nk_chart_push_slot(ctx, value, 0i32);
 }
-#[no_mangle]
+
 pub unsafe fn nk_chart_push_slot(
     mut ctx: *mut nk_context,
     mut value: f32,
@@ -22236,7 +22236,7 @@ unsafe fn nk_chart_push_line(
         return ret;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_chart_end(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut chart: *mut nk_chart = 0 as *mut nk_chart;
@@ -22253,7 +22253,7 @@ pub unsafe fn nk_chart_end(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_plot(
     mut ctx: *mut nk_context,
     mut type_0: nk_chart_type,
@@ -22294,7 +22294,7 @@ pub unsafe fn nk_plot(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_plot_function(
     mut ctx: *mut nk_context,
     mut type_0: nk_chart_type,
@@ -22333,7 +22333,7 @@ pub unsafe fn nk_plot_function(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_popup_begin(
     mut ctx: *mut nk_context,
     mut type_0: nk_popup_type,
@@ -22445,7 +22445,7 @@ unsafe fn nk_start_popup(mut ctx: *mut nk_context, mut win: *mut nk_window) -> (
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_popup_close(mut ctx: *mut nk_context) -> () {
     let mut popup: *mut nk_window = 0 as *mut nk_window;
     if ctx.is_null() || (*ctx).current.is_null() {
@@ -22456,7 +22456,7 @@ pub unsafe fn nk_popup_close(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_popup_end(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut popup: *mut nk_window = 0 as *mut nk_window;
@@ -22498,7 +22498,7 @@ unsafe fn nk_finish_popup(mut ctx: *mut nk_context, mut win: *mut nk_window) -> 
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo(
     mut ctx: *mut nk_context,
     mut items: *mut *const libc::c_char,
@@ -22542,11 +22542,11 @@ pub unsafe fn nk_combo(
         return selected;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_end(mut ctx: *mut nk_context) -> () {
     nk_contextual_end(ctx);
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_end(mut ctx: *mut nk_context) -> () {
     let mut padding: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     let mut popup: *mut nk_window = 0 as *mut nk_window;
@@ -22592,7 +22592,7 @@ pub unsafe fn nk_contextual_end(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_item_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -22600,7 +22600,7 @@ pub unsafe fn nk_combo_item_label(
 ) -> libc::c_int {
     return nk_contextual_item_label(ctx, label, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_item_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -22608,7 +22608,7 @@ pub unsafe fn nk_contextual_item_label(
 ) -> libc::c_int {
     return nk_contextual_item_text(ctx, label, nk_strlen(label), align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_item_text(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -22661,7 +22661,7 @@ pub unsafe fn nk_contextual_item_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_close(mut ctx: *mut nk_context) -> () {
     if ctx.is_null() || (*ctx).current.is_null() || (*(*ctx).current).layout.is_null() {
         return;
@@ -22670,7 +22670,7 @@ pub unsafe fn nk_contextual_close(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_label(
     mut ctx: *mut nk_context,
     mut selected: *const libc::c_char,
@@ -22678,7 +22678,7 @@ pub unsafe fn nk_combo_begin_label(
 ) -> libc::c_int {
     return nk_combo_begin_text(ctx, selected, nk_strlen(selected), size);
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_text(
     mut ctx: *mut nk_context,
     mut selected: *const libc::c_char,
@@ -22989,7 +22989,7 @@ unsafe fn nk_nonblock_begin(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_separator(
     mut ctx: *mut nk_context,
     mut items_separated_by_separator: *const libc::c_char,
@@ -23063,7 +23063,7 @@ pub unsafe fn nk_combo_separator(
         return selected;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_item_text(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -23072,7 +23072,7 @@ pub unsafe fn nk_combo_item_text(
 ) -> libc::c_int {
     return nk_contextual_item_text(ctx, text, len, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_string(
     mut ctx: *mut nk_context,
     mut items_separated_by_zeros: *const libc::c_char,
@@ -23091,7 +23091,7 @@ pub unsafe fn nk_combo_string(
         size,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_callback(
     mut ctx: *mut nk_context,
     mut item_getter: Option<
@@ -23138,7 +23138,7 @@ pub unsafe fn nk_combo_callback(
         return selected;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combobox(
     mut ctx: *mut nk_context,
     mut items: *mut *const libc::c_char,
@@ -23149,7 +23149,7 @@ pub unsafe fn nk_combobox(
 ) -> () {
     *selected = nk_combo(ctx, items, count, *selected, item_height, size);
 }
-#[no_mangle]
+
 pub unsafe fn nk_combobox_string(
     mut ctx: *mut nk_context,
     mut items_separated_by_zeros: *const libc::c_char,
@@ -23167,7 +23167,7 @@ pub unsafe fn nk_combobox_string(
         size,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_combobox_separator(
     mut ctx: *mut nk_context,
     mut items_separated_by_separator: *const libc::c_char,
@@ -23187,7 +23187,7 @@ pub unsafe fn nk_combobox_separator(
         size,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_combobox_callback(
     mut ctx: *mut nk_context,
     mut item_getter: Option<
@@ -23209,7 +23209,7 @@ pub unsafe fn nk_combobox_callback(
         size,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_color(
     mut ctx: *mut nk_context,
     mut color: nk_color,
@@ -23344,7 +23344,7 @@ pub unsafe fn nk_combo_begin_color(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_symbol(
     mut ctx: *mut nk_context,
     mut symbol: nk_symbol_type,
@@ -23503,7 +23503,7 @@ pub unsafe fn nk_combo_begin_symbol(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_symbol_label(
     mut ctx: *mut nk_context,
     mut selected: *const libc::c_char,
@@ -23512,7 +23512,7 @@ pub unsafe fn nk_combo_begin_symbol_label(
 ) -> libc::c_int {
     return nk_combo_begin_symbol_text(ctx, selected, nk_strlen(selected), type_0, size);
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_symbol_text(
     mut ctx: *mut nk_context,
     mut selected: *const libc::c_char,
@@ -23706,7 +23706,7 @@ pub unsafe fn nk_combo_begin_symbol_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_image(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -23840,7 +23840,7 @@ pub unsafe fn nk_combo_begin_image(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_image_label(
     mut ctx: *mut nk_context,
     mut selected: *const libc::c_char,
@@ -23849,7 +23849,7 @@ pub unsafe fn nk_combo_begin_image_label(
 ) -> libc::c_int {
     return nk_combo_begin_image_text(ctx, selected, nk_strlen(selected), img, size);
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_begin_image_text(
     mut ctx: *mut nk_context,
     mut selected: *const libc::c_char,
@@ -24026,7 +24026,7 @@ pub unsafe fn nk_combo_begin_image_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_item_image_label(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -24035,7 +24035,7 @@ pub unsafe fn nk_combo_item_image_label(
 ) -> libc::c_int {
     return nk_contextual_item_image_label(ctx, img, text, alignment);
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_item_image_label(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -24044,7 +24044,7 @@ pub unsafe fn nk_contextual_item_image_label(
 ) -> libc::c_int {
     return nk_contextual_item_image_text(ctx, img, label, nk_strlen(label), align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_item_image_text(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -24099,7 +24099,7 @@ pub unsafe fn nk_contextual_item_image_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_item_image_text(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -24109,7 +24109,7 @@ pub unsafe fn nk_combo_item_image_text(
 ) -> libc::c_int {
     return nk_contextual_item_image_text(ctx, img, text, len, alignment);
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_item_symbol_label(
     mut ctx: *mut nk_context,
     mut sym: nk_symbol_type,
@@ -24118,7 +24118,7 @@ pub unsafe fn nk_combo_item_symbol_label(
 ) -> libc::c_int {
     return nk_contextual_item_symbol_label(ctx, sym, label, alignment);
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_item_symbol_label(
     mut ctx: *mut nk_context,
     mut symbol: nk_symbol_type,
@@ -24127,7 +24127,7 @@ pub unsafe fn nk_contextual_item_symbol_label(
 ) -> libc::c_int {
     return nk_contextual_item_symbol_text(ctx, symbol, text, nk_strlen(text), align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_item_symbol_text(
     mut ctx: *mut nk_context,
     mut symbol: nk_symbol_type,
@@ -24182,7 +24182,7 @@ pub unsafe fn nk_contextual_item_symbol_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_item_symbol_text(
     mut ctx: *mut nk_context,
     mut sym: nk_symbol_type,
@@ -24192,11 +24192,11 @@ pub unsafe fn nk_combo_item_symbol_text(
 ) -> libc::c_int {
     return nk_contextual_item_symbol_text(ctx, sym, text, len, alignment);
 }
-#[no_mangle]
+
 pub unsafe fn nk_combo_close(mut ctx: *mut nk_context) -> () {
     nk_contextual_close(ctx);
 }
-#[no_mangle]
+
 pub unsafe fn nk_contextual_begin(
     mut ctx: *mut nk_context,
     mut flags: nk_flags,
@@ -24280,7 +24280,7 @@ pub unsafe fn nk_contextual_begin(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_tooltip(mut ctx: *mut nk_context, mut text: *const libc::c_char) -> () {
     let mut style: *const nk_style = 0 as *const nk_style;
     let mut padding: nk_vec2 = nk_vec2 { x: 0., y: 0. };
@@ -24316,7 +24316,7 @@ pub unsafe fn nk_tooltip(mut ctx: *mut nk_context, mut text: *const libc::c_char
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_tooltip_end(mut ctx: *mut nk_context) -> () {
     if ctx.is_null() || (*ctx).current.is_null() {
         return;
@@ -24327,7 +24327,7 @@ pub unsafe fn nk_tooltip_end(mut ctx: *mut nk_context) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_tooltip_begin(mut ctx: *mut nk_context, mut width: f32) -> libc::c_int {
     let mut x: libc::c_int = 0;
     let mut y: libc::c_int = 0;
@@ -24385,7 +24385,7 @@ unsafe fn nk_ifloorf(mut x: f32) -> libc::c_int {
     x = (x as libc::c_int - if x < 0.0f32 { 1i32 } else { 0i32 }) as f32;
     return x as libc::c_int;
 }
-#[no_mangle]
+
 pub unsafe fn nk_menubar_begin(mut ctx: *mut nk_context) -> () {
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
     if ctx.is_null() || (*ctx).current.is_null() || (*(*ctx).current).layout.is_null() {
@@ -24422,7 +24422,7 @@ pub unsafe fn nk_menubar_begin(mut ctx: *mut nk_context) -> () {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_menubar_end(mut ctx: *mut nk_context) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -24453,7 +24453,7 @@ pub unsafe fn nk_menubar_end(mut ctx: *mut nk_context) -> () {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_begin_text(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -24563,7 +24563,7 @@ unsafe fn nk_menu_begin(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_begin_label(
     mut ctx: *mut nk_context,
     mut text: *const libc::c_char,
@@ -24572,7 +24572,7 @@ pub unsafe fn nk_menu_begin_label(
 ) -> libc::c_int {
     return nk_menu_begin_text(ctx, text, nk_strlen(text), align, size);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_begin_image(
     mut ctx: *mut nk_context,
     mut id: *const libc::c_char,
@@ -24619,7 +24619,7 @@ pub unsafe fn nk_menu_begin_image(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_begin_image_text(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -24672,7 +24672,7 @@ pub unsafe fn nk_menu_begin_image_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_begin_image_label(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -24682,7 +24682,7 @@ pub unsafe fn nk_menu_begin_image_label(
 ) -> libc::c_int {
     return nk_menu_begin_image_text(ctx, title, nk_strlen(title), align, img, size);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_begin_symbol(
     mut ctx: *mut nk_context,
     mut id: *const libc::c_char,
@@ -24730,7 +24730,7 @@ pub unsafe fn nk_menu_begin_symbol(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_begin_symbol_text(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -24783,7 +24783,7 @@ pub unsafe fn nk_menu_begin_symbol_text(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_begin_symbol_label(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -24793,7 +24793,7 @@ pub unsafe fn nk_menu_begin_symbol_label(
 ) -> libc::c_int {
     return nk_menu_begin_symbol_text(ctx, title, nk_strlen(title), align, sym, size);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_item_text(
     mut ctx: *mut nk_context,
     mut title: *const libc::c_char,
@@ -24802,7 +24802,7 @@ pub unsafe fn nk_menu_item_text(
 ) -> libc::c_int {
     return nk_contextual_item_text(ctx, title, len, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_item_label(
     mut ctx: *mut nk_context,
     mut label: *const libc::c_char,
@@ -24810,7 +24810,7 @@ pub unsafe fn nk_menu_item_label(
 ) -> libc::c_int {
     return nk_contextual_item_label(ctx, label, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_item_image_label(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -24819,7 +24819,7 @@ pub unsafe fn nk_menu_item_image_label(
 ) -> libc::c_int {
     return nk_contextual_item_image_label(ctx, img, label, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_item_image_text(
     mut ctx: *mut nk_context,
     mut img: nk_image,
@@ -24829,7 +24829,7 @@ pub unsafe fn nk_menu_item_image_text(
 ) -> libc::c_int {
     return nk_contextual_item_image_text(ctx, img, text, len, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_item_symbol_text(
     mut ctx: *mut nk_context,
     mut sym: nk_symbol_type,
@@ -24839,7 +24839,7 @@ pub unsafe fn nk_menu_item_symbol_text(
 ) -> libc::c_int {
     return nk_contextual_item_symbol_text(ctx, sym, text, len, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_item_symbol_label(
     mut ctx: *mut nk_context,
     mut sym: nk_symbol_type,
@@ -24848,15 +24848,15 @@ pub unsafe fn nk_menu_item_symbol_label(
 ) -> libc::c_int {
     return nk_contextual_item_symbol_label(ctx, sym, label, align);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_close(mut ctx: *mut nk_context) -> () {
     nk_contextual_close(ctx);
 }
-#[no_mangle]
+
 pub unsafe fn nk_menu_end(mut ctx: *mut nk_context) -> () {
     nk_contextual_end(ctx);
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_load_cursor(
     mut ctx: *mut nk_context,
     mut cursor: nk_style_cursor,
@@ -24871,7 +24871,7 @@ pub unsafe fn nk_style_load_cursor(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_load_all_cursors(
     mut ctx: *mut nk_context,
     mut cursors: *mut nk_cursor,
@@ -24891,7 +24891,7 @@ pub unsafe fn nk_style_load_all_cursors(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_get_color_by_name(mut c: nk_style_colors) -> *const libc::c_char {
     return nk_color_names[c as usize];
 }
@@ -24927,7 +24927,7 @@ static mut nk_color_names: [*const libc::c_char; 28] = unsafe {
         b"NK_COLOR_TAB_HEADER\x00" as *const u8 as *const libc::c_char,
     ]
 };
-#[no_mangle]
+
 pub unsafe fn nk_style_set_font(mut ctx: *mut nk_context, mut font: *const nk_user_font) -> () {
     let mut style: *mut nk_style = 0 as *mut nk_style;
     if ctx.is_null() {
@@ -24942,7 +24942,7 @@ pub unsafe fn nk_style_set_font(mut ctx: *mut nk_context, mut font: *const nk_us
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_set_cursor(mut ctx: *mut nk_context, mut c: nk_style_cursor) -> libc::c_int {
     let mut style: *mut nk_style = 0 as *mut nk_style;
     if ctx.is_null() {
@@ -24957,15 +24957,15 @@ pub unsafe fn nk_style_set_cursor(mut ctx: *mut nk_context, mut c: nk_style_curs
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_show_cursor(mut ctx: *mut nk_context) -> () {
     (*ctx).style.cursor_visible = nk_true as libc::c_int;
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_hide_cursor(mut ctx: *mut nk_context) -> () {
     (*ctx).style.cursor_visible = nk_false as libc::c_int;
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_push_font(
     mut ctx: *mut nk_context,
     mut font: *const nk_user_font,
@@ -24996,7 +24996,7 @@ pub unsafe fn nk_style_push_font(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_push_float(
     mut ctx: *mut nk_context,
     mut address: *mut f32,
@@ -25027,7 +25027,7 @@ pub unsafe fn nk_style_push_float(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_push_vec2(
     mut ctx: *mut nk_context,
     mut address: *mut nk_vec2,
@@ -25057,7 +25057,7 @@ pub unsafe fn nk_style_push_vec2(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_push_style_item(
     mut ctx: *mut nk_context,
     mut address: *mut nk_style_item,
@@ -25089,7 +25089,7 @@ pub unsafe fn nk_style_push_style_item(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_push_flags(
     mut ctx: *mut nk_context,
     mut address: *mut nk_flags,
@@ -25120,7 +25120,7 @@ pub unsafe fn nk_style_push_flags(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_push_color(
     mut ctx: *mut nk_context,
     mut address: *mut nk_color,
@@ -25151,7 +25151,7 @@ pub unsafe fn nk_style_push_color(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_pop_font(mut ctx: *mut nk_context) -> libc::c_int {
     let mut font_stack: *mut nk_config_stack_user_font = 0 as *mut nk_config_stack_user_font;
     let mut element: *mut nk_config_stack_user_font_element =
@@ -25171,7 +25171,7 @@ pub unsafe fn nk_style_pop_font(mut ctx: *mut nk_context) -> libc::c_int {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_pop_float(mut ctx: *mut nk_context) -> libc::c_int {
     let mut type_stack: *mut nk_config_stack_float = 0 as *mut nk_config_stack_float;
     let mut element: *mut nk_config_stack_float_element = 0 as *mut nk_config_stack_float_element;
@@ -25190,7 +25190,7 @@ pub unsafe fn nk_style_pop_float(mut ctx: *mut nk_context) -> libc::c_int {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_pop_vec2(mut ctx: *mut nk_context) -> libc::c_int {
     let mut type_stack: *mut nk_config_stack_vec2 = 0 as *mut nk_config_stack_vec2;
     let mut element: *mut nk_config_stack_vec2_element = 0 as *mut nk_config_stack_vec2_element;
@@ -25209,7 +25209,7 @@ pub unsafe fn nk_style_pop_vec2(mut ctx: *mut nk_context) -> libc::c_int {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_pop_style_item(mut ctx: *mut nk_context) -> libc::c_int {
     let mut type_stack: *mut nk_config_stack_style_item = 0 as *mut nk_config_stack_style_item;
     let mut element: *mut nk_config_stack_style_item_element =
@@ -25229,7 +25229,7 @@ pub unsafe fn nk_style_pop_style_item(mut ctx: *mut nk_context) -> libc::c_int {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_pop_flags(mut ctx: *mut nk_context) -> libc::c_int {
     let mut type_stack: *mut nk_config_stack_flags = 0 as *mut nk_config_stack_flags;
     let mut element: *mut nk_config_stack_flags_element = 0 as *mut nk_config_stack_flags_element;
@@ -25248,7 +25248,7 @@ pub unsafe fn nk_style_pop_flags(mut ctx: *mut nk_context) -> libc::c_int {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_pop_color(mut ctx: *mut nk_context) -> libc::c_int {
     let mut type_stack: *mut nk_config_stack_color = 0 as *mut nk_config_stack_color;
     let mut element: *mut nk_config_stack_color_element = 0 as *mut nk_config_stack_color_element;
@@ -25267,11 +25267,11 @@ pub unsafe fn nk_style_pop_color(mut ctx: *mut nk_context) -> libc::c_int {
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgb_iv(mut c: *const libc::c_int) -> nk_color {
     return nk_rgb(*c.offset(0isize), *c.offset(1isize), *c.offset(2isize));
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgb_bv(mut c: *const nk_byte) -> nk_color {
     return nk_rgb(
         *c.offset(0isize) as libc::c_int,
@@ -25279,7 +25279,7 @@ pub unsafe fn nk_rgb_bv(mut c: *const nk_byte) -> nk_color {
         *c.offset(2isize) as libc::c_int,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgb_f(
     mut r: f32,
     mut g: f32,
@@ -25321,15 +25321,15 @@ pub unsafe fn nk_rgb_f(
     ret.a = 255i32 as nk_byte;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgb_fv(mut c: *const f32) -> nk_color {
     return nk_rgb_f(*c.offset(0isize), *c.offset(1isize), *c.offset(2isize));
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgb_cf(mut c: nk_colorf) -> nk_color {
     return nk_rgb_f(c.r, c.g, c.b);
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgb_hex(mut rgb: *const libc::c_char) -> nk_color {
     let mut col: nk_color = nk_color {
         r: 0,
@@ -25367,7 +25367,7 @@ unsafe fn nk_parse_hex(mut p: *const libc::c_char, mut length: libc::c_int) -> l
     }
     return i;
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgba_u32(mut in_0: nk_uint) -> nk_color {
     let mut ret: nk_color = nk_color {
         r: 0,
@@ -25381,7 +25381,7 @@ pub unsafe fn nk_rgba_u32(mut in_0: nk_uint) -> nk_color {
     ret.a = (in_0 >> 24i32 & 255i32 as libc::c_uint) as nk_byte;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgba_iv(mut c: *const libc::c_int) -> nk_color {
     return nk_rgba(
         *c.offset(0isize),
@@ -25390,7 +25390,7 @@ pub unsafe fn nk_rgba_iv(mut c: *const libc::c_int) -> nk_color {
         *c.offset(3isize),
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgba_bv(mut c: *const nk_byte) -> nk_color {
     return nk_rgba(
         *c.offset(0isize) as libc::c_int,
@@ -25399,11 +25399,11 @@ pub unsafe fn nk_rgba_bv(mut c: *const nk_byte) -> nk_color {
         *c.offset(3isize) as libc::c_int,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgba_cf(mut c: nk_colorf) -> nk_color {
     return nk_rgba_f(c.r, c.g, c.b, c.a);
 }
-#[no_mangle]
+
 pub unsafe fn nk_rgba_hex(mut rgb: *const libc::c_char) -> nk_color {
     let mut col: nk_color = nk_color {
         r: 0,
@@ -25421,11 +25421,11 @@ pub unsafe fn nk_rgba_hex(mut rgb: *const libc::c_char) -> nk_color {
     col.a = nk_parse_hex(c.offset(6isize), 2i32) as nk_byte;
     return col;
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsv(mut h: libc::c_int, mut s: libc::c_int, mut v: libc::c_int) -> nk_color {
     return nk_hsva(h, s, v, 255i32);
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsva(
     mut h: libc::c_int,
     mut s: libc::c_int,
@@ -25462,11 +25462,11 @@ pub unsafe fn nk_hsva(
     }) as f32 / 255.0f32;
     return nk_hsva_f(hf, sf, vf, af);
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsv_iv(mut c: *const libc::c_int) -> nk_color {
     return nk_hsv(*c.offset(0isize), *c.offset(1isize), *c.offset(2isize));
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsv_bv(mut c: *const nk_byte) -> nk_color {
     return nk_hsv(
         *c.offset(0isize) as libc::c_int,
@@ -25474,11 +25474,11 @@ pub unsafe fn nk_hsv_bv(mut c: *const nk_byte) -> nk_color {
         *c.offset(2isize) as libc::c_int,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsv_fv(mut c: *const f32) -> nk_color {
     return nk_hsv_f(*c.offset(0isize), *c.offset(1isize), *c.offset(2isize));
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsva_iv(mut c: *const libc::c_int) -> nk_color {
     return nk_hsva(
         *c.offset(0isize),
@@ -25487,7 +25487,7 @@ pub unsafe fn nk_hsva_iv(mut c: *const libc::c_int) -> nk_color {
         *c.offset(3isize),
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsva_bv(mut c: *const nk_byte) -> nk_color {
     return nk_hsva(
         *c.offset(0isize) as libc::c_int,
@@ -25496,7 +25496,7 @@ pub unsafe fn nk_hsva_bv(mut c: *const nk_byte) -> nk_color {
         *c.offset(3isize) as libc::c_int,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_hsva_fv(mut c: *const f32) -> nk_color {
     return nk_hsva_f(
         *c.offset(0isize),
@@ -25505,7 +25505,7 @@ pub unsafe fn nk_hsva_fv(mut c: *const f32) -> nk_color {
         *c.offset(3isize),
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_cf(mut in_0: nk_color) -> nk_colorf {
     let mut o: nk_colorf = nk_colorf {
         r: 0.,
@@ -25516,7 +25516,7 @@ pub unsafe fn nk_color_cf(mut in_0: nk_color) -> nk_colorf {
     nk_color_f(&mut o.r, &mut o.g, &mut o.b, &mut o.a, in_0);
     return o;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_d(
     mut r: *mut libc::c_double,
     mut g: *mut libc::c_double,
@@ -25530,7 +25530,7 @@ pub unsafe fn nk_color_d(
     *b = in_0.b as libc::c_double * s;
     *a = in_0.a as libc::c_double * s;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_dv(mut c: *mut libc::c_double, mut in_0: nk_color) -> () {
     nk_color_d(
         &mut *c.offset(0isize),
@@ -25540,7 +25540,7 @@ pub unsafe fn nk_color_dv(mut c: *mut libc::c_double, mut in_0: nk_color) -> () 
         in_0,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hex_rgba(mut output: *mut libc::c_char, mut col: nk_color) -> () {
     *output.offset(0isize) = (if (col.r as libc::c_int & 240i32) >> 4i32 <= 9i32 {
         '0' as i32 + ((col.r as libc::c_int & 240i32) >> 4i32)
@@ -25584,7 +25584,7 @@ pub unsafe fn nk_color_hex_rgba(mut output: *mut libc::c_char, mut col: nk_color
     }) as libc::c_char;
     *output.offset(8isize) = '\u{0}' as i32 as libc::c_char;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hex_rgb(mut output: *mut libc::c_char, mut col: nk_color) -> () {
     *output.offset(0isize) = (if (col.r as libc::c_int & 240i32) >> 4i32 <= 9i32 {
         '0' as i32 + ((col.r as libc::c_int & 240i32) >> 4i32)
@@ -25618,7 +25618,7 @@ pub unsafe fn nk_color_hex_rgb(mut output: *mut libc::c_char, mut col: nk_color)
     }) as libc::c_char;
     *output.offset(6isize) = '\u{0}' as i32 as libc::c_char;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsv_i(
     mut out_h: *mut libc::c_int,
     mut out_s: *mut libc::c_int,
@@ -25628,7 +25628,7 @@ pub unsafe fn nk_color_hsv_i(
     let mut a: libc::c_int = 0;
     nk_color_hsva_i(out_h, out_s, out_v, &mut a, in_0);
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsva_i(
     mut out_h: *mut libc::c_int,
     mut out_s: *mut libc::c_int,
@@ -25646,7 +25646,7 @@ pub unsafe fn nk_color_hsva_i(
     *out_v = (v * 255.0f32) as nk_byte as libc::c_int;
     *out_a = (a * 255.0f32) as nk_byte as libc::c_int;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsva_f(
     mut out_h: *mut f32,
     mut out_s: *mut f32,
@@ -25663,7 +25663,7 @@ pub unsafe fn nk_color_hsva_f(
     nk_color_f(&mut col.r, &mut col.g, &mut col.b, &mut col.a, in_0);
     nk_colorf_hsva_f(out_h, out_s, out_v, out_a, col);
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsv_b(
     mut out_h: *mut nk_byte,
     mut out_s: *mut nk_byte,
@@ -25682,7 +25682,7 @@ pub unsafe fn nk_color_hsv_b(
     *out_s = tmp[1usize] as nk_byte;
     *out_v = tmp[2usize] as nk_byte;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsv_iv(mut out: *mut libc::c_int, mut in_0: nk_color) -> () {
     nk_color_hsv_i(
         &mut *out.offset(0isize),
@@ -25691,7 +25691,7 @@ pub unsafe fn nk_color_hsv_iv(mut out: *mut libc::c_int, mut in_0: nk_color) -> 
         in_0,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsv_bv(mut out: *mut nk_byte, mut in_0: nk_color) -> () {
     let mut tmp: [libc::c_int; 4] = [0; 4];
     nk_color_hsv_i(&mut tmp[0usize], &mut tmp[1usize], &mut tmp[2usize], in_0);
@@ -25699,7 +25699,7 @@ pub unsafe fn nk_color_hsv_bv(mut out: *mut nk_byte, mut in_0: nk_color) -> () {
     *out.offset(1isize) = tmp[1usize] as nk_byte;
     *out.offset(2isize) = tmp[2usize] as nk_byte;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsv_f(
     mut out_h: *mut f32,
     mut out_s: *mut f32,
@@ -25709,7 +25709,7 @@ pub unsafe fn nk_color_hsv_f(
     let mut a: f32 = 0.;
     nk_color_hsva_f(out_h, out_s, out_v, &mut a, in_0);
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsv_fv(mut out: *mut f32, mut in_0: nk_color) -> () {
     let mut a: f32 = 0.;
     nk_color_hsva_f(
@@ -25720,7 +25720,7 @@ pub unsafe fn nk_color_hsv_fv(mut out: *mut f32, mut in_0: nk_color) -> () {
         in_0,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsva_b(
     mut h: *mut nk_byte,
     mut s: *mut nk_byte,
@@ -25741,7 +25741,7 @@ pub unsafe fn nk_color_hsva_b(
     *v = tmp[2usize] as nk_byte;
     *a = tmp[3usize] as nk_byte;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsva_iv(mut out: *mut libc::c_int, mut in_0: nk_color) -> () {
     nk_color_hsva_i(
         &mut *out.offset(0isize),
@@ -25751,7 +25751,7 @@ pub unsafe fn nk_color_hsva_iv(mut out: *mut libc::c_int, mut in_0: nk_color) ->
         in_0,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsva_bv(mut out: *mut nk_byte, mut in_0: nk_color) -> () {
     let mut tmp: [libc::c_int; 4] = [0; 4];
     nk_color_hsva_i(
@@ -25766,7 +25766,7 @@ pub unsafe fn nk_color_hsva_bv(mut out: *mut nk_byte, mut in_0: nk_color) -> () 
     *out.offset(2isize) = tmp[2usize] as nk_byte;
     *out.offset(3isize) = tmp[3usize] as nk_byte;
 }
-#[no_mangle]
+
 pub unsafe fn nk_color_hsva_fv(mut out: *mut f32, mut in_0: nk_color) -> () {
     nk_color_hsva_f(
         &mut *out.offset(0isize),
@@ -25776,7 +25776,7 @@ pub unsafe fn nk_color_hsva_fv(mut out: *mut f32, mut in_0: nk_color) -> () {
         in_0,
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_handle_id(mut id: libc::c_int) -> nk_handle {
     let mut handle: nk_handle = nk_handle {
         ptr: 0 as *mut libc::c_void,
@@ -25788,7 +25788,7 @@ pub unsafe fn nk_handle_id(mut id: libc::c_int) -> nk_handle {
     handle.id = id;
     return handle;
 }
-#[no_mangle]
+
 pub unsafe fn nk_image_handle(mut handle: nk_handle) -> nk_image {
     let mut s: nk_image = nk_image {
         handle: nk_handle {
@@ -25811,7 +25811,7 @@ pub unsafe fn nk_image_handle(mut handle: nk_handle) -> nk_image {
     s.region[3usize] = 0i32 as libc::c_ushort;
     return s;
 }
-#[no_mangle]
+
 pub unsafe fn nk_image_ptr(mut ptr: *mut libc::c_void) -> nk_image {
     let mut s: nk_image = nk_image {
         handle: nk_handle {
@@ -25834,7 +25834,7 @@ pub unsafe fn nk_image_ptr(mut ptr: *mut libc::c_void) -> nk_image {
     s.region[3usize] = 0i32 as libc::c_ushort;
     return s;
 }
-#[no_mangle]
+
 pub unsafe fn nk_image_id(mut id: libc::c_int) -> nk_image {
     let mut s: nk_image = nk_image {
         handle: nk_handle {
@@ -25857,7 +25857,7 @@ pub unsafe fn nk_image_id(mut id: libc::c_int) -> nk_image {
     s.region[3usize] = 0i32 as libc::c_ushort;
     return s;
 }
-#[no_mangle]
+
 pub unsafe fn nk_subimage_ptr(
     mut ptr: *mut libc::c_void,
     mut w: libc::c_ushort,
@@ -25885,7 +25885,7 @@ pub unsafe fn nk_subimage_ptr(
     s.region[3usize] = r.h as libc::c_ushort;
     return s;
 }
-#[no_mangle]
+
 pub unsafe fn nk_subimage_id(
     mut id: libc::c_int,
     mut w: libc::c_ushort,
@@ -25913,7 +25913,7 @@ pub unsafe fn nk_subimage_id(
     s.region[3usize] = r.h as libc::c_ushort;
     return s;
 }
-#[no_mangle]
+
 pub unsafe fn nk_subimage_handle(
     mut handle: nk_handle,
     mut w: libc::c_ushort,
@@ -25941,26 +25941,26 @@ pub unsafe fn nk_subimage_handle(
     s.region[3usize] = r.h as libc::c_ushort;
     return s;
 }
-#[no_mangle]
+
 pub unsafe fn nk_vec2i(mut x: libc::c_int, mut y: libc::c_int) -> nk_vec2 {
     let mut ret: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     ret.x = x as f32;
     ret.y = y as f32;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_vec2v(mut v: *const f32) -> nk_vec2 {
     return nk_vec2(*v.offset(0isize), *v.offset(1isize));
 }
-#[no_mangle]
+
 pub unsafe fn nk_vec2iv(mut v: *const libc::c_int) -> nk_vec2 {
     return nk_vec2i(*v.offset(0isize), *v.offset(1isize));
 }
-#[no_mangle]
+
 pub unsafe fn nk_get_null_rect() -> nk_rect {
     return nk_null_rect;
 }
-#[no_mangle]
+
 pub unsafe fn nk_recti(
     mut x: libc::c_int,
     mut y: libc::c_int,
@@ -25979,11 +25979,11 @@ pub unsafe fn nk_recti(
     r.h = h as f32;
     return r;
 }
-#[no_mangle]
+
 pub unsafe fn nk_recta(mut pos: nk_vec2, mut size: nk_vec2) -> nk_rect {
     return nk_rect(pos.x, pos.y, size.x, size.y);
 }
-#[no_mangle]
+
 pub unsafe fn nk_rectv(mut r: *const f32) -> nk_rect {
     return nk_rect(
         *r.offset(0isize),
@@ -25992,7 +25992,7 @@ pub unsafe fn nk_rectv(mut r: *const f32) -> nk_rect {
         *r.offset(3isize),
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_rectiv(mut r: *const libc::c_int) -> nk_rect {
     return nk_recti(
         *r.offset(0isize),
@@ -26001,21 +26001,21 @@ pub unsafe fn nk_rectiv(mut r: *const libc::c_int) -> nk_rect {
         *r.offset(3isize),
     );
 }
-#[no_mangle]
+
 pub unsafe fn nk_rect_pos(mut r: nk_rect) -> nk_vec2 {
     let mut ret: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     ret.x = r.x;
     ret.y = r.y;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_rect_size(mut r: nk_rect) -> nk_vec2 {
     let mut ret: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     ret.x = r.w;
     ret.y = r.h;
     return ret;
 }
-#[no_mangle]
+
 pub unsafe fn nk_stricmp(mut s1: *const libc::c_char, mut s2: *const libc::c_char) -> libc::c_int {
     let mut current_block: u64;
     let mut c1: nk_int = 0;
@@ -26066,7 +26066,7 @@ pub unsafe fn nk_stricmp(mut s1: *const libc::c_char, mut s2: *const libc::c_cha
     }
     return 0i32;
 }
-#[no_mangle]
+
 pub unsafe fn nk_strfilter(
     mut text: *const libc::c_char,
     mut regexp: *const libc::c_char,
@@ -26139,7 +26139,7 @@ unsafe fn nk_str_match_star(
     }
     return 0i32;
 }
-#[no_mangle]
+
 pub unsafe fn nk_strmatch_fuzzy_string(
     mut str: *const libc::c_char,
     mut pattern: *const libc::c_char,
@@ -26147,7 +26147,7 @@ pub unsafe fn nk_strmatch_fuzzy_string(
 ) -> libc::c_int {
     return nk_strmatch_fuzzy_text(str, nk_strlen(str), pattern, out_score);
 }
-#[no_mangle]
+
 pub unsafe fn nk_strmatch_fuzzy_text(
     mut str: *const libc::c_char,
     mut str_len: libc::c_int,
@@ -26289,7 +26289,7 @@ unsafe fn nk_to_upper(mut c: libc::c_int) -> libc::c_int {
         c
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_utf_at(
     mut buffer: *const libc::c_char,
     mut length: libc::c_int,
@@ -26330,13 +26330,13 @@ pub unsafe fn nk_utf_at(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_default_glyph_ranges() -> *const nk_rune {
     static mut ranges: [nk_rune; 3] =
         unsafe { [32i32 as nk_rune, 255i32 as nk_rune, 0i32 as nk_rune] };
     return ranges.as_ptr();
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_chinese_glyph_ranges() -> *const nk_rune {
     static mut ranges: [nk_rune; 11] = unsafe {
         [
@@ -26355,7 +26355,7 @@ pub unsafe fn nk_font_chinese_glyph_ranges() -> *const nk_rune {
     };
     return ranges.as_ptr();
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_cyrillic_glyph_ranges() -> *const nk_rune {
     static mut ranges: [nk_rune; 9] = unsafe {
         [
@@ -26372,7 +26372,7 @@ pub unsafe fn nk_font_cyrillic_glyph_ranges() -> *const nk_rune {
     };
     return ranges.as_ptr();
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_korean_glyph_ranges() -> *const nk_rune {
     static mut ranges: [nk_rune; 7] = unsafe {
         [
@@ -26387,7 +26387,7 @@ pub unsafe fn nk_font_korean_glyph_ranges() -> *const nk_rune {
     };
     return ranges.as_ptr();
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_init_default(mut atlas: *mut nk_font_atlas) -> () {
     if atlas.is_null() {
         return;
@@ -26405,7 +26405,7 @@ pub unsafe fn nk_font_atlas_init_default(mut atlas: *mut nk_font_atlas) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_init(
     mut atlas: *mut nk_font_atlas,
     mut alloc: *mut nk_allocator,
@@ -26422,7 +26422,7 @@ pub unsafe fn nk_font_atlas_init(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_init_custom(
     mut atlas: *mut nk_font_atlas,
     mut permanent: *mut nk_allocator,
@@ -26440,7 +26440,7 @@ pub unsafe fn nk_font_atlas_init_custom(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_begin(mut atlas: *mut nk_font_atlas) -> () {
     if atlas.is_null()
         || (*atlas).permanent.alloc.is_none()
@@ -26467,7 +26467,7 @@ pub unsafe fn nk_font_atlas_begin(mut atlas: *mut nk_font_atlas) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_config(mut pixel_height: f32) -> nk_font_config {
     let mut cfg: nk_font_config = nk_font_config {
         next: 0 as *mut nk_font_config,
@@ -26508,7 +26508,7 @@ pub unsafe fn nk_font_config(mut pixel_height: f32) -> nk_font_config {
     cfg.n = 0 as *mut nk_font_config;
     return cfg;
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_add(
     mut atlas: *mut nk_font_atlas,
     mut config: *const nk_font_config,
@@ -26614,7 +26614,7 @@ pub unsafe fn nk_font_atlas_add(
         return font;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_add_default(
     mut atlas: *mut nk_font_atlas,
     mut pixel_height: f32,
@@ -27189,7 +27189,7 @@ static mut nk_proggy_clean_ttf_compressed_data_base85: [libc::c_char; 11981] = u
         45, 35, 108, 76, 89, 73, 58, 120, 118, 68, 61, 35, 0,
     ]
 };
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_add_compressed_base85(
     mut atlas: *mut nk_font_atlas,
     mut data_base85: *const libc::c_char,
@@ -27236,7 +27236,7 @@ pub unsafe fn nk_font_atlas_add_compressed_base85(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_add_compressed(
     mut atlas: *mut nk_font_atlas,
     mut compressed_data: *mut libc::c_void,
@@ -27609,7 +27609,7 @@ unsafe fn nk_decode_85_byte(mut c: libc::c_char) -> libc::c_uint {
         c as libc::c_int - 35i32
     }) as libc::c_uint;
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_add_from_memory(
     mut atlas: *mut nk_font_atlas,
     mut memory: *mut libc::c_void,
@@ -27658,7 +27658,7 @@ pub unsafe fn nk_font_atlas_add_from_memory(
         return nk_font_atlas_add(atlas, &mut cfg);
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_add_from_file(
     mut atlas: *mut nk_font_atlas,
     mut file_path: *const libc::c_char,
@@ -27746,7 +27746,7 @@ unsafe fn nk_file_load(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_bake(
     mut atlas: *mut nk_font_atlas,
     mut width: *mut libc::c_int,
@@ -28119,7 +28119,7 @@ unsafe fn nk_font_query_font_glyph(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_find_glyph(
     mut font: *mut nk_font,
     mut unicode: nk_rune,
@@ -31904,7 +31904,7 @@ unsafe fn nk_font_baker_memory(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_end(
     mut atlas: *mut nk_font_atlas,
     mut texture: nk_handle,
@@ -31950,7 +31950,7 @@ pub unsafe fn nk_font_atlas_end(
     (*atlas).custom.w = 0i32 as libc::c_short;
     (*atlas).custom.h = 0i32 as libc::c_short;
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_cleanup(mut atlas: *mut nk_font_atlas) -> () {
     if atlas.is_null() || (*atlas).permanent.alloc.is_none() || (*atlas).permanent.free.is_none() {
         return;
@@ -31980,7 +31980,7 @@ pub unsafe fn nk_font_atlas_cleanup(mut atlas: *mut nk_font_atlas) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_font_atlas_clear(mut atlas: *mut nk_font_atlas) -> () {
     if atlas.is_null() || (*atlas).permanent.alloc.is_none() || (*atlas).permanent.free.is_none() {
         return;
@@ -32049,7 +32049,7 @@ pub unsafe fn nk_font_atlas_clear(mut atlas: *mut nk_font_atlas) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_init_default(mut buffer: *mut nk_buffer) -> () {
     let mut alloc: nk_allocator = nk_allocator {
         userdata: nk_handle {
@@ -32063,7 +32063,7 @@ pub unsafe fn nk_buffer_init_default(mut buffer: *mut nk_buffer) -> () {
     alloc.free = Some(nk_mfree);
     nk_buffer_init(buffer, &mut alloc, (4i32 * 1024i32) as nk_size);
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_info(mut s: *mut nk_memory_status, mut b: *mut nk_buffer) -> () {
     if s.is_null() || b.is_null() {
         return;
@@ -32076,7 +32076,7 @@ pub unsafe fn nk_buffer_info(mut s: *mut nk_memory_status, mut b: *mut nk_buffer
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_push(
     mut b: *mut nk_buffer,
     mut type_0: nk_buffer_allocation_type,
@@ -32092,7 +32092,7 @@ pub unsafe fn nk_buffer_push(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_buffer_memory_const(mut buffer: *const nk_buffer) -> *const libc::c_void {
     if buffer.is_null() {
         return 0 as *const libc::c_void;
@@ -32100,7 +32100,7 @@ pub unsafe fn nk_buffer_memory_const(mut buffer: *const nk_buffer) -> *const lib
         return (*buffer).memory.ptr;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_init_default(mut str: *mut nk_str) -> () {
     let mut alloc: nk_allocator = nk_allocator {
         userdata: nk_handle {
@@ -32115,7 +32115,7 @@ pub unsafe fn nk_str_init_default(mut str: *mut nk_str) -> () {
     nk_buffer_init(&mut (*str).buffer, &mut alloc, 32i32 as nk_size);
     (*str).len = 0i32;
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_init(
     mut str: *mut nk_str,
     mut alloc: *const nk_allocator,
@@ -32124,24 +32124,24 @@ pub unsafe fn nk_str_init(
     nk_buffer_init(&mut (*str).buffer, alloc, size);
     (*str).len = 0i32;
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_clear(mut str: *mut nk_str) -> () {
     nk_buffer_clear(&mut (*str).buffer);
     (*str).len = 0i32;
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_free(mut str: *mut nk_str) -> () {
     nk_buffer_free(&mut (*str).buffer);
     (*str).len = 0i32;
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_append_str_char(
     mut s: *mut nk_str,
     mut str: *const libc::c_char,
 ) -> libc::c_int {
     return nk_str_append_text_char(s, str, nk_strlen(str));
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_append_text_utf8(
     mut str: *mut nk_str,
     mut text: *const libc::c_char,
@@ -32162,7 +32162,7 @@ pub unsafe fn nk_str_append_text_utf8(
         return len;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_append_str_utf8(
     mut str: *mut nk_str,
     mut text: *const libc::c_char,
@@ -32186,7 +32186,7 @@ pub unsafe fn nk_str_append_str_utf8(
         return runes;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_append_text_runes(
     mut str: *mut nk_str,
     mut text: *const nk_rune,
@@ -32210,7 +32210,7 @@ pub unsafe fn nk_str_append_text_runes(
         return len;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_append_str_runes(
     mut str: *mut nk_str,
     mut runes: *const nk_rune,
@@ -32229,7 +32229,7 @@ pub unsafe fn nk_str_append_str_runes(
         return i;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_insert_text_char(
     mut str: *mut nk_str,
     mut pos: libc::c_int,
@@ -32238,7 +32238,7 @@ pub unsafe fn nk_str_insert_text_char(
 ) -> libc::c_int {
     return nk_str_insert_text_utf8(str, pos, text, len);
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_insert_str_char(
     mut str: *mut nk_str,
     mut pos: libc::c_int,
@@ -32246,7 +32246,7 @@ pub unsafe fn nk_str_insert_str_char(
 ) -> libc::c_int {
     return nk_str_insert_text_utf8(str, pos, text, nk_strlen(text));
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_insert_str_utf8(
     mut str: *mut nk_str,
     mut pos: libc::c_int,
@@ -32271,7 +32271,7 @@ pub unsafe fn nk_str_insert_str_utf8(
         return runes;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_insert_str_runes(
     mut str: *mut nk_str,
     mut pos: libc::c_int,
@@ -32291,7 +32291,7 @@ pub unsafe fn nk_str_insert_str_runes(
         return i;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_remove_runes(mut str: *mut nk_str, mut len: libc::c_int) -> () {
     let mut index: libc::c_int = 0;
     let mut begin: *const libc::c_char = 0 as *const libc::c_char;
@@ -32314,7 +32314,7 @@ pub unsafe fn nk_str_remove_runes(mut str: *mut nk_str, mut len: libc::c_int) ->
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_at_char(mut s: *mut nk_str, mut pos: libc::c_int) -> *mut libc::c_char {
     if s.is_null() || pos > (*s).buffer.allocated as libc::c_int {
         return 0 as *mut libc::c_char;
@@ -32323,7 +32323,7 @@ pub unsafe fn nk_str_at_char(mut s: *mut nk_str, mut pos: libc::c_int) -> *mut l
             as *mut libc::c_char;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_at_char_const(
     mut s: *const nk_str,
     mut pos: libc::c_int,
@@ -32335,7 +32335,7 @@ pub unsafe fn nk_str_at_char_const(
             as *mut libc::c_char;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_str_get(mut s: *mut nk_str) -> *mut libc::c_char {
     if s.is_null() || 0 == (*s).len || 0 == (*s).buffer.allocated {
         return 0 as *mut libc::c_char;
@@ -32343,7 +32343,7 @@ pub unsafe fn nk_str_get(mut s: *mut nk_str) -> *mut libc::c_char {
         return (*s).buffer.memory.ptr as *mut libc::c_char;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_filter_ascii(mut box_0: *const nk_text_edit, mut unicode: nk_rune) -> libc::c_int {
     if unicode > 128i32 as libc::c_uint {
         return nk_false as libc::c_int;
@@ -32351,7 +32351,7 @@ pub unsafe fn nk_filter_ascii(mut box_0: *const nk_text_edit, mut unicode: nk_ru
         return nk_true as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_filter_hex(mut box_0: *const nk_text_edit, mut unicode: nk_rune) -> libc::c_int {
     if (unicode < '0' as i32 as libc::c_uint || unicode > '9' as i32 as libc::c_uint)
         && (unicode < 'a' as i32 as libc::c_uint || unicode > 'f' as i32 as libc::c_uint)
@@ -32362,7 +32362,7 @@ pub unsafe fn nk_filter_hex(mut box_0: *const nk_text_edit, mut unicode: nk_rune
         return nk_true as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_filter_oct(mut box_0: *const nk_text_edit, mut unicode: nk_rune) -> libc::c_int {
     if unicode < '0' as i32 as libc::c_uint || unicode > '7' as i32 as libc::c_uint {
         return nk_false as libc::c_int;
@@ -32370,7 +32370,7 @@ pub unsafe fn nk_filter_oct(mut box_0: *const nk_text_edit, mut unicode: nk_rune
         return nk_true as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_filter_binary(
     mut box_0: *const nk_text_edit,
     mut unicode: nk_rune,
@@ -32381,7 +32381,7 @@ pub unsafe fn nk_filter_binary(
         return nk_true as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_init_default(mut state: *mut nk_text_edit) -> () {
     if state.is_null() {
         return;
@@ -32396,7 +32396,7 @@ pub unsafe fn nk_textedit_init_default(mut state: *mut nk_text_edit) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_init(
     mut state: *mut nk_text_edit,
     mut alloc: *mut nk_allocator,
@@ -32415,7 +32415,7 @@ pub unsafe fn nk_textedit_init(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_init_fixed(
     mut state: *mut nk_text_edit,
     mut memory: *mut libc::c_void,
@@ -32434,7 +32434,7 @@ pub unsafe fn nk_textedit_init_fixed(
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_free(mut state: *mut nk_text_edit) -> () {
     if state.is_null() {
         return;
@@ -32443,7 +32443,7 @@ pub unsafe fn nk_textedit_free(mut state: *mut nk_text_edit) -> () {
         return;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_textedit_paste(
     mut state: *mut nk_text_edit,
     mut ctext: *const libc::c_char,
@@ -32474,7 +32474,7 @@ pub unsafe fn nk_textedit_paste(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_stroke_curve(
     mut b: *mut nk_command_buffer,
     mut ax: f32,
@@ -32514,7 +32514,7 @@ pub unsafe fn nk_stroke_curve(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_stroke_circle(
     mut b: *mut nk_command_buffer,
     mut r: nk_rect,
@@ -32565,7 +32565,7 @@ pub unsafe fn nk_stroke_circle(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_stroke_arc(
     mut b: *mut nk_command_buffer,
     mut cx: f32,
@@ -32599,7 +32599,7 @@ pub unsafe fn nk_stroke_arc(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_stroke_triangle(
     mut b: *mut nk_command_buffer,
     mut x0: f32,
@@ -32650,7 +32650,7 @@ pub unsafe fn nk_stroke_triangle(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_stroke_polyline(
     mut b: *mut nk_command_buffer,
     mut points: *mut f32,
@@ -32687,7 +32687,7 @@ pub unsafe fn nk_stroke_polyline(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_stroke_polygon(
     mut b: *mut nk_command_buffer,
     mut points: *mut f32,
@@ -32724,7 +32724,7 @@ pub unsafe fn nk_stroke_polygon(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_fill_arc(
     mut b: *mut nk_command_buffer,
     mut cx: f32,
@@ -32756,7 +32756,7 @@ pub unsafe fn nk_fill_arc(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_fill_polygon(
     mut b: *mut nk_command_buffer,
     mut points: *mut f32,
@@ -32793,7 +32793,7 @@ pub unsafe fn nk_fill_polygon(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_push_custom(
     mut b: *mut nk_command_buffer,
     mut r: nk_rect,
@@ -32841,7 +32841,7 @@ pub unsafe fn nk_push_custom(
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_has_mouse_click(mut i: *const nk_input, mut id: nk_buttons) -> libc::c_int {
     let mut btn: *const nk_mouse_button = 0 as *const nk_mouse_button;
     if i.is_null() {
@@ -32855,7 +32855,7 @@ pub unsafe fn nk_input_has_mouse_click(mut i: *const nk_input, mut id: nk_button
         };
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_any_mouse_click_in_rect(
     mut in_0: *const nk_input,
     mut b: nk_rect,
@@ -32870,7 +32870,7 @@ pub unsafe fn nk_input_any_mouse_click_in_rect(
     }
     return down;
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_mouse_released(
     mut i: *const nk_input,
     mut id: nk_buttons,
@@ -32882,7 +32882,7 @@ pub unsafe fn nk_input_is_mouse_released(
             && 0 != (*i).mouse.buttons[id as usize].clicked) as libc::c_int;
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_key_released(mut i: *const nk_input, mut key: nk_keys) -> libc::c_int {
     let mut k: *const nk_key = 0 as *const nk_key;
     if i.is_null() {
@@ -32898,7 +32898,7 @@ pub unsafe fn nk_input_is_key_released(mut i: *const nk_input, mut key: nk_keys)
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_input_is_key_down(mut i: *const nk_input, mut key: nk_keys) -> libc::c_int {
     let mut k: *const nk_key = 0 as *const nk_key;
     if i.is_null() {
@@ -32912,7 +32912,7 @@ pub unsafe fn nk_input_is_key_down(mut i: *const nk_input, mut key: nk_keys) -> 
         }
     };
 }
-#[no_mangle]
+
 pub unsafe fn nk_style_item_image(mut img: nk_image) -> nk_style_item {
     let mut i: nk_style_item = nk_style_item {
         type_0: NK_STYLE_ITEM_COLOR,
