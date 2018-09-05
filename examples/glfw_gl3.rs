@@ -4,7 +4,7 @@ extern crate libc;
 extern crate nuke;
 
 use gl::types::*;
-use glfw::{Action, Context, Key};
+use glfw::{Action, Context as glfwContext, Key};
 use nuke::*;
 
 use std::ffi::CString;
@@ -171,15 +171,15 @@ struct GlfwContext {
     display_width: i32,
     display_height: i32,
     device: Device,
-    context: nk_context,
-    atlas: nk_font_atlas,
-    fb_scale: nk_vec2,
+    context: Context,
+    atlas: FontAtlas,
+    fb_scale: Point,
     text: [u32; TEXT_MAX],
     text_len: usize,
-    scroll: nk_vec2,
+    scroll: Point,
     last_button_click: f64,
     is_double_click_down: i32,
-    double_click_pos: nk_vec2,
+    double_click_pos: Point,
 }
 
 fn pressed(action: Action) -> i32 {
@@ -191,10 +191,8 @@ fn pressed(action: Action) -> i32 {
 }
 
 impl GlfwContext {
-    unsafe fn new(
-        window: glfw::Window,
-    ) -> Self {
-        let mut context: nk_context = mem::zeroed();
+    unsafe fn new(window: glfw::Window) -> Self {
+        let mut context: Context = mem::zeroed();
         nk_init_default(&mut context, ptr::null());
         // if (init_state == NK_GLFW3_INSTALL_CALLBACKS) {
         //     glfwSetScrollCallback(win, nk_gflw3_scroll_callback);
@@ -205,7 +203,7 @@ impl GlfwContext {
         // glfw.ctx.clip.paste = nk_glfw3_clipbard_paste;
         // glfw.ctx.clip.userdata = nk_handle_ptr(0);
         let mut device = Device::new();
-        let mut atlas: nk_font_atlas = mem::zeroed();
+        let mut atlas: FontAtlas = mem::zeroed();
         nk_font_atlas_init_default(&mut atlas);
         nk_font_atlas_begin(&mut atlas);
         let (mut w, mut h) = (0, 0);
@@ -228,13 +226,13 @@ impl GlfwContext {
             device: Device::new(),
             context,
             atlas,
-            fb_scale: nk_vec2(0.0, 0.0),
+            fb_scale: Point::new(0.0, 0.0),
             text: [0; TEXT_MAX],
             text_len: 0,
-            scroll: nk_vec2(0.0, 0.0),
+            scroll: Point::new(0.0, 0.0),
             last_button_click: 0.0,
             is_double_click_down: 0,
-            double_click_pos: nk_vec2(0.0, 0.0),
+            double_click_pos: Point::new(0.0, 0.0),
         }
     }
 
@@ -377,7 +375,7 @@ impl GlfwContext {
         nk_input_scroll(ctx, self.scroll);
         nk_input_end(ctx);
         self.text_len = 0;
-        self.scroll = nk_vec2(0.0, 0.0);
+        self.scroll = Point::new(0.0, 0.0);
     }
 
     unsafe fn render(&mut self, aa: nk_anti_aliasing) {
@@ -536,7 +534,7 @@ impl GlfwContext {
         //     let dt = time - self.last_button_click;
         //     if dt > DOUBLE_CLICK_LO && dt < DOUBLE_CLICK_HI {
         //         self.is_double_click_down = 1;
-        //         self.double_click_pos = nk_vec2(x as f32, y as f32);
+        //         self.double_click_pos = Point(x as f32, y as f32);
         //     }
         //     self.last_button_click = time;
         // } else {
@@ -649,7 +647,7 @@ pub fn main() {
                 if nk_begin(
                     ctx,
                     c_str!("Demo"),
-                    nk_rect(50.0, 50.0, 230.0, 250.0),
+                    Rect::new(50.0, 50.0, 230.0, 250.0),
                     NK_WINDOW_BORDER
                         | NK_WINDOW_MOVABLE
                         | NK_WINDOW_SCALABLE
@@ -679,7 +677,7 @@ pub fn main() {
                     if nk_combo_begin_color(
                         ctx,
                         nk_rgb_cf(bg),
-                        nk_vec2(nk_widget_width(ctx), 400.0),
+                        Point::new(nk_widget_width(ctx), 400.0),
                     ) != 0
                     {
                         nk_layout_row_dynamic(ctx, 120.0, 1);
