@@ -161,11 +161,7 @@ pub unsafe fn nk_input_is_key_pressed(i: *const Input, key: Keys) -> libc::c_int
     };
 }
 
-pub unsafe fn nk_input_mouse_clicked(
-    i: *const Input,
-    id: Buttons,
-    rect: Rect,
-) -> libc::c_int {
+pub unsafe fn nk_input_mouse_clicked(i: *const Input, id: Buttons, rect: Rect) -> libc::c_int {
     if i.is_null() {
         return 0;
     } else if 0 == nk_input_is_mouse_hovering_rect(i, rect) {
@@ -184,9 +180,7 @@ pub unsafe fn nk_input_is_mouse_click_in_rect(
         return 0;
     } else {
         let btn = &(*i).mouse.buttons[id as usize] as *const MouseButton;
-        return if 0 != nk_input_has_mouse_click_down_in_rect(i, id, b, 0)
-            && 0 != (*btn).clicked
-        {
+        return if 0 != nk_input_has_mouse_click_down_in_rect(i, id, b, 0) && 0 != (*btn).clicked {
             1
         } else {
             0
@@ -209,10 +203,7 @@ pub unsafe fn nk_input_has_mouse_click_down_in_rect(
     };
 }
 
-pub unsafe fn nk_input_is_mouse_prev_hovering_rect(
-    i: *const Input,
-    rect: Rect,
-) -> libc::c_int {
+pub unsafe fn nk_input_is_mouse_prev_hovering_rect(i: *const Input, rect: Rect) -> libc::c_int {
     if i.is_null() {
         return 0;
     } else {

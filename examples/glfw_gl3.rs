@@ -34,9 +34,42 @@ const TEXT_MAX: usize = 256;
 const DOUBLE_CLICK_LO: f64 = 0.02;
 const DOUBLE_CLICK_HI: f64 = 0.2;
 
+// settings
+const WINDOW_WIDTH: u32 = 1200;
+const WINDOW_HEIGHT: u32 = 800;
+const MAX_VERTEX_BUFFER: usize = 512 * 1024;
+const MAX_ELEMENT_BUFFER: usize = 128 * 1024;
+
+const VERTEX_SHADER: &str = r#"
+    #version 330
+    uniform mat4 ProjMtx;
+    in vec2 Position;
+    in vec2 TexCoord;
+    in vec4 Color;
+    out vec2 Frag_UV;
+    out vec4 Frag_Color;
+    void main() {
+       Frag_UV = TexCoord;
+       Frag_Color = Color;
+       gl_Position = ProjMtx * vec4(Position.xy, 0, 1);
+    }
+"#;
+
+const FRAGMENT_SHADER: &str = r#"
+    #version 330
+    precision mediump float;
+    uniform sampler2D Texture;
+    in vec2 Frag_UV;
+    in vec4 Frag_Color;
+    out vec4 Out_Color;
+    void main(){
+       Out_Color = Frag_Color * texture(Texture, Frag_UV.st);
+    }
+"#;
+
 struct Device {
-    cmds: nk_buffer,
-    null: nk_draw_null_texture,
+    cmds: Buffer,
+    null: DrawNullTexture,
     vbo: GLuint,
     vao: GLuint,
     ebo: GLuint,
@@ -53,7 +86,7 @@ struct Device {
 
 impl Device {
     unsafe fn new() -> Self {
-        let mut cmds: nk_buffer = mem::zeroed();
+        let mut cmds: Buffer = mem::zeroed();
         nk_buffer_init_default(&mut cmds);
         let mut dev = Self {
             cmds,
@@ -378,7 +411,7 @@ impl GlfwContext {
         self.scroll = Point::new(0.0, 0.0);
     }
 
-    unsafe fn render(&mut self, aa: nk_anti_aliasing) {
+    unsafe fn render(&mut self, aa: AntiAliasing) {
         let mut ortho = [
             [2.0, 0.0, 0.0, 0.0],
             [0.0, -2.0, 0.0, 0.0],
@@ -435,24 +468,24 @@ impl GlfwContext {
             let elements = gl::MapBuffer(gl::ELEMENT_ARRAY_BUFFER, gl::WRITE_ONLY);
             {
                 /* fill convert configuration */
-                let mut config = mem::zeroed::<nk_convert_config>();
-                let vertex_layout: [nk_draw_vertex_layout_element; 4] = [
-                    nk_draw_vertex_layout_element {
+                let mut config = mem::zeroed::<ConvertConfig>();
+                let vertex_layout: [DrawVertexLayoutElement; 4] = [
+                    DrawVertexLayoutElement {
                         attribute: NK_VERTEX_POSITION,
                         format: NK_FORMAT_FLOAT,
                         offset: offset_of!(Vertex, position) as u64,
                     },
-                    nk_draw_vertex_layout_element {
+                    DrawVertexLayoutElement {
                         attribute: NK_VERTEX_TEXCOORD,
                         format: NK_FORMAT_FLOAT,
                         offset: offset_of!(Vertex, uv) as u64,
                     },
-                    nk_draw_vertex_layout_element {
+                    DrawVertexLayoutElement {
                         attribute: NK_VERTEX_COLOR,
                         format: NK_FORMAT_R8G8B8A8,
                         offset: offset_of!(Vertex, col) as u64,
                     },
-                    nk_draw_vertex_layout_element {
+                    DrawVertexLayoutElement {
                         attribute: NK_VERTEX_ATTRIBUTE_COUNT,
                         format: NK_FORMAT_COUNT,
                         offset: 0,
@@ -550,39 +583,6 @@ struct Vertex {
     col: [u8; 4],
 }
 
-// settings
-const WINDOW_WIDTH: u32 = 1200;
-const WINDOW_HEIGHT: u32 = 800;
-const MAX_VERTEX_BUFFER: usize = 512 * 1024;
-const MAX_ELEMENT_BUFFER: usize = 128 * 1024;
-
-const VERTEX_SHADER: &str = r#"
-    #version 330
-    uniform mat4 ProjMtx;
-    in vec2 Position;
-    in vec2 TexCoord;
-    in vec4 Color;
-    out vec2 Frag_UV;
-    out vec4 Frag_Color;
-    void main() {
-       Frag_UV = TexCoord;
-       Frag_Color = Color;
-       gl_Position = ProjMtx * vec4(Position.xy, 0, 1);
-    }
-"#;
-
-const FRAGMENT_SHADER: &str = r#"
-    #version 330
-    precision mediump float;
-    uniform sampler2D Texture;
-    in vec2 Frag_UV;
-    in vec4 Frag_Color;
-    out vec4 Out_Color;
-    void main(){
-       Out_Color = Frag_Color * texture(Texture, Frag_UV.st);
-    }
-"#;
-
 #[allow(non_snake_case)]
 pub fn main() {
     // glfw: initialize and configure
@@ -608,7 +608,7 @@ pub fn main() {
     window.set_key_polling(true);
     window.set_framebuffer_size_polling(true);
 
-    let mut bg = nk_colorf {
+    let mut bg = ColorF {
         r: 0.10,
         g: 0.18,
         b: 0.24,
