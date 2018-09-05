@@ -36,7 +36,7 @@ pub struct nk_buffer {
     pub pool: nk_allocator,
     pub type_0: nk_allocation_type,
     pub memory: nk_memory,
-    pub grow_factor: libc::c_float,
+    pub grow_factor: f32,
     pub allocated: nk_size,
     pub needed: nk_size,
     pub calls: nk_size,
@@ -87,10 +87,10 @@ pub struct nk_command_buffer {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_rect {
-    pub x: libc::c_float,
-    pub y: libc::c_float,
-    pub w: libc::c_float,
-    pub h: libc::c_float,
+    pub x: f32,
+    pub y: f32,
+    pub w: f32,
+    pub h: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -103,7 +103,7 @@ pub struct nk_draw_command {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_convert_config {
-    pub global_alpha: libc::c_float,
+    pub global_alpha: f32,
     pub line_AA: nk_anti_aliasing,
     pub shape_AA: nk_anti_aliasing,
     pub circle_segment_count: libc::c_uint,
@@ -159,8 +159,8 @@ pub struct nk_draw_null_texture {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_vec2 {
-    pub x: libc::c_float,
-    pub y: libc::c_float,
+    pub x: f32,
+    pub y: f32,
 }
 
 
@@ -215,7 +215,7 @@ pub struct nk_text_edit {
     pub single_line: libc::c_uchar,
     pub active: libc::c_uchar,
     pub padding1: libc::c_uchar,
-    pub preferred_x: libc::c_float,
+    pub preferred_x: f32,
     pub undo: nk_text_undo_state,
 }
 #[derive(Copy, Clone)]
@@ -276,13 +276,13 @@ pub struct nk_draw_list {
 #[repr(C)]
 pub struct nk_user_font {
     pub userdata: nk_handle,
-    pub height: libc::c_float,
+    pub height: f32,
     pub width: nk_text_width_f,
     pub query: nk_query_font_glyph_f,
     pub texture: nk_handle,
 }
 pub type nk_query_font_glyph_f = Option<
-    unsafe fn(_: nk_handle, _: libc::c_float, _: *mut nk_user_font_glyph, _: nk_rune, _: nk_rune)
+    unsafe fn(_: nk_handle, _: f32, _: *mut nk_user_font_glyph, _: nk_rune, _: nk_rune)
         -> (),
 >;
 #[derive(Copy, Clone)]
@@ -290,13 +290,13 @@ pub type nk_query_font_glyph_f = Option<
 pub struct nk_user_font_glyph {
     pub uv: [nk_vec2; 2],
     pub offset: nk_vec2,
-    pub width: libc::c_float,
-    pub height: libc::c_float,
-    pub xadvance: libc::c_float,
+    pub width: f32,
+    pub height: f32,
+    pub xadvance: f32,
 }
 pub type nk_text_width_f = Option<
-    unsafe fn(_: nk_handle, _: libc::c_float, _: *const libc::c_char, _: libc::c_int)
-        -> libc::c_float,
+    unsafe fn(_: nk_handle, _: f32, _: *const libc::c_char, _: libc::c_int)
+        -> f32,
 >;
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -306,12 +306,12 @@ pub struct nk_panel {
     pub bounds: nk_rect,
     pub offset_x: *mut nk_uint,
     pub offset_y: *mut nk_uint,
-    pub at_x: libc::c_float,
-    pub at_y: libc::c_float,
-    pub max_x: libc::c_float,
-    pub footer_height: libc::c_float,
-    pub header_height: libc::c_float,
-    pub border: libc::c_float,
+    pub at_x: f32,
+    pub at_y: f32,
+    pub max_x: f32,
+    pub footer_height: f32,
+    pub header_height: f32,
+    pub border: f32,
     pub has_scrolling: libc::c_uint,
     pub clip: nk_rect,
     pub menu: nk_menu_state,
@@ -324,10 +324,10 @@ pub struct nk_panel {
 #[repr(C)]
 pub struct nk_chart {
     pub slot: libc::c_int,
-    pub x: libc::c_float,
-    pub y: libc::c_float,
-    pub w: libc::c_float,
-    pub h: libc::c_float,
+    pub x: f32,
+    pub y: f32,
+    pub w: f32,
+    pub h: f32,
     pub slots: [nk_chart_slot; 4],
 }
 #[derive(Copy, Clone)]
@@ -336,9 +336,9 @@ pub struct nk_chart_slot {
     pub type_0: nk_chart_type,
     pub color: nk_color,
     pub highlight: nk_color,
-    pub min: libc::c_float,
-    pub max: libc::c_float,
-    pub range: libc::c_float,
+    pub min: f32,
+    pub max: f32,
+    pub range: f32,
     pub count: libc::c_int,
     pub last: nk_vec2,
     pub index: libc::c_int,
@@ -352,17 +352,17 @@ pub const NK_CHART_LINES: nk_chart_type = 0;
 pub struct nk_row_layout {
     pub type_0: nk_panel_row_layout_type,
     pub index: libc::c_int,
-    pub height: libc::c_float,
-    pub min_height: libc::c_float,
+    pub height: f32,
+    pub min_height: f32,
     pub columns: libc::c_int,
-    pub ratio: *const libc::c_float,
-    pub item_width: libc::c_float,
-    pub item_height: libc::c_float,
-    pub item_offset: libc::c_float,
-    pub filled: libc::c_float,
+    pub ratio: *const f32,
+    pub item_width: f32,
+    pub item_height: f32,
+    pub item_offset: f32,
+    pub filled: f32,
     pub item: nk_rect,
     pub tree_depth: libc::c_int,
-    pub templates: [libc::c_float; 16],
+    pub templates: [f32; 16],
 }
 pub type nk_panel_row_layout_type = libc::c_uint;
 pub const NK_LAYOUT_COUNT: nk_panel_row_layout_type = 9;
@@ -378,10 +378,10 @@ pub const NK_LAYOUT_DYNAMIC_FIXED: nk_panel_row_layout_type = 0;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_menu_state {
-    pub x: libc::c_float,
-    pub y: libc::c_float,
-    pub w: libc::c_float,
-    pub h: libc::c_float,
+    pub x: f32,
+    pub y: f32,
+    pub w: f32,
+    pub h: f32,
     pub offset: nk_scroll,
 }
 #[derive(Copy, Clone)]
@@ -409,7 +409,7 @@ pub struct nk_context {
     pub last_widget_state: nk_flags,
     pub button_behavior: nk_button_behavior,
     pub stacks: nk_configuration_stacks,
-    pub delta_time_seconds: libc::c_float,
+    pub delta_time_seconds: f32,
     pub draw_list: nk_draw_list,
     pub userdata: nk_handle,
     pub text_edit: nk_text_edit,
@@ -450,7 +450,7 @@ pub struct nk_window {
     pub scrollbar: nk_scroll,
     pub buffer: nk_command_buffer,
     pub layout: *mut nk_panel,
-    pub scrollbar_hiding_timer: libc::c_float,
+    pub scrollbar_hiding_timer: f32,
     pub property: nk_property_state,
     pub popup: nk_popup_state,
     pub edit: nk_edit_state,
@@ -630,8 +630,8 @@ pub struct nk_config_stack_float {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_config_stack_float_element {
-    pub address: *mut libc::c_float,
-    pub old_value: libc::c_float,
+    pub address: *mut f32,
+    pub old_value: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -685,15 +685,15 @@ pub struct nk_style_window {
     pub group_border_color: nk_color,
     pub tooltip_border_color: nk_color,
     pub scaler: nk_style_item,
-    pub border: libc::c_float,
-    pub combo_border: libc::c_float,
-    pub contextual_border: libc::c_float,
-    pub menu_border: libc::c_float,
-    pub group_border: libc::c_float,
-    pub tooltip_border: libc::c_float,
-    pub popup_border: libc::c_float,
-    pub min_row_height_padding: libc::c_float,
-    pub rounding: libc::c_float,
+    pub border: f32,
+    pub combo_border: f32,
+    pub contextual_border: f32,
+    pub menu_border: f32,
+    pub group_border: f32,
+    pub tooltip_border: f32,
+    pub popup_border: f32,
+    pub min_row_height_padding: f32,
+    pub rounding: f32,
     pub spacing: nk_vec2,
     pub scrollbar_size: nk_vec2,
     pub min_size: nk_vec2,
@@ -754,8 +754,8 @@ pub struct nk_style_button {
     pub text_hover: nk_color,
     pub text_active: nk_color,
     pub text_alignment: nk_flags,
-    pub border: libc::c_float,
-    pub rounding: libc::c_float,
+    pub border: f32,
+    pub rounding: f32,
     pub padding: nk_vec2,
     pub image_padding: nk_vec2,
     pub touch_padding: nk_vec2,
@@ -780,8 +780,8 @@ pub struct nk_style_combo {
     pub sym_normal: nk_symbol_type,
     pub sym_hover: nk_symbol_type,
     pub sym_active: nk_symbol_type,
-    pub border: libc::c_float,
-    pub rounding: libc::c_float,
+    pub border: f32,
+    pub rounding: f32,
     pub content_padding: nk_vec2,
     pub button_padding: nk_vec2,
     pub spacing: nk_vec2,
@@ -798,9 +798,9 @@ pub struct nk_style_tab {
     pub node_minimize_button: nk_style_button,
     pub sym_minimize: nk_symbol_type,
     pub sym_maximize: nk_symbol_type,
-    pub border: libc::c_float,
-    pub rounding: libc::c_float,
-    pub indent: libc::c_float,
+    pub border: f32,
+    pub rounding: f32,
+    pub indent: f32,
     pub padding: nk_vec2,
     pub spacing: nk_vec2,
 }
@@ -815,10 +815,10 @@ pub struct nk_style_scrollbar {
     pub cursor_hover: nk_style_item,
     pub cursor_active: nk_style_item,
     pub cursor_border_color: nk_color,
-    pub border: libc::c_float,
-    pub rounding: libc::c_float,
-    pub border_cursor: libc::c_float,
-    pub rounding_cursor: libc::c_float,
+    pub border: f32,
+    pub rounding: f32,
+    pub border_cursor: f32,
+    pub rounding_cursor: f32,
     pub padding: nk_vec2,
     pub show_buttons: libc::c_int,
     pub inc_button: nk_style_button,
@@ -836,8 +836,8 @@ pub struct nk_style_chart {
     pub border_color: nk_color,
     pub selected_color: nk_color,
     pub color: nk_color,
-    pub border: libc::c_float,
-    pub rounding: libc::c_float,
+    pub border: f32,
+    pub rounding: f32,
     pub padding: nk_vec2,
 }
 #[derive(Copy, Clone)]
@@ -859,12 +859,12 @@ pub struct nk_style_edit {
     pub selected_hover: nk_color,
     pub selected_text_normal: nk_color,
     pub selected_text_hover: nk_color,
-    pub border: libc::c_float,
-    pub rounding: libc::c_float,
-    pub cursor_size: libc::c_float,
+    pub border: f32,
+    pub rounding: f32,
+    pub cursor_size: f32,
     pub scrollbar_size: nk_vec2,
     pub padding: nk_vec2,
-    pub row_padding: libc::c_float,
+    pub row_padding: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -878,8 +878,8 @@ pub struct nk_style_property {
     pub label_active: nk_color,
     pub sym_left: nk_symbol_type,
     pub sym_right: nk_symbol_type,
-    pub border: libc::c_float,
-    pub rounding: libc::c_float,
+    pub border: f32,
+    pub rounding: f32,
     pub padding: nk_vec2,
     pub edit: nk_style_edit,
     pub inc_button: nk_style_button,
@@ -899,10 +899,10 @@ pub struct nk_style_progress {
     pub cursor_hover: nk_style_item,
     pub cursor_active: nk_style_item,
     pub cursor_border_color: nk_color,
-    pub rounding: libc::c_float,
-    pub border: libc::c_float,
-    pub cursor_border: libc::c_float,
-    pub cursor_rounding: libc::c_float,
+    pub rounding: f32,
+    pub border: f32,
+    pub cursor_border: f32,
+    pub cursor_rounding: f32,
     pub padding: nk_vec2,
     pub userdata: nk_handle,
     pub draw_begin: Option<unsafe fn(_: *mut nk_command_buffer, _: nk_handle) -> ()>,
@@ -922,9 +922,9 @@ pub struct nk_style_slider {
     pub cursor_normal: nk_style_item,
     pub cursor_hover: nk_style_item,
     pub cursor_active: nk_style_item,
-    pub border: libc::c_float,
-    pub rounding: libc::c_float,
-    pub bar_height: libc::c_float,
+    pub border: f32,
+    pub rounding: f32,
+    pub bar_height: f32,
     pub padding: nk_vec2,
     pub spacing: nk_vec2,
     pub cursor_size: nk_vec2,
@@ -954,7 +954,7 @@ pub struct nk_style_selectable {
     pub text_pressed_active: nk_color,
     pub text_background: nk_color,
     pub text_alignment: nk_flags,
-    pub rounding: libc::c_float,
+    pub rounding: f32,
     pub padding: nk_vec2,
     pub touch_padding: nk_vec2,
     pub image_padding: nk_vec2,
@@ -978,8 +978,8 @@ pub struct nk_style_toggle {
     pub text_alignment: nk_flags,
     pub padding: nk_vec2,
     pub touch_padding: nk_vec2,
-    pub spacing: libc::c_float,
-    pub border: libc::c_float,
+    pub spacing: f32,
+    pub border: f32,
     pub userdata: nk_handle,
     pub draw_begin: Option<unsafe fn(_: *mut nk_command_buffer, _: nk_handle) -> ()>,
     pub draw_end: Option<unsafe fn(_: *mut nk_command_buffer, _: nk_handle) -> ()>,
@@ -1049,10 +1049,10 @@ pub const nk_false: unnamed = 0;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_colorf {
-    pub r: libc::c_float,
-    pub g: libc::c_float,
-    pub b: libc::c_float,
-    pub a: libc::c_float,
+    pub r: f32,
+    pub g: f32,
+    pub b: f32,
+    pub a: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -1277,7 +1277,7 @@ pub struct nk_command_text {
     pub y: libc::c_short,
     pub w: libc::c_ushort,
     pub h: libc::c_ushort,
-    pub height: libc::c_float,
+    pub height: f32,
     pub length: libc::c_int,
     pub string: [libc::c_char; 1],
 }
@@ -1298,7 +1298,7 @@ pub const NK_STROKE_OPEN: nk_draw_list_stroke = 0;
 #[repr(C)]
 pub union unnamed_3 {
     i: nk_uint,
-    f: libc::c_float,
+    f: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -1361,7 +1361,7 @@ pub struct nk_command_arc_filled {
     pub cx: libc::c_short,
     pub cy: libc::c_short,
     pub r: libc::c_ushort,
-    pub a: [libc::c_float; 2],
+    pub a: [f32; 2],
     pub color: nk_color,
 }
 #[derive(Copy, Clone)]
@@ -1372,7 +1372,7 @@ pub struct nk_command_arc {
     pub cy: libc::c_short,
     pub r: libc::c_ushort,
     pub line_thickness: libc::c_ushort,
-    pub a: [libc::c_float; 2],
+    pub a: [f32; 2],
     pub color: nk_color,
 }
 #[derive(Copy, Clone)]
@@ -1557,7 +1557,7 @@ pub const NK_TOGGLE_CHECK: nk_toggle_type = 0;
 #[repr(C)]
 pub union nk_property {
     i: libc::c_int,
-    f: libc::c_float,
+    f: f32,
     d: libc::c_double,
 }
 #[derive(Copy, Clone)]
@@ -1596,9 +1596,9 @@ pub const NK_EDIT_CTRL_ENTER_NEWLINE: nk_edit_flags = 128;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_text_find {
-    pub x: libc::c_float,
-    pub y: libc::c_float,
-    pub height: libc::c_float,
+    pub x: f32,
+    pub y: f32,
+    pub height: f32,
     pub first_char: libc::c_int,
     pub length: libc::c_int,
     pub prev_first: libc::c_int,
@@ -1606,11 +1606,11 @@ pub struct nk_text_find {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_text_edit_row {
-    pub x0: libc::c_float,
-    pub x1: libc::c_float,
-    pub baseline_y_delta: libc::c_float,
-    pub ymin: libc::c_float,
-    pub ymax: libc::c_float,
+    pub x0: f32,
+    pub x1: f32,
+    pub baseline_y_delta: f32,
+    pub ymin: f32,
+    pub ymax: f32,
     pub num_chars: libc::c_int,
 }
 pub const NK_TEXT_EDIT_MODE_INSERT: nk_text_edit_mode = 1;
@@ -1657,7 +1657,7 @@ pub struct nk_font {
     pub next: *mut nk_font,
     pub handle: nk_user_font,
     pub info: nk_baked_font,
-    pub scale: libc::c_float,
+    pub scale: f32,
     pub glyphs: *mut nk_font_glyph,
     pub fallback: *const nk_font_glyph,
     pub fallback_codepoint: nk_rune,
@@ -1677,7 +1677,7 @@ pub struct nk_font_config {
     pub oversample_v: libc::c_uchar,
     pub oversample_h: libc::c_uchar,
     pub padding: [libc::c_uchar; 3],
-    pub size: libc::c_float,
+    pub size: f32,
     pub coord_type: nk_font_coord_type,
     pub spacing: nk_vec2,
     pub range: *const nk_rune,
@@ -1689,9 +1689,9 @@ pub struct nk_font_config {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_baked_font {
-    pub height: libc::c_float,
-    pub ascent: libc::c_float,
-    pub descent: libc::c_float,
+    pub height: f32,
+    pub ascent: f32,
+    pub descent: f32,
     pub glyph_offset: nk_rune,
     pub glyph_count: nk_rune,
     pub ranges: *const nk_rune,
@@ -1700,17 +1700,17 @@ pub struct nk_baked_font {
 #[repr(C)]
 pub struct nk_font_glyph {
     pub codepoint: nk_rune,
-    pub xadvance: libc::c_float,
-    pub x0: libc::c_float,
-    pub y0: libc::c_float,
-    pub x1: libc::c_float,
-    pub y1: libc::c_float,
-    pub w: libc::c_float,
-    pub h: libc::c_float,
-    pub u0: libc::c_float,
-    pub v0: libc::c_float,
-    pub u1: libc::c_float,
-    pub v1: libc::c_float,
+    pub xadvance: f32,
+    pub x0: f32,
+    pub y0: f32,
+    pub x1: f32,
+    pub y1: f32,
+    pub w: f32,
+    pub h: f32,
+    pub u0: f32,
+    pub v0: f32,
+    pub u1: f32,
+    pub v1: f32,
 }
 pub type nk_font_atlas_format = libc::c_uint;
 pub const NK_FONT_ATLAS_RGBA32: nk_font_atlas_format = 1;
@@ -1750,7 +1750,7 @@ pub struct nk_font_baker {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_tt_pack_range {
-    pub font_size: libc::c_float,
+    pub font_size: f32,
     pub first_unicode_codepoint_in_range: libc::c_int,
     pub array_of_unicode_codepoints: *mut libc::c_int,
     pub num_chars: libc::c_int,
@@ -1765,11 +1765,11 @@ pub struct nk_tt_packedchar {
     pub y0: libc::c_ushort,
     pub x1: libc::c_ushort,
     pub y1: libc::c_ushort,
-    pub xoff: libc::c_float,
-    pub yoff: libc::c_float,
-    pub xadvance: libc::c_float,
-    pub xoff2: libc::c_float,
-    pub yoff2: libc::c_float,
+    pub xoff: f32,
+    pub yoff: f32,
+    pub xadvance: f32,
+    pub xoff2: f32,
+    pub yoff2: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -1834,14 +1834,14 @@ pub struct nk_tt_pack_context {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_tt_aligned_quad {
-    pub x0: libc::c_float,
-    pub y0: libc::c_float,
-    pub s0: libc::c_float,
-    pub t0: libc::c_float,
-    pub x1: libc::c_float,
-    pub y1: libc::c_float,
-    pub s1: libc::c_float,
-    pub t1: libc::c_float,
+    pub x0: f32,
+    pub y0: f32,
+    pub s0: f32,
+    pub t0: f32,
+    pub x1: f32,
+    pub y1: f32,
+    pub s1: f32,
+    pub t1: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -1867,16 +1867,16 @@ pub struct nk_tt__bitmap {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_tt__point {
-    pub x: libc::c_float,
-    pub y: libc::c_float,
+    pub x: f32,
+    pub y: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct nk_tt__edge {
-    pub x0: libc::c_float,
-    pub y0: libc::c_float,
-    pub x1: libc::c_float,
-    pub y1: libc::c_float,
+    pub x0: f32,
+    pub y0: f32,
+    pub x1: f32,
+    pub y1: f32,
     pub invert: libc::c_int,
 }
 #[derive(Copy, Clone)]
@@ -1896,12 +1896,12 @@ pub struct nk_tt__hheap_chunk {
 #[repr(C)]
 pub struct nk_tt__active_edge {
     pub next: *mut nk_tt__active_edge,
-    pub fx: libc::c_float,
-    pub fdx: libc::c_float,
-    pub fdy: libc::c_float,
-    pub direction: libc::c_float,
-    pub sy: libc::c_float,
-    pub ey: libc::c_float,
+    pub fx: f32,
+    pub fdx: f32,
+    pub fdy: f32,
+    pub direction: f32,
+    pub sy: f32,
+    pub ey: f32,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -2182,10 +2182,10 @@ pub unsafe fn nk_draw_list_init(mut list: *mut nk_draw_list) -> () {
         while i < (::std::mem::size_of::<[nk_vec2; 12]>() as libc::c_ulong)
             .wrapping_div(::std::mem::size_of::<nk_vec2>() as libc::c_ulong)
         {
-            let a: libc::c_float = i as libc::c_float
+            let a: f32 = i as f32
                 / (::std::mem::size_of::<[nk_vec2; 12]>() as libc::c_ulong)
                     .wrapping_div(::std::mem::size_of::<nk_vec2>() as libc::c_ulong)
-                    as libc::c_float * 2i32 as libc::c_float
+                    as f32 * 2i32 as f32
                 * 3.1415927410125734f32;
             (*list).circle_vtx[i as usize].x = nk_cos(a);
             (*list).circle_vtx[i as usize].y = nk_sin(a);
@@ -2194,26 +2194,26 @@ pub unsafe fn nk_draw_list_init(mut list: *mut nk_draw_list) -> () {
         return;
     };
 }
-unsafe fn nk_sin(mut x: libc::c_float) -> libc::c_float {
-    static mut a0: libc::c_float = unsafe { 1.9105930344931874e-31f32 };
-    static mut a1: libc::c_float = unsafe { 1.0008676052093506f32 };
-    static mut a2: libc::c_float = unsafe { -0.012127612717449665f32 };
-    static mut a3: libc::c_float = unsafe { -0.13807877898216248f32 };
-    static mut a4: libc::c_float = unsafe { -0.0267353393137455f32 };
-    static mut a5: libc::c_float = unsafe { 0.020802659913897516f32 };
-    static mut a6: libc::c_float = unsafe { -0.003039960516616702f32 };
-    static mut a7: libc::c_float = unsafe { 0.00013823564222548157f32 };
+unsafe fn nk_sin(mut x: f32) -> f32 {
+    static mut a0: f32 = unsafe { 1.9105930344931874e-31f32 };
+    static mut a1: f32 = unsafe { 1.0008676052093506f32 };
+    static mut a2: f32 = unsafe { -0.012127612717449665f32 };
+    static mut a3: f32 = unsafe { -0.13807877898216248f32 };
+    static mut a4: f32 = unsafe { -0.0267353393137455f32 };
+    static mut a5: f32 = unsafe { 0.020802659913897516f32 };
+    static mut a6: f32 = unsafe { -0.003039960516616702f32 };
+    static mut a7: f32 = unsafe { 0.00013823564222548157f32 };
     return a0 + x * (a1 + x * (a2 + x * (a3 + x * (a4 + x * (a5 + x * (a6 + x * a7))))));
 }
-unsafe fn nk_cos(mut x: libc::c_float) -> libc::c_float {
-    static mut a0: libc::c_float = unsafe { 1.0023859739303589f32 };
-    static mut a1: libc::c_float = unsafe { -0.03819199651479721f32 };
-    static mut a2: libc::c_float = unsafe { -0.3943823277950287f32 };
-    static mut a3: libc::c_float = unsafe { -0.1181340366601944f32 };
-    static mut a4: libc::c_float = unsafe { 0.10712379962205887f32 };
-    static mut a5: libc::c_float = unsafe { -0.018663715571165086f32 };
-    static mut a6: libc::c_float = unsafe { 0.00099014095030725f32 };
-    static mut a7: libc::c_float = unsafe { -5.2302214344429959e-14f32 };
+unsafe fn nk_cos(mut x: f32) -> f32 {
+    static mut a0: f32 = unsafe { 1.0023859739303589f32 };
+    static mut a1: f32 = unsafe { -0.03819199651479721f32 };
+    static mut a2: f32 = unsafe { -0.3943823277950287f32 };
+    static mut a3: f32 = unsafe { -0.1181340366601944f32 };
+    static mut a4: f32 = unsafe { 0.10712379962205887f32 };
+    static mut a5: f32 = unsafe { -0.018663715571165086f32 };
+    static mut a6: f32 = unsafe { 0.00099014095030725f32 };
+    static mut a7: f32 = unsafe { -5.2302214344429959e-14f32 };
     return a0 + x * (a1 + x * (a2 + x * (a3 + x * (a4 + x * (a5 + x * (a6 + x * a7))))));
 }
 #[no_mangle]
@@ -2248,7 +2248,7 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         /* default text */
         text = &mut (*style).text as *mut nk_style_text;
         (*text).color = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
-        (*text).padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        (*text).padding = nk_vec2(0i32 as f32, 0i32 as f32);
         /* default button */
         button = &mut (*style).button as *mut nk_style_button;
         nk_zero(
@@ -2347,10 +2347,10 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*toggle).text_hover = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*toggle).text_active = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*toggle).padding = nk_vec2(2.0f32, 2.0f32);
-        (*toggle).touch_padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        (*toggle).touch_padding = nk_vec2(0i32 as f32, 0i32 as f32);
         (*toggle).border_color = nk_rgba(0i32, 0i32, 0i32, 0i32);
         (*toggle).border = 0.0f32;
-        (*toggle).spacing = 4i32 as libc::c_float;
+        (*toggle).spacing = 4i32 as f32;
         /* option toggle */
         toggle = &mut (*style).option as *mut nk_style_toggle;
         nk_zero(
@@ -2373,10 +2373,10 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*toggle).text_hover = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*toggle).text_active = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*toggle).padding = nk_vec2(3.0f32, 3.0f32);
-        (*toggle).touch_padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        (*toggle).touch_padding = nk_vec2(0i32 as f32, 0i32 as f32);
         (*toggle).border_color = nk_rgba(0i32, 0i32, 0i32, 0i32);
         (*toggle).border = 0.0f32;
-        (*toggle).spacing = 4i32 as libc::c_float;
+        (*toggle).spacing = 4i32 as f32;
         /* selectable */
         select = &mut (*style).selectable as *mut nk_style_selectable;
         nk_zero(
@@ -2403,7 +2403,7 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*select).text_pressed_active = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*select).padding = nk_vec2(2.0f32, 2.0f32);
         (*select).image_padding = nk_vec2(2.0f32, 2.0f32);
-        (*select).touch_padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        (*select).touch_padding = nk_vec2(0i32 as f32, 0i32 as f32);
         (*select).userdata = nk_handle_ptr(0 as *mut libc::c_void);
         (*select).rounding = 0.0f32;
         (*select).draw_begin = None;
@@ -2431,13 +2431,13 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         );
         (*slider).inc_symbol = NK_SYMBOL_TRIANGLE_RIGHT;
         (*slider).dec_symbol = NK_SYMBOL_TRIANGLE_LEFT;
-        (*slider).cursor_size = nk_vec2(16i32 as libc::c_float, 16i32 as libc::c_float);
-        (*slider).padding = nk_vec2(2i32 as libc::c_float, 2i32 as libc::c_float);
-        (*slider).spacing = nk_vec2(2i32 as libc::c_float, 2i32 as libc::c_float);
+        (*slider).cursor_size = nk_vec2(16i32 as f32, 16i32 as f32);
+        (*slider).padding = nk_vec2(2i32 as f32, 2i32 as f32);
+        (*slider).spacing = nk_vec2(2i32 as f32, 2i32 as f32);
         (*slider).userdata = nk_handle_ptr(0 as *mut libc::c_void);
         (*slider).show_buttons = nk_false as libc::c_int;
-        (*slider).bar_height = 8i32 as libc::c_float;
-        (*slider).rounding = 0i32 as libc::c_float;
+        (*slider).bar_height = 8i32 as f32;
+        (*slider).rounding = 0i32 as f32;
         (*slider).draw_begin = None;
         (*slider).draw_end = None;
         /* slider buttons */
@@ -2481,11 +2481,11 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*prog).border_color = nk_rgba(0i32, 0i32, 0i32, 0i32);
         (*prog).cursor_border_color = nk_rgba(0i32, 0i32, 0i32, 0i32);
         (*prog).userdata = nk_handle_ptr(0 as *mut libc::c_void);
-        (*prog).padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*prog).rounding = 0i32 as libc::c_float;
-        (*prog).border = 0i32 as libc::c_float;
-        (*prog).cursor_rounding = 0i32 as libc::c_float;
-        (*prog).cursor_border = 0i32 as libc::c_float;
+        (*prog).padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*prog).rounding = 0i32 as f32;
+        (*prog).border = 0i32 as f32;
+        (*prog).cursor_rounding = 0i32 as f32;
+        (*prog).cursor_border = 0i32 as f32;
         (*prog).draw_begin = None;
         (*prog).draw_end = None;
         /* scrollbars */
@@ -2513,12 +2513,12 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*scroll).userdata = nk_handle_ptr(0 as *mut libc::c_void);
         (*scroll).border_color = *table.offset(NK_COLOR_SCROLLBAR as libc::c_int as isize);
         (*scroll).cursor_border_color = *table.offset(NK_COLOR_SCROLLBAR as libc::c_int as isize);
-        (*scroll).padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        (*scroll).padding = nk_vec2(0i32 as f32, 0i32 as f32);
         (*scroll).show_buttons = nk_false as libc::c_int;
-        (*scroll).border = 0i32 as libc::c_float;
-        (*scroll).rounding = 0i32 as libc::c_float;
-        (*scroll).border_cursor = 0i32 as libc::c_float;
-        (*scroll).rounding_cursor = 0i32 as libc::c_float;
+        (*scroll).border = 0i32 as f32;
+        (*scroll).rounding = 0i32 as f32;
+        (*scroll).border_cursor = 0i32 as f32;
+        (*scroll).rounding_cursor = 0i32 as f32;
         (*scroll).draw_begin = None;
         (*scroll).draw_end = None;
         (*style).scrollv = (*style).scrollh;
@@ -2564,13 +2564,13 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*edit).selected_hover = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*edit).selected_text_normal = *table.offset(NK_COLOR_EDIT as libc::c_int as isize);
         (*edit).selected_text_hover = *table.offset(NK_COLOR_EDIT as libc::c_int as isize);
-        (*edit).scrollbar_size = nk_vec2(10i32 as libc::c_float, 10i32 as libc::c_float);
+        (*edit).scrollbar_size = nk_vec2(10i32 as f32, 10i32 as f32);
         (*edit).scrollbar = (*style).scrollv;
-        (*edit).padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*edit).row_padding = 2i32 as libc::c_float;
-        (*edit).cursor_size = 4i32 as libc::c_float;
-        (*edit).border = 1i32 as libc::c_float;
-        (*edit).rounding = 0i32 as libc::c_float;
+        (*edit).padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*edit).row_padding = 2i32 as f32;
+        (*edit).cursor_size = 4i32 as f32;
+        (*edit).border = 1i32 as f32;
+        (*edit).rounding = 0i32 as f32;
         /* property */
         property = &mut (*style).property as *mut nk_style_property;
         nk_zero(
@@ -2590,9 +2590,9 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*property).sym_left = NK_SYMBOL_TRIANGLE_LEFT;
         (*property).sym_right = NK_SYMBOL_TRIANGLE_RIGHT;
         (*property).userdata = nk_handle_ptr(0 as *mut libc::c_void);
-        (*property).padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*property).border = 1i32 as libc::c_float;
-        (*property).rounding = 10i32 as libc::c_float;
+        (*property).padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*property).border = 1i32 as f32;
+        (*property).rounding = 10i32 as f32;
         (*property).draw_begin = None;
         (*property).draw_end = None;
         /* property buttons */
@@ -2645,10 +2645,10 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*edit).selected_hover = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*edit).selected_text_normal = *table.offset(NK_COLOR_EDIT as libc::c_int as isize);
         (*edit).selected_text_hover = *table.offset(NK_COLOR_EDIT as libc::c_int as isize);
-        (*edit).padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
-        (*edit).cursor_size = 8i32 as libc::c_float;
-        (*edit).border = 0i32 as libc::c_float;
-        (*edit).rounding = 0i32 as libc::c_float;
+        (*edit).padding = nk_vec2(0i32 as f32, 0i32 as f32);
+        (*edit).cursor_size = 8i32 as f32;
+        (*edit).border = 0i32 as f32;
+        (*edit).rounding = 0i32 as f32;
         /* chart */
         chart = &mut (*style).chart as *mut nk_style_chart;
         nk_zero(
@@ -2661,9 +2661,9 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*chart).selected_color =
             *table.offset(NK_COLOR_CHART_COLOR_HIGHLIGHT as libc::c_int as isize);
         (*chart).color = *table.offset(NK_COLOR_CHART_COLOR as libc::c_int as isize);
-        (*chart).padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*chart).border = 0i32 as libc::c_float;
-        (*chart).rounding = 0i32 as libc::c_float;
+        (*chart).padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*chart).border = 0i32 as f32;
+        (*chart).rounding = 0i32 as f32;
         /* combo */
         combo = &mut (*style).combo as *mut nk_style_combo;
         (*combo).normal =
@@ -2678,11 +2678,11 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*combo).sym_normal = NK_SYMBOL_TRIANGLE_DOWN;
         (*combo).sym_hover = NK_SYMBOL_TRIANGLE_DOWN;
         (*combo).sym_active = NK_SYMBOL_TRIANGLE_DOWN;
-        (*combo).content_padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*combo).button_padding = nk_vec2(0i32 as libc::c_float, 4i32 as libc::c_float);
-        (*combo).spacing = nk_vec2(4i32 as libc::c_float, 0i32 as libc::c_float);
-        (*combo).border = 1i32 as libc::c_float;
-        (*combo).rounding = 0i32 as libc::c_float;
+        (*combo).content_padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*combo).button_padding = nk_vec2(0i32 as f32, 4i32 as f32);
+        (*combo).spacing = nk_vec2(4i32 as f32, 0i32 as f32);
+        (*combo).border = 1i32 as f32;
+        (*combo).rounding = 0i32 as f32;
         /* combo button */
         button = &mut (*style).combo.button as *mut nk_style_button;
         nk_zero(
@@ -2716,11 +2716,11 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*tab).text = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*tab).sym_minimize = NK_SYMBOL_TRIANGLE_RIGHT;
         (*tab).sym_maximize = NK_SYMBOL_TRIANGLE_DOWN;
-        (*tab).padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*tab).spacing = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
+        (*tab).padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*tab).spacing = nk_vec2(4i32 as f32, 4i32 as f32);
         (*tab).indent = 10.0f32;
-        (*tab).border = 1i32 as libc::c_float;
-        (*tab).rounding = 0i32 as libc::c_float;
+        (*tab).border = 1i32 as f32;
+        (*tab).rounding = 0i32 as f32;
         /* tab button */
         button = &mut (*style).tab.tab_minimize_button as *mut nk_style_button;
         nk_zero(
@@ -2788,9 +2788,9 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*win).header.label_normal = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*win).header.label_hover = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
         (*win).header.label_active = *table.offset(NK_COLOR_TEXT as libc::c_int as isize);
-        (*win).header.label_padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).header.padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).header.spacing = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        (*win).header.label_padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).header.padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).header.spacing = nk_vec2(0i32 as f32, 0i32 as f32);
         /* window header close button */
         button = &mut (*style).window.header.close_button as *mut nk_style_button;
         nk_zero(
@@ -2854,9 +2854,9 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*win).tooltip_border_color = *table.offset(NK_COLOR_BORDER as libc::c_int as isize);
         (*win).scaler = nk_style_item_color(*table.offset(NK_COLOR_TEXT as libc::c_int as isize));
         (*win).rounding = 0.0f32;
-        (*win).spacing = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).scrollbar_size = nk_vec2(10i32 as libc::c_float, 10i32 as libc::c_float);
-        (*win).min_size = nk_vec2(64i32 as libc::c_float, 64i32 as libc::c_float);
+        (*win).spacing = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).scrollbar_size = nk_vec2(10i32 as f32, 10i32 as f32);
+        (*win).min_size = nk_vec2(64i32 as f32, 64i32 as f32);
         (*win).combo_border = 1.0f32;
         (*win).contextual_border = 1.0f32;
         (*win).menu_border = 1.0f32;
@@ -2864,19 +2864,19 @@ pub unsafe fn nk_style_from_table(mut ctx: *mut nk_context, mut table: *const nk
         (*win).tooltip_border = 1.0f32;
         (*win).popup_border = 1.0f32;
         (*win).border = 2.0f32;
-        (*win).min_row_height_padding = 8i32 as libc::c_float;
-        (*win).padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).group_padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).popup_padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).combo_padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).contextual_padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).menu_padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
-        (*win).tooltip_padding = nk_vec2(4i32 as libc::c_float, 4i32 as libc::c_float);
+        (*win).min_row_height_padding = 8i32 as f32;
+        (*win).padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).group_padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).popup_padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).combo_padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).contextual_padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).menu_padding = nk_vec2(4i32 as f32, 4i32 as f32);
+        (*win).tooltip_padding = nk_vec2(4i32 as f32, 4i32 as f32);
         return;
     };
 }
 #[no_mangle]
-pub unsafe fn nk_vec2(mut x: libc::c_float, mut y: libc::c_float) -> nk_vec2 {
+pub unsafe fn nk_vec2(mut x: f32, mut y: f32) -> nk_vec2 {
     let mut ret: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     ret.x = x;
     ret.y = y;
@@ -3624,11 +3624,11 @@ pub unsafe fn nk_input_begin(mut ctx: *mut nk_context) -> () {
             i += 1
         }
         (*in_0).keyboard.text_len = 0i32;
-        (*in_0).mouse.scroll_delta = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        (*in_0).mouse.scroll_delta = nk_vec2(0i32 as f32, 0i32 as f32);
         (*in_0).mouse.prev.x = (*in_0).mouse.pos.x;
         (*in_0).mouse.prev.y = (*in_0).mouse.pos.y;
-        (*in_0).mouse.delta.x = 0i32 as libc::c_float;
-        (*in_0).mouse.delta.y = 0i32 as libc::c_float;
+        (*in_0).mouse.delta.x = 0i32 as f32;
+        (*in_0).mouse.delta.y = 0i32 as f32;
         i = 0i32;
         while i < NK_KEY_MAX as libc::c_int {
             (*in_0).keyboard.keys[i as usize].clicked = 0i32 as libc::c_uint;
@@ -3648,8 +3648,8 @@ pub unsafe fn nk_input_motion(
         return;
     } else {
         in_0 = &mut (*ctx).input as *mut nk_input;
-        (*in_0).mouse.pos.x = x as libc::c_float;
-        (*in_0).mouse.pos.y = y as libc::c_float;
+        (*in_0).mouse.pos.x = x as f32;
+        (*in_0).mouse.pos.y = y as f32;
         (*in_0).mouse.delta.x = (*in_0).mouse.pos.x - (*in_0).mouse.prev.x;
         (*in_0).mouse.delta.y = (*in_0).mouse.pos.y - (*in_0).mouse.prev.y;
         return;
@@ -3692,8 +3692,8 @@ pub unsafe fn nk_input_button(
             return;
         } else {
             btn = &mut (*in_0).mouse.buttons[id as usize] as *mut nk_mouse_button;
-            (*btn).clicked_pos.x = x as libc::c_float;
-            (*btn).clicked_pos.y = y as libc::c_float;
+            (*btn).clicked_pos.x = x as f32;
+            (*btn).clicked_pos.y = y as f32;
             (*btn).down = down;
             (*btn).clicked = (*btn).clicked.wrapping_add(1);
             return;
@@ -4054,7 +4054,7 @@ pub unsafe fn nk_draw_image(
     } else {
         if 0 != (*b).use_clipping {
             let mut c: *const nk_rect = &mut (*b).clip as *mut nk_rect;
-            if (*c).w == 0i32 as libc::c_float || (*c).h == 0i32 as libc::c_float
+            if (*c).w == 0i32 as f32 || (*c).h == 0i32 as f32
                 || ((*c).x > r.x + r.w
                     || (*c).x + (*c).w < r.x
                     || (*c).y > r.y + r.h
@@ -4073,15 +4073,15 @@ pub unsafe fn nk_draw_image(
         } else {
             (*cmd).x = r.x as libc::c_short;
             (*cmd).y = r.y as libc::c_short;
-            (*cmd).w = (if (0i32 as libc::c_float) < r.w {
+            (*cmd).w = (if (0i32 as f32) < r.w {
                 r.w
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
-            (*cmd).h = (if (0i32 as libc::c_float) < r.h {
+            (*cmd).h = (if (0i32 as f32) < r.h {
                 r.h
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
             (*cmd).img = *img;
             (*cmd).col = col;
@@ -4176,7 +4176,7 @@ unsafe fn nk_buffer_alloc(
                 return 0 as *mut libc::c_void;
             } else {
                 /* buffer is full so allocate bigger buffer if dynamic */
-                capacity = ((*b).memory.size as libc::c_float * (*b).grow_factor) as nk_size;
+                capacity = ((*b).memory.size as f32 * (*b).grow_factor) as nk_size;
                 capacity = if capacity
                     < nk_round_up_pow2((*b).allocated.wrapping_add(size) as nk_uint)
                         as libc::c_ulong
@@ -4461,8 +4461,8 @@ static mut nk_null_rect: nk_rect = unsafe {
     nk_rect {
         x: -8192.0f32,
         y: -8192.0f32,
-        w: 16384i32 as libc::c_float,
-        h: 16384i32 as libc::c_float,
+        w: 16384i32 as f32,
+        h: 16384i32 as f32,
     }
 };
 unsafe fn nk_command_buffer_init(
@@ -4547,10 +4547,10 @@ pub unsafe fn nk_convert(
                     nk_draw_list_add_clip(
                         &mut (*ctx).draw_list,
                         nk_rect(
-                            (*s).x as libc::c_float,
-                            (*s).y as libc::c_float,
-                            (*s).w as libc::c_float,
-                            (*s).h as libc::c_float,
+                            (*s).x as f32,
+                            (*s).y as f32,
+                            (*s).w as f32,
+                            (*s).h as f32,
                         ),
                     );
                 }
@@ -4558,29 +4558,29 @@ pub unsafe fn nk_convert(
                     l = cmd as *const nk_command_line;
                     nk_draw_list_stroke_line(
                         &mut (*ctx).draw_list,
-                        nk_vec2((*l).begin.x as libc::c_float, (*l).begin.y as libc::c_float),
-                        nk_vec2((*l).end.x as libc::c_float, (*l).end.y as libc::c_float),
+                        nk_vec2((*l).begin.x as f32, (*l).begin.y as f32),
+                        nk_vec2((*l).end.x as f32, (*l).end.y as f32),
                         (*l).color,
-                        (*l).line_thickness as libc::c_float,
+                        (*l).line_thickness as f32,
                     );
                 }
                 3 => {
                     q = cmd as *const nk_command_curve;
                     nk_draw_list_stroke_curve(
                         &mut (*ctx).draw_list,
-                        nk_vec2((*q).begin.x as libc::c_float, (*q).begin.y as libc::c_float),
+                        nk_vec2((*q).begin.x as f32, (*q).begin.y as f32),
                         nk_vec2(
-                            (*q).ctrl[0usize].x as libc::c_float,
-                            (*q).ctrl[0usize].y as libc::c_float,
+                            (*q).ctrl[0usize].x as f32,
+                            (*q).ctrl[0usize].y as f32,
                         ),
                         nk_vec2(
-                            (*q).ctrl[1usize].x as libc::c_float,
-                            (*q).ctrl[1usize].y as libc::c_float,
+                            (*q).ctrl[1usize].x as f32,
+                            (*q).ctrl[1usize].y as f32,
                         ),
-                        nk_vec2((*q).end.x as libc::c_float, (*q).end.y as libc::c_float),
+                        nk_vec2((*q).end.x as f32, (*q).end.y as f32),
                         (*q).color,
                         (*config).curve_segment_count,
-                        (*q).line_thickness as libc::c_float,
+                        (*q).line_thickness as f32,
                     );
                 }
                 4 => {
@@ -4588,14 +4588,14 @@ pub unsafe fn nk_convert(
                     nk_draw_list_stroke_rect(
                         &mut (*ctx).draw_list,
                         nk_rect(
-                            (*r).x as libc::c_float,
-                            (*r).y as libc::c_float,
-                            (*r).w as libc::c_float,
-                            (*r).h as libc::c_float,
+                            (*r).x as f32,
+                            (*r).y as f32,
+                            (*r).w as f32,
+                            (*r).h as f32,
                         ),
                         (*r).color,
-                        (*r).rounding as libc::c_float,
-                        (*r).line_thickness as libc::c_float,
+                        (*r).rounding as f32,
+                        (*r).line_thickness as f32,
                     );
                 }
                 5 => {
@@ -4603,13 +4603,13 @@ pub unsafe fn nk_convert(
                     nk_draw_list_fill_rect(
                         &mut (*ctx).draw_list,
                         nk_rect(
-                            (*r_0).x as libc::c_float,
-                            (*r_0).y as libc::c_float,
-                            (*r_0).w as libc::c_float,
-                            (*r_0).h as libc::c_float,
+                            (*r_0).x as f32,
+                            (*r_0).y as f32,
+                            (*r_0).w as f32,
+                            (*r_0).h as f32,
                         ),
                         (*r_0).color,
-                        (*r_0).rounding as libc::c_float,
+                        (*r_0).rounding as f32,
                     );
                 }
                 6 => {
@@ -4617,10 +4617,10 @@ pub unsafe fn nk_convert(
                     nk_draw_list_fill_rect_multi_color(
                         &mut (*ctx).draw_list,
                         nk_rect(
-                            (*r_1).x as libc::c_float,
-                            (*r_1).y as libc::c_float,
-                            (*r_1).w as libc::c_float,
-                            (*r_1).h as libc::c_float,
+                            (*r_1).x as f32,
+                            (*r_1).y as f32,
+                            (*r_1).w as f32,
+                            (*r_1).h as f32,
                         ),
                         (*r_1).left,
                         (*r_1).top,
@@ -4633,15 +4633,15 @@ pub unsafe fn nk_convert(
                     nk_draw_list_stroke_circle(
                         &mut (*ctx).draw_list,
                         nk_vec2(
-                            (*c).x as libc::c_float
-                                + (*c).w as libc::c_float / 2i32 as libc::c_float,
-                            (*c).y as libc::c_float
-                                + (*c).h as libc::c_float / 2i32 as libc::c_float,
+                            (*c).x as f32
+                                + (*c).w as f32 / 2i32 as f32,
+                            (*c).y as f32
+                                + (*c).h as f32 / 2i32 as f32,
                         ),
-                        (*c).w as libc::c_float / 2i32 as libc::c_float,
+                        (*c).w as f32 / 2i32 as f32,
                         (*c).color,
                         (*config).circle_segment_count,
-                        (*c).line_thickness as libc::c_float,
+                        (*c).line_thickness as f32,
                     );
                 }
                 8 => {
@@ -4649,12 +4649,12 @@ pub unsafe fn nk_convert(
                     nk_draw_list_fill_circle(
                         &mut (*ctx).draw_list,
                         nk_vec2(
-                            (*c_0).x as libc::c_float
-                                + (*c_0).w as libc::c_float / 2i32 as libc::c_float,
-                            (*c_0).y as libc::c_float
-                                + (*c_0).h as libc::c_float / 2i32 as libc::c_float,
+                            (*c_0).x as f32
+                                + (*c_0).w as f32 / 2i32 as f32,
+                            (*c_0).y as f32
+                                + (*c_0).h as f32 / 2i32 as f32,
                         ),
-                        (*c_0).w as libc::c_float / 2i32 as libc::c_float,
+                        (*c_0).w as f32 / 2i32 as f32,
                         (*c_0).color,
                         (*config).circle_segment_count,
                     );
@@ -4663,12 +4663,12 @@ pub unsafe fn nk_convert(
                     c_1 = cmd as *const nk_command_arc;
                     nk_draw_list_path_line_to(
                         &mut (*ctx).draw_list,
-                        nk_vec2((*c_1).cx as libc::c_float, (*c_1).cy as libc::c_float),
+                        nk_vec2((*c_1).cx as f32, (*c_1).cy as f32),
                     );
                     nk_draw_list_path_arc_to(
                         &mut (*ctx).draw_list,
-                        nk_vec2((*c_1).cx as libc::c_float, (*c_1).cy as libc::c_float),
-                        (*c_1).r as libc::c_float,
+                        nk_vec2((*c_1).cx as f32, (*c_1).cy as f32),
+                        (*c_1).r as f32,
                         (*c_1).a[0usize],
                         (*c_1).a[1usize],
                         (*config).arc_segment_count,
@@ -4677,19 +4677,19 @@ pub unsafe fn nk_convert(
                         &mut (*ctx).draw_list,
                         (*c_1).color,
                         NK_STROKE_CLOSED,
-                        (*c_1).line_thickness as libc::c_float,
+                        (*c_1).line_thickness as f32,
                     );
                 }
                 10 => {
                     c_2 = cmd as *const nk_command_arc_filled;
                     nk_draw_list_path_line_to(
                         &mut (*ctx).draw_list,
-                        nk_vec2((*c_2).cx as libc::c_float, (*c_2).cy as libc::c_float),
+                        nk_vec2((*c_2).cx as f32, (*c_2).cy as f32),
                     );
                     nk_draw_list_path_arc_to(
                         &mut (*ctx).draw_list,
-                        nk_vec2((*c_2).cx as libc::c_float, (*c_2).cy as libc::c_float),
-                        (*c_2).r as libc::c_float,
+                        nk_vec2((*c_2).cx as f32, (*c_2).cy as f32),
+                        (*c_2).r as f32,
                         (*c_2).a[0usize],
                         (*c_2).a[1usize],
                         (*config).arc_segment_count,
@@ -4700,20 +4700,20 @@ pub unsafe fn nk_convert(
                     t = cmd as *const nk_command_triangle;
                     nk_draw_list_stroke_triangle(
                         &mut (*ctx).draw_list,
-                        nk_vec2((*t).a.x as libc::c_float, (*t).a.y as libc::c_float),
-                        nk_vec2((*t).b.x as libc::c_float, (*t).b.y as libc::c_float),
-                        nk_vec2((*t).c.x as libc::c_float, (*t).c.y as libc::c_float),
+                        nk_vec2((*t).a.x as f32, (*t).a.y as f32),
+                        nk_vec2((*t).b.x as f32, (*t).b.y as f32),
+                        nk_vec2((*t).c.x as f32, (*t).c.y as f32),
                         (*t).color,
-                        (*t).line_thickness as libc::c_float,
+                        (*t).line_thickness as f32,
                     );
                 }
                 12 => {
                     t_0 = cmd as *const nk_command_triangle_filled;
                     nk_draw_list_fill_triangle(
                         &mut (*ctx).draw_list,
-                        nk_vec2((*t_0).a.x as libc::c_float, (*t_0).a.y as libc::c_float),
-                        nk_vec2((*t_0).b.x as libc::c_float, (*t_0).b.y as libc::c_float),
-                        nk_vec2((*t_0).c.x as libc::c_float, (*t_0).c.y as libc::c_float),
+                        nk_vec2((*t_0).a.x as f32, (*t_0).a.y as f32),
+                        nk_vec2((*t_0).b.x as f32, (*t_0).b.y as f32),
+                        nk_vec2((*t_0).c.x as f32, (*t_0).c.y as f32),
                         (*t_0).color,
                     );
                 }
@@ -4723,8 +4723,8 @@ pub unsafe fn nk_convert(
                     i = 0i32;
                     while i < (*p).point_count as libc::c_int {
                         let mut pnt: nk_vec2 = nk_vec2(
-                            (*p).points[i as usize].x as libc::c_float,
-                            (*p).points[i as usize].y as libc::c_float,
+                            (*p).points[i as usize].x as f32,
+                            (*p).points[i as usize].y as f32,
                         );
                         nk_draw_list_path_line_to(&mut (*ctx).draw_list, pnt);
                         i += 1
@@ -4733,7 +4733,7 @@ pub unsafe fn nk_convert(
                         &mut (*ctx).draw_list,
                         (*p).color,
                         NK_STROKE_CLOSED,
-                        (*p).line_thickness as libc::c_float,
+                        (*p).line_thickness as f32,
                     );
                 }
                 14 => {
@@ -4743,8 +4743,8 @@ pub unsafe fn nk_convert(
                     i_0 = 0i32;
                     while i_0 < (*p_0).point_count as libc::c_int {
                         let mut pnt_0: nk_vec2 = nk_vec2(
-                            (*p_0).points[i_0 as usize].x as libc::c_float,
-                            (*p_0).points[i_0 as usize].y as libc::c_float,
+                            (*p_0).points[i_0 as usize].x as f32,
+                            (*p_0).points[i_0 as usize].y as f32,
                         );
                         nk_draw_list_path_line_to(&mut (*ctx).draw_list, pnt_0);
                         i_0 += 1
@@ -4757,8 +4757,8 @@ pub unsafe fn nk_convert(
                     i_1 = 0i32;
                     while i_1 < (*p_1).point_count as libc::c_int {
                         let mut pnt_1: nk_vec2 = nk_vec2(
-                            (*p_1).points[i_1 as usize].x as libc::c_float,
-                            (*p_1).points[i_1 as usize].y as libc::c_float,
+                            (*p_1).points[i_1 as usize].x as f32,
+                            (*p_1).points[i_1 as usize].y as f32,
                         );
                         nk_draw_list_path_line_to(&mut (*ctx).draw_list, pnt_1);
                         i_1 += 1
@@ -4767,7 +4767,7 @@ pub unsafe fn nk_convert(
                         &mut (*ctx).draw_list,
                         (*p_1).color,
                         NK_STROKE_OPEN,
-                        (*p_1).line_thickness as libc::c_float,
+                        (*p_1).line_thickness as f32,
                     );
                 }
                 16 => {
@@ -4776,10 +4776,10 @@ pub unsafe fn nk_convert(
                         &mut (*ctx).draw_list,
                         (*t_1).font,
                         nk_rect(
-                            (*t_1).x as libc::c_float,
-                            (*t_1).y as libc::c_float,
-                            (*t_1).w as libc::c_float,
-                            (*t_1).h as libc::c_float,
+                            (*t_1).x as f32,
+                            (*t_1).y as f32,
+                            (*t_1).w as f32,
+                            (*t_1).h as f32,
                         ),
                         (*t_1).string.as_ptr(),
                         (*t_1).length,
@@ -4793,10 +4793,10 @@ pub unsafe fn nk_convert(
                         &mut (*ctx).draw_list,
                         (*i_2).img,
                         nk_rect(
-                            (*i_2).x as libc::c_float,
-                            (*i_2).y as libc::c_float,
-                            (*i_2).w as libc::c_float,
-                            (*i_2).h as libc::c_float,
+                            (*i_2).x as f32,
+                            (*i_2).y as f32,
+                            (*i_2).w as f32,
+                            (*i_2).h as f32,
                         ),
                         (*i_2).col,
                     );
@@ -4840,10 +4840,10 @@ pub unsafe fn nk_convert(
 }
 #[no_mangle]
 pub unsafe fn nk_rect(
-    mut x: libc::c_float,
-    mut y: libc::c_float,
-    mut w: libc::c_float,
-    mut h: libc::c_float,
+    mut x: f32,
+    mut y: f32,
+    mut w: f32,
+    mut h: f32,
 ) -> nk_rect {
     let mut r: nk_rect = nk_rect {
         x: 0.,
@@ -4873,14 +4873,14 @@ pub unsafe fn nk_draw_list_add_image(
         if 0 != nk_image_is_subimage(&mut texture) {
             /* add region inside of the texture  */
             uv = [nk_vec2 { x: 0., y: 0. }; 2];
-            uv[0usize].x = texture.region[0usize] as libc::c_float / texture.w as libc::c_float;
-            uv[0usize].y = texture.region[1usize] as libc::c_float / texture.h as libc::c_float;
+            uv[0usize].x = texture.region[0usize] as f32 / texture.w as f32;
+            uv[0usize].y = texture.region[1usize] as f32 / texture.h as f32;
             uv[1usize].x = (texture.region[0usize] as libc::c_int
-                + texture.region[2usize] as libc::c_int) as libc::c_float
-                / texture.w as libc::c_float;
+                + texture.region[2usize] as libc::c_int) as f32
+                / texture.w as f32;
             uv[1usize].y = (texture.region[1usize] as libc::c_int
-                + texture.region[3usize] as libc::c_int) as libc::c_float
-                / texture.h as libc::c_float;
+                + texture.region[3usize] as libc::c_int) as f32
+                / texture.h as f32;
             nk_draw_list_push_rect_uv(
                 list,
                 nk_vec2(rect.x, rect.y),
@@ -4982,7 +4982,7 @@ unsafe fn nk_draw_vertex(
 }
 unsafe fn nk_draw_vertex_color(
     mut attr: *mut libc::c_void,
-    mut vals: *const libc::c_float,
+    mut vals: *const f32,
     mut format: nk_draw_vertex_layout_format,
 ) -> () {
     let mut col_5: [libc::c_double; 4] = [0.; 4];
@@ -5009,13 +5009,13 @@ unsafe fn nk_draw_vertex_color(
     };
     let mut col_1: [nk_ushort; 3] = [0; 3];
     /* if this triggers you tried to provide a value format for a color */
-    let mut val: [libc::c_float; 4] = [0.; 4];
+    let mut val: [f32; 4] = [0.; 4];
     if (format as libc::c_uint) < NK_FORMAT_COLOR_BEGIN as libc::c_int as libc::c_uint
         || format as libc::c_uint > NK_FORMAT_COLOR_END as libc::c_int as libc::c_uint
     {
         return;
     } else {
-        val[0usize] = if (0i32 as libc::c_float) < if 1.0f32 < *vals.offset(0isize) {
+        val[0usize] = if (0i32 as f32) < if 1.0f32 < *vals.offset(0isize) {
             1.0f32
         } else {
             *vals.offset(0isize)
@@ -5026,9 +5026,9 @@ unsafe fn nk_draw_vertex_color(
                 *vals.offset(0isize)
             }
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
-        val[1usize] = if (0i32 as libc::c_float) < if 1.0f32 < *vals.offset(1isize) {
+        val[1usize] = if (0i32 as f32) < if 1.0f32 < *vals.offset(1isize) {
             1.0f32
         } else {
             *vals.offset(1isize)
@@ -5039,9 +5039,9 @@ unsafe fn nk_draw_vertex_color(
                 *vals.offset(1isize)
             }
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
-        val[2usize] = if (0i32 as libc::c_float) < if 1.0f32 < *vals.offset(2isize) {
+        val[2usize] = if (0i32 as f32) < if 1.0f32 < *vals.offset(2isize) {
             1.0f32
         } else {
             *vals.offset(2isize)
@@ -5052,9 +5052,9 @@ unsafe fn nk_draw_vertex_color(
                 *vals.offset(2isize)
             }
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
-        val[3usize] = if (0i32 as libc::c_float) < if 1.0f32 < *vals.offset(3isize) {
+        val[3usize] = if (0i32 as f32) < if 1.0f32 < *vals.offset(3isize) {
             1.0f32
         } else {
             *vals.offset(3isize)
@@ -5065,7 +5065,7 @@ unsafe fn nk_draw_vertex_color(
                 *vals.offset(3isize)
             }
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
         match format as libc::c_uint {
             11 | 8 => {
@@ -5092,9 +5092,9 @@ unsafe fn nk_draw_vertex_color(
             }
             9 => {
                 col_1 = [0; 3];
-                col_1[0usize] = (val[0usize] * 65535i32 as libc::c_float) as nk_ushort;
-                col_1[1usize] = (val[1usize] * 65535i32 as libc::c_float) as nk_ushort;
-                col_1[2usize] = (val[2usize] * 65535i32 as libc::c_float) as nk_ushort;
+                col_1[0usize] = (val[0usize] * 65535i32 as f32) as nk_ushort;
+                col_1[1usize] = (val[1usize] * 65535i32 as f32) as nk_ushort;
+                col_1[2usize] = (val[2usize] * 65535i32 as f32) as nk_ushort;
                 nk_memcopy(
                     attr,
                     col_1.as_mut_ptr() as *const libc::c_void,
@@ -5103,10 +5103,10 @@ unsafe fn nk_draw_vertex_color(
             }
             13 => {
                 col_2 = [0; 4];
-                col_2[0usize] = (val[0usize] * 65535i32 as libc::c_float) as nk_ushort;
-                col_2[1usize] = (val[1usize] * 65535i32 as libc::c_float) as nk_ushort;
-                col_2[2usize] = (val[2usize] * 65535i32 as libc::c_float) as nk_ushort;
-                col_2[3usize] = (val[3usize] * 65535i32 as libc::c_float) as nk_ushort;
+                col_2[0usize] = (val[0usize] * 65535i32 as f32) as nk_ushort;
+                col_2[1usize] = (val[1usize] * 65535i32 as f32) as nk_ushort;
+                col_2[2usize] = (val[2usize] * 65535i32 as f32) as nk_ushort;
+                col_2[3usize] = (val[3usize] * 65535i32 as f32) as nk_ushort;
                 nk_memcopy(
                     attr,
                     col_2.as_mut_ptr() as *const libc::c_void,
@@ -5115,9 +5115,9 @@ unsafe fn nk_draw_vertex_color(
             }
             10 => {
                 col_3 = [0; 3];
-                col_3[0usize] = (val[0usize] * 4294967295u32 as libc::c_float) as nk_uint;
-                col_3[1usize] = (val[1usize] * 4294967295u32 as libc::c_float) as nk_uint;
-                col_3[2usize] = (val[2usize] * 4294967295u32 as libc::c_float) as nk_uint;
+                col_3[0usize] = (val[0usize] * 4294967295u32 as f32) as nk_uint;
+                col_3[1usize] = (val[1usize] * 4294967295u32 as f32) as nk_uint;
+                col_3[2usize] = (val[2usize] * 4294967295u32 as f32) as nk_uint;
                 nk_memcopy(
                     attr,
                     col_3.as_mut_ptr() as *const libc::c_void,
@@ -5126,10 +5126,10 @@ unsafe fn nk_draw_vertex_color(
             }
             14 => {
                 col_4 = [0; 4];
-                col_4[0usize] = (val[0usize] * 4294967295u32 as libc::c_float) as nk_uint;
-                col_4[1usize] = (val[1usize] * 4294967295u32 as libc::c_float) as nk_uint;
-                col_4[2usize] = (val[2usize] * 4294967295u32 as libc::c_float) as nk_uint;
-                col_4[3usize] = (val[3usize] * 4294967295u32 as libc::c_float) as nk_uint;
+                col_4[0usize] = (val[0usize] * 4294967295u32 as f32) as nk_uint;
+                col_4[1usize] = (val[1usize] * 4294967295u32 as f32) as nk_uint;
+                col_4[2usize] = (val[2usize] * 4294967295u32 as f32) as nk_uint;
+                col_4[3usize] = (val[3usize] * 4294967295u32 as f32) as nk_uint;
                 nk_memcopy(
                     attr,
                     col_4.as_mut_ptr() as *const libc::c_void,
@@ -5140,7 +5140,7 @@ unsafe fn nk_draw_vertex_color(
                 nk_memcopy(
                     attr,
                     val.as_mut_ptr() as *const libc::c_void,
-                    (::std::mem::size_of::<libc::c_float>() as libc::c_ulong)
+                    (::std::mem::size_of::<f32>() as libc::c_ulong)
                         .wrapping_mul(4i32 as libc::c_ulong),
                 );
             }
@@ -5171,7 +5171,7 @@ unsafe fn nk_draw_vertex_color(
     };
 }
 #[no_mangle]
-pub unsafe fn nk_rgba_fv(mut c: *const libc::c_float) -> nk_color {
+pub unsafe fn nk_rgba_fv(mut c: *const f32) -> nk_color {
     return nk_rgba_f(
         *c.offset(0isize),
         *c.offset(1isize),
@@ -5181,10 +5181,10 @@ pub unsafe fn nk_rgba_fv(mut c: *const libc::c_float) -> nk_color {
 }
 #[no_mangle]
 pub unsafe fn nk_rgba_f(
-    mut r: libc::c_float,
-    mut g: libc::c_float,
-    mut b: libc::c_float,
-    mut a: libc::c_float,
+    mut r: f32,
+    mut g: f32,
+    mut b: f32,
+    mut a: f32,
 ) -> nk_color {
     let mut ret: nk_color = nk_color {
         r: 0,
@@ -5192,41 +5192,41 @@ pub unsafe fn nk_rgba_f(
         b: 0,
         a: 0,
     };
-    ret.r = (if (0i32 as libc::c_float) < if 1.0f32 < r { 1.0f32 } else { r } {
+    ret.r = (if (0i32 as f32) < if 1.0f32 < r { 1.0f32 } else { r } {
         if 1.0f32 < r {
             1.0f32
         } else {
             r
         }
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     } * 255.0f32) as nk_byte;
-    ret.g = (if (0i32 as libc::c_float) < if 1.0f32 < g { 1.0f32 } else { g } {
+    ret.g = (if (0i32 as f32) < if 1.0f32 < g { 1.0f32 } else { g } {
         if 1.0f32 < g {
             1.0f32
         } else {
             g
         }
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     } * 255.0f32) as nk_byte;
-    ret.b = (if (0i32 as libc::c_float) < if 1.0f32 < b { 1.0f32 } else { b } {
+    ret.b = (if (0i32 as f32) < if 1.0f32 < b { 1.0f32 } else { b } {
         if 1.0f32 < b {
             1.0f32
         } else {
             b
         }
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     } * 255.0f32) as nk_byte;
-    ret.a = (if (0i32 as libc::c_float) < if 1.0f32 < a { 1.0f32 } else { a } {
+    ret.a = (if (0i32 as f32) < if 1.0f32 < a { 1.0f32 } else { a } {
         if 1.0f32 < a {
             1.0f32
         } else {
             a
         }
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     } * 255.0f32) as nk_byte;
     return ret;
 }
@@ -5240,7 +5240,7 @@ pub unsafe fn nk_color_u32(mut in_0: nk_color) -> nk_uint {
 }
 unsafe fn nk_draw_vertex_element(
     mut dst: *mut libc::c_void,
-    mut values: *const libc::c_float,
+    mut values: *const f32,
     mut value_count: libc::c_int,
     mut format: nk_draw_vertex_layout_format,
 ) -> () {
@@ -5262,17 +5262,17 @@ unsafe fn nk_draw_vertex_element(
         while value_index < value_count {
             match format as libc::c_uint {
                 0 => {
-                    value = (if if *values.offset(value_index as isize) < 127i32 as libc::c_float {
+                    value = (if if *values.offset(value_index as isize) < 127i32 as f32 {
                         *values.offset(value_index as isize)
                     } else {
-                        127i32 as libc::c_float
-                    } < -127i32 as libc::c_float
+                        127i32 as f32
+                    } < -127i32 as f32
                     {
-                        -127i32 as libc::c_float
-                    } else if *values.offset(value_index as isize) < 127i32 as libc::c_float {
+                        -127i32 as f32
+                    } else if *values.offset(value_index as isize) < 127i32 as f32 {
                         *values.offset(value_index as isize)
                     } else {
-                        127i32 as libc::c_float
+                        127i32 as f32
                     }) as libc::c_char;
                     nk_memcopy(
                         attribute,
@@ -5286,17 +5286,17 @@ unsafe fn nk_draw_vertex_element(
                 }
                 1 => {
                     value_0 =
-                        (if if *values.offset(value_index as isize) < 32767i32 as libc::c_float {
+                        (if if *values.offset(value_index as isize) < 32767i32 as f32 {
                             *values.offset(value_index as isize)
                         } else {
-                            32767i32 as libc::c_float
-                        } < -32767i32 as libc::c_float
+                            32767i32 as f32
+                        } < -32767i32 as f32
                         {
-                            -32767i32 as libc::c_float
-                        } else if *values.offset(value_index as isize) < 32767i32 as libc::c_float {
+                            -32767i32 as f32
+                        } else if *values.offset(value_index as isize) < 32767i32 as f32 {
                             *values.offset(value_index as isize)
                         } else {
-                            32767i32 as libc::c_float
+                            32767i32 as f32
                         }) as nk_short;
                     nk_memcopy(
                         attribute,
@@ -5310,19 +5310,19 @@ unsafe fn nk_draw_vertex_element(
                 }
                 2 => {
                     value_1 = (if if *values.offset(value_index as isize)
-                        < 2147483647i32 as libc::c_float
+                        < 2147483647i32 as f32
                     {
                         *values.offset(value_index as isize)
                     } else {
-                        2147483647i32 as libc::c_float
-                    } < -2147483647i32 as libc::c_float
+                        2147483647i32 as f32
+                    } < -2147483647i32 as f32
                     {
-                        -2147483647i32 as libc::c_float
-                    } else if *values.offset(value_index as isize) < 2147483647i32 as libc::c_float
+                        -2147483647i32 as f32
+                    } else if *values.offset(value_index as isize) < 2147483647i32 as f32
                     {
                         *values.offset(value_index as isize)
                     } else {
-                        2147483647i32 as libc::c_float
+                        2147483647i32 as f32
                     }) as nk_int;
                     nk_memcopy(
                         attribute,
@@ -5334,18 +5334,18 @@ unsafe fn nk_draw_vertex_element(
                         as *mut libc::c_void
                 }
                 3 => {
-                    value_2 = (if if *values.offset(value_index as isize) < 256i32 as libc::c_float
+                    value_2 = (if if *values.offset(value_index as isize) < 256i32 as f32
                     {
                         *values.offset(value_index as isize)
                     } else {
-                        256i32 as libc::c_float
-                    } < 0i32 as libc::c_float
+                        256i32 as f32
+                    } < 0i32 as f32
                     {
-                        0i32 as libc::c_float
-                    } else if *values.offset(value_index as isize) < 256i32 as libc::c_float {
+                        0i32 as f32
+                    } else if *values.offset(value_index as isize) < 256i32 as f32 {
                         *values.offset(value_index as isize)
                     } else {
-                        256i32 as libc::c_float
+                        256i32 as f32
                     }) as libc::c_uchar;
                     nk_memcopy(
                         attribute,
@@ -5360,17 +5360,17 @@ unsafe fn nk_draw_vertex_element(
                 }
                 4 => {
                     value_3 =
-                        (if if *values.offset(value_index as isize) < 65535i32 as libc::c_float {
+                        (if if *values.offset(value_index as isize) < 65535i32 as f32 {
                             *values.offset(value_index as isize)
                         } else {
-                            65535i32 as libc::c_float
-                        } < 0i32 as libc::c_float
+                            65535i32 as f32
+                        } < 0i32 as f32
                         {
-                            0i32 as libc::c_float
-                        } else if *values.offset(value_index as isize) < 65535i32 as libc::c_float {
+                            0i32 as f32
+                        } else if *values.offset(value_index as isize) < 65535i32 as f32 {
                             *values.offset(value_index as isize)
                         } else {
-                            65535i32 as libc::c_float
+                            65535i32 as f32
                         }) as nk_ushort;
                     nk_memcopy(
                         attribute,
@@ -5384,19 +5384,19 @@ unsafe fn nk_draw_vertex_element(
                 }
                 5 => {
                     value_4 = (if if *values.offset(value_index as isize)
-                        < 4294967295u32 as libc::c_float
+                        < 4294967295u32 as f32
                     {
                         *values.offset(value_index as isize)
                     } else {
-                        4294967295u32 as libc::c_float
-                    } < 0i32 as libc::c_float
+                        4294967295u32 as f32
+                    } < 0i32 as f32
                     {
-                        0i32 as libc::c_float
-                    } else if *values.offset(value_index as isize) < 4294967295u32 as libc::c_float
+                        0i32 as f32
+                    } else if *values.offset(value_index as isize) < 4294967295u32 as f32
                     {
                         *values.offset(value_index as isize)
                     } else {
-                        4294967295u32 as libc::c_float
+                        4294967295u32 as f32
                     }) as nk_uint;
                     nk_memcopy(
                         attribute,
@@ -5410,12 +5410,12 @@ unsafe fn nk_draw_vertex_element(
                 6 => {
                     nk_memcopy(
                         attribute,
-                        &*values.offset(value_index as isize) as *const libc::c_float
+                        &*values.offset(value_index as isize) as *const f32
                             as *const libc::c_void,
-                        ::std::mem::size_of::<libc::c_float>() as libc::c_ulong,
+                        ::std::mem::size_of::<f32>() as libc::c_ulong,
                     );
                     attribute = (attribute as *mut libc::c_char).offset(::std::mem::size_of::<
-                        libc::c_float,
+                        f32,
                     >()
                         as libc::c_ulong
                         as isize) as *mut libc::c_void
@@ -5534,7 +5534,7 @@ unsafe fn nk_draw_list_alloc_vertices(
     };
 }
 #[no_mangle]
-pub unsafe fn nk_color_fv(mut c: *mut libc::c_float, mut in_0: nk_color) -> () {
+pub unsafe fn nk_color_fv(mut c: *mut f32, mut in_0: nk_color) -> () {
     nk_color_f(
         &mut *c.offset(0isize),
         &mut *c.offset(1isize),
@@ -5545,17 +5545,17 @@ pub unsafe fn nk_color_fv(mut c: *mut libc::c_float, mut in_0: nk_color) -> () {
 }
 #[no_mangle]
 pub unsafe fn nk_color_f(
-    mut r: *mut libc::c_float,
-    mut g: *mut libc::c_float,
-    mut b: *mut libc::c_float,
-    mut a: *mut libc::c_float,
+    mut r: *mut f32,
+    mut g: *mut f32,
+    mut b: *mut f32,
+    mut a: *mut f32,
     mut in_0: nk_color,
 ) -> () {
-    static mut s: libc::c_float = unsafe { 1.0f32 / 255.0f32 };
-    *r = in_0.r as libc::c_float * s;
-    *g = in_0.g as libc::c_float * s;
-    *b = in_0.b as libc::c_float * s;
-    *a = in_0.a as libc::c_float * s;
+    static mut s: f32 = unsafe { 1.0f32 / 255.0f32 };
+    *r = in_0.r as f32 * s;
+    *g = in_0.g as f32 * s;
+    *b = in_0.b as f32 * s;
+    *a = in_0.a as f32 * s;
 }
 #[no_mangle]
 pub unsafe fn nk_image_is_subimage(mut img: *const nk_image) -> libc::c_int {
@@ -5619,10 +5619,10 @@ pub unsafe fn nk_draw_list_add_text(
     mut rect: nk_rect,
     mut text: *const libc::c_char,
     mut len: libc::c_int,
-    mut font_height: libc::c_float,
+    mut font_height: f32,
     mut fg: nk_color,
 ) -> () {
-    let mut x: libc::c_float = 0i32 as libc::c_float;
+    let mut x: f32 = 0i32 as f32;
     let mut text_len: libc::c_int = 0i32;
     let mut unicode: nk_rune = 0i32 as nk_rune;
     let mut next: nk_rune = 0i32 as nk_rune;
@@ -5651,13 +5651,13 @@ pub unsafe fn nk_draw_list_add_text(
             return;
         } else {
             /* draw every glyph image */
-            fg.a = (fg.a as libc::c_float * (*list).config.global_alpha) as nk_byte;
+            fg.a = (fg.a as f32 * (*list).config.global_alpha) as nk_byte;
             while text_len < len && 0 != glyph_len {
-                let mut gx: libc::c_float = 0.;
-                let mut gy: libc::c_float = 0.;
-                let mut gh: libc::c_float = 0.;
-                let mut gw: libc::c_float = 0.;
-                let mut char_width: libc::c_float = 0i32 as libc::c_float;
+                let mut gx: f32 = 0.;
+                let mut gy: f32 = 0.;
+                let mut gh: f32 = 0.;
+                let mut gw: f32 = 0.;
+                let mut char_width: f32 = 0i32 as f32;
                 if unicode == 65533i32 as libc::c_uint {
                     break;
                 }
@@ -5707,7 +5707,7 @@ pub unsafe fn nk_draw_list_path_stroke(
     mut list: *mut nk_draw_list,
     mut color: nk_color,
     mut closed: nk_draw_list_stroke,
-    mut thickness: libc::c_float,
+    mut thickness: f32,
 ) -> () {
     let mut points: *mut nk_vec2 = 0 as *mut nk_vec2;
     if list.is_null() {
@@ -5745,14 +5745,14 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
     points_count: libc::c_uint,
     mut color: nk_color,
     mut closed: nk_draw_list_stroke,
-    mut thickness: libc::c_float,
+    mut thickness: f32,
     mut aliasing: nk_anti_aliasing,
 ) -> () {
     let mut d: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     let mut d1: nk_vec2 = nk_vec2 { x: 0., y: 0. };
-    let mut scale: libc::c_float = 0.;
+    let mut scale: f32 = 0.;
     let mut d2: nk_vec2 = nk_vec2 { x: 0., y: 0. };
-    let mut scale_0: libc::c_float = 0.;
+    let mut scale_0: f32 = 0.;
     let mut count: nk_size = 0;
     let mut thick_line: libc::c_int = 0;
     let mut col: nk_colorf = nk_colorf {
@@ -5770,20 +5770,20 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
     if list.is_null() || points_count < 2i32 as libc::c_uint {
         return;
     } else {
-        color.a = (color.a as libc::c_float * (*list).config.global_alpha) as nk_byte;
+        color.a = (color.a as f32 * (*list).config.global_alpha) as nk_byte;
         count = points_count as nk_size;
         if 0 == closed as u64 {
             count = points_count.wrapping_sub(1i32 as libc::c_uint) as nk_size
         }
         thick_line = (thickness > 1.0f32) as libc::c_int;
         nk_draw_list_push_userdata(list, (*list).userdata);
-        color.a = (color.a as libc::c_float * (*list).config.global_alpha) as nk_byte;
+        color.a = (color.a as f32 * (*list).config.global_alpha) as nk_byte;
         nk_color_fv(&mut col.r, color);
         col_trans = col;
-        col_trans.a = 0i32 as libc::c_float;
+        col_trans.a = 0i32 as f32;
         if aliasing as libc::c_uint == NK_ANTI_ALIASING_ON as libc::c_int as libc::c_uint {
             /* ANTI-ALIASED STROKE */
-            let AA_SIZE: libc::c_float = 1.0f32;
+            let AA_SIZE: f32 = 1.0f32;
             const pnt_align: nk_size = ::std::mem::align_of::<nk_vec2>() as nk_size;
             const pnt_size: nk_size = ::std::mem::size_of::<nk_vec2>() as nk_size;
             /* allocate vertices and elements  */
@@ -5841,7 +5841,7 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
                             (*points.offset(i2 as isize)).x - (*points.offset(i1 as isize)).x,
                             (*points.offset(i2 as isize)).y - (*points.offset(i1 as isize)).y,
                         );
-                        let mut len: libc::c_float = 0.;
+                        let mut len: f32 = 0.;
                         /* vec2 inverted length  */
                         len = diff.x * diff.x + diff.y * diff.y;
                         if len != 0.0f32 {
@@ -5930,7 +5930,7 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
                         i1 = 0i32 as nk_size;
                         while i1 < count {
                             let mut dm: nk_vec2 = nk_vec2 { x: 0., y: 0. };
-                            let mut dmr2: libc::c_float = 0.;
+                            let mut dmr2: f32 = 0.;
                             let mut i2_0: nk_size = if i1.wrapping_add(1i32 as libc::c_ulong)
                                 == points_count as libc::c_ulong
                             {
@@ -6049,7 +6049,7 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
                     } else {
                         let mut idx1_0: nk_size = 0;
                         let mut i_0: nk_size = 0;
-                        let half_inner_thickness: libc::c_float = (thickness - AA_SIZE) * 0.5f32;
+                        let half_inner_thickness: f32 = (thickness - AA_SIZE) * 0.5f32;
                         if 0 == closed as u64 {
                             d1 = nk_vec2(
                                 (*normals.offset(0isize)).x * (half_inner_thickness + AA_SIZE),
@@ -6185,7 +6185,7 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
                                         + (*normals.offset(i2_1 as isize)).y,
                                 ).y * 0.5f32,
                             );
-                            let mut dmr2_0: libc::c_float = dm_0.x * dm_0.x + dm_0.y * dm_0.y;
+                            let mut dmr2_0: f32 = dm_0.x * dm_0.x + dm_0.y * dm_0.y;
                             if dmr2_0 > 9.999999974752428e-7f32 {
                                 scale_0 = 1.0f32 / dmr2_0;
                                 scale_0 = if 100.0f32 < scale_0 {
@@ -6344,8 +6344,8 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
             } else {
                 i1_0 = 0i32 as nk_size;
                 while i1_0 < count {
-                    let mut dx: libc::c_float = 0.;
-                    let mut dy: libc::c_float = 0.;
+                    let mut dx: f32 = 0.;
+                    let mut dy: f32 = 0.;
                     let uv_1: nk_vec2 = (*list).config.null.uv;
                     let i2_2: nk_size = if i1_0.wrapping_add(1i32 as libc::c_ulong)
                         == points_count as libc::c_ulong
@@ -6357,7 +6357,7 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
                     let p1: nk_vec2 = *points.offset(i1_0 as isize);
                     let p2: nk_vec2 = *points.offset(i2_2 as isize);
                     let mut diff_0: nk_vec2 = nk_vec2(p2.x - p1.x, p2.y - p1.y);
-                    let mut len_0: libc::c_float = 0.;
+                    let mut len_0: f32 = 0.;
                     /* vec2 inverted length  */
                     len_0 = diff_0.x * diff_0.x + diff_0.y * diff_0.y;
                     if len_0 != 0.0f32 {
@@ -6419,9 +6419,9 @@ pub unsafe fn nk_draw_list_stroke_poly_line(
         return;
     };
 }
-unsafe fn nk_inv_sqrt(mut n: libc::c_float) -> libc::c_float {
-    let mut x2: libc::c_float = 0.;
-    let threehalfs: libc::c_float = 1.5f32;
+unsafe fn nk_inv_sqrt(mut n: f32) -> f32 {
+    let mut x2: f32 = 0.;
+    let threehalfs: f32 = 1.5f32;
     let mut conv: unnamed_3 = unnamed_3 { i: 0i32 as nk_uint };
     conv.f = n;
     x2 = n * 0.5f32;
@@ -6546,7 +6546,7 @@ pub unsafe fn nk_draw_list_fill_poly_convex(
     mut color: nk_color,
     mut aliasing: nk_anti_aliasing,
 ) -> () {
-    let mut scale: libc::c_float = 0.;
+    let mut scale: f32 = 0.;
     let mut col: nk_colorf = nk_colorf {
         r: 0.,
         g: 0.,
@@ -6565,15 +6565,15 @@ pub unsafe fn nk_draw_list_fill_poly_convex(
         return;
     } else {
         nk_draw_list_push_userdata(list, (*list).userdata);
-        color.a = (color.a as libc::c_float * (*list).config.global_alpha) as nk_byte;
+        color.a = (color.a as f32 * (*list).config.global_alpha) as nk_byte;
         nk_color_fv(&mut col.r, color);
         col_trans = col;
-        col_trans.a = 0i32 as libc::c_float;
+        col_trans.a = 0i32 as f32;
         if aliasing as libc::c_uint == NK_ANTI_ALIASING_ON as libc::c_int as libc::c_uint {
             let mut i: nk_size = 0i32 as nk_size;
             let mut i0: nk_size = 0i32 as nk_size;
             let mut i1: nk_size = 0i32 as nk_size;
-            let AA_SIZE: libc::c_float = 1.0f32;
+            let AA_SIZE: f32 = 1.0f32;
             let mut vertex_offset: nk_size = 0i32 as nk_size;
             let mut index: nk_size = (*list).vertex_count as nk_size;
             let idx_count: nk_size = points_count
@@ -6629,7 +6629,7 @@ pub unsafe fn nk_draw_list_fill_poly_convex(
                         let mut p1: nk_vec2 = *points.offset(i1 as isize);
                         let mut diff: nk_vec2 = nk_vec2(p1.x - p0.x, p1.y - p0.y);
                         /* vec2 inverted length  */
-                        let mut len: libc::c_float = diff.x * diff.x + diff.y * diff.y;
+                        let mut len: f32 = diff.x * diff.x + diff.y * diff.y;
                         if len != 0.0f32 {
                             len = nk_inv_sqrt(len)
                         } else {
@@ -6653,7 +6653,7 @@ pub unsafe fn nk_draw_list_fill_poly_convex(
                             nk_vec2(n0.x + n1.x, n0.y + n1.y).x * 0.5f32,
                             nk_vec2(n0.x + n1.x, n0.y + n1.y).y * 0.5f32,
                         );
-                        let mut dmr2: libc::c_float = dm.x * dm.x + dm.y * dm.y;
+                        let mut dmr2: f32 = dm.x * dm.x + dm.y * dm.y;
                         if dmr2 > 9.999999974752428e-7f32 {
                             scale = 1.0f32 / dmr2;
                             scale = if scale < 100.0f32 { scale } else { 100.0f32 };
@@ -6774,7 +6774,7 @@ pub unsafe fn nk_draw_list_stroke_triangle(
     mut b: nk_vec2,
     mut c: nk_vec2,
     mut col: nk_color,
-    mut thickness: libc::c_float,
+    mut thickness: f32,
 ) -> () {
     if list.is_null() || 0 == col.a {
         return;
@@ -6790,9 +6790,9 @@ pub unsafe fn nk_draw_list_stroke_triangle(
 pub unsafe fn nk_draw_list_path_arc_to(
     mut list: *mut nk_draw_list,
     mut center: nk_vec2,
-    mut radius: libc::c_float,
-    mut a_min: libc::c_float,
-    mut a_max: libc::c_float,
+    mut radius: f32,
+    mut a_min: f32,
+    mut a_max: f32,
     mut segments: libc::c_uint,
 ) -> () {
     let mut i: libc::c_uint = 0i32 as libc::c_uint;
@@ -6819,17 +6819,17 @@ pub unsafe fn nk_draw_list_path_arc_to(
 
         [1] https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities
     */
-        let d_angle: libc::c_float = (a_max - a_min) / segments as libc::c_float;
-        let sin_d: libc::c_float = nk_sin(d_angle);
-        let cos_d: libc::c_float = nk_cos(d_angle);
-        let mut cx: libc::c_float = nk_cos(a_min) * radius;
-        let mut cy: libc::c_float = nk_sin(a_min) * radius;
+        let d_angle: f32 = (a_max - a_min) / segments as f32;
+        let sin_d: f32 = nk_sin(d_angle);
+        let cos_d: f32 = nk_cos(d_angle);
+        let mut cx: f32 = nk_cos(a_min) * radius;
+        let mut cy: f32 = nk_sin(a_min) * radius;
         i = 0i32 as libc::c_uint;
         while i <= segments {
-            let mut new_cx: libc::c_float = 0.;
-            let mut new_cy: libc::c_float = 0.;
-            let x: libc::c_float = center.x + cx;
-            let y: libc::c_float = center.y + cy;
+            let mut new_cx: f32 = 0.;
+            let mut new_cy: f32 = 0.;
+            let x: f32 = center.x + cx;
+            let y: f32 = center.y + cy;
             nk_draw_list_path_line_to(list, nk_vec2(x, y));
             new_cx = cx * cos_d - cy * sin_d;
             new_cy = cy * cos_d + cx * sin_d;
@@ -6844,16 +6844,16 @@ pub unsafe fn nk_draw_list_path_arc_to(
 pub unsafe fn nk_draw_list_fill_circle(
     mut list: *mut nk_draw_list,
     mut center: nk_vec2,
-    mut radius: libc::c_float,
+    mut radius: f32,
     mut col: nk_color,
     mut segs: libc::c_uint,
 ) -> () {
-    let mut a_max: libc::c_float = 0.;
+    let mut a_max: f32 = 0.;
     if list.is_null() || 0 == col.a {
         return;
     } else {
-        a_max = 3.1415927410125734f32 * 2.0f32 * (segs as libc::c_float - 1.0f32)
-            / segs as libc::c_float;
+        a_max = 3.1415927410125734f32 * 2.0f32 * (segs as f32 - 1.0f32)
+            / segs as f32;
         nk_draw_list_path_arc_to(list, center, radius, 0.0f32, a_max, segs);
         nk_draw_list_path_fill(list, col);
         return;
@@ -6863,17 +6863,17 @@ pub unsafe fn nk_draw_list_fill_circle(
 pub unsafe fn nk_draw_list_stroke_circle(
     mut list: *mut nk_draw_list,
     mut center: nk_vec2,
-    mut radius: libc::c_float,
+    mut radius: f32,
     mut col: nk_color,
     mut segs: libc::c_uint,
-    mut thickness: libc::c_float,
+    mut thickness: f32,
 ) -> () {
-    let mut a_max: libc::c_float = 0.;
+    let mut a_max: f32 = 0.;
     if list.is_null() || 0 == col.a {
         return;
     } else {
-        a_max = 3.1415927410125734f32 * 2.0f32 * (segs as libc::c_float - 1.0f32)
-            / segs as libc::c_float;
+        a_max = 3.1415927410125734f32 * 2.0f32 * (segs as f32 - 1.0f32)
+            / segs as f32;
         nk_draw_list_path_arc_to(list, center, radius, 0.0f32, a_max, segs);
         nk_draw_list_path_stroke(list, col, NK_STROKE_CLOSED, thickness);
         return;
@@ -6972,7 +6972,7 @@ pub unsafe fn nk_draw_list_fill_rect(
     mut list: *mut nk_draw_list,
     mut rect: nk_rect,
     mut col: nk_color,
-    mut rounding: libc::c_float,
+    mut rounding: f32,
 ) -> () {
     if list.is_null() || 0 == col.a {
         return;
@@ -7001,31 +7001,31 @@ pub unsafe fn nk_draw_list_path_rect_to(
     mut list: *mut nk_draw_list,
     mut a: nk_vec2,
     mut b: nk_vec2,
-    mut rounding: libc::c_float,
+    mut rounding: f32,
 ) -> () {
-    let mut r: libc::c_float = 0.;
+    let mut r: f32 = 0.;
     if list.is_null() {
         return;
     } else {
         r = rounding;
-        r = if r < if b.x - a.x < 0i32 as libc::c_float {
+        r = if r < if b.x - a.x < 0i32 as f32 {
             -(b.x - a.x)
         } else {
             b.x - a.x
         } {
             r
-        } else if b.x - a.x < 0i32 as libc::c_float {
+        } else if b.x - a.x < 0i32 as f32 {
             -(b.x - a.x)
         } else {
             b.x - a.x
         };
-        r = if r < if b.y - a.y < 0i32 as libc::c_float {
+        r = if r < if b.y - a.y < 0i32 as f32 {
             -(b.y - a.y)
         } else {
             b.y - a.y
         } {
             r
-        } else if b.y - a.y < 0i32 as libc::c_float {
+        } else if b.y - a.y < 0i32 as f32 {
             -(b.y - a.y)
         } else {
             b.y - a.y
@@ -7048,7 +7048,7 @@ pub unsafe fn nk_draw_list_path_rect_to(
 pub unsafe fn nk_draw_list_path_arc_to_fast(
     mut list: *mut nk_draw_list,
     mut center: nk_vec2,
-    mut radius: libc::c_float,
+    mut radius: f32,
     mut a_min: libc::c_int,
     mut a_max: libc::c_int,
 ) -> () {
@@ -7063,8 +7063,8 @@ pub unsafe fn nk_draw_list_path_arc_to_fast(
                     (::std::mem::size_of::<[nk_vec2; 12]>() as libc::c_ulong)
                         .wrapping_div(::std::mem::size_of::<nk_vec2>() as libc::c_ulong),
                 ) as usize];
-                let x: libc::c_float = center.x + c.x * radius;
-                let y: libc::c_float = center.y + c.y * radius;
+                let x: f32 = center.x + c.x * radius;
+                let y: f32 = center.y + c.y * radius;
                 nk_draw_list_path_line_to(list, nk_vec2(x, y));
                 a += 1
             }
@@ -7077,8 +7077,8 @@ pub unsafe fn nk_draw_list_stroke_rect(
     mut list: *mut nk_draw_list,
     mut rect: nk_rect,
     mut col: nk_color,
-    mut rounding: libc::c_float,
-    mut thickness: libc::c_float,
+    mut rounding: f32,
+    mut thickness: f32,
 ) -> () {
     if list.is_null() || 0 == col.a {
         return;
@@ -7111,7 +7111,7 @@ pub unsafe fn nk_draw_list_stroke_curve(
     mut p1: nk_vec2,
     mut col: nk_color,
     mut segments: libc::c_uint,
-    mut thickness: libc::c_float,
+    mut thickness: f32,
 ) -> () {
     if list.is_null() || 0 == col.a {
         return;
@@ -7130,7 +7130,7 @@ pub unsafe fn nk_draw_list_path_curve_to(
     mut p4: nk_vec2,
     mut num_segments: libc::c_uint,
 ) -> () {
-    let mut t_step: libc::c_float = 0.;
+    let mut t_step: f32 = 0.;
     let mut i_step: libc::c_uint = 0;
     let mut p1: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     if list.is_null() || 0 == (*list).path_count {
@@ -7142,17 +7142,17 @@ pub unsafe fn nk_draw_list_path_curve_to(
             num_segments
         };
         p1 = nk_draw_list_path_last(list);
-        t_step = 1.0f32 / num_segments as libc::c_float;
+        t_step = 1.0f32 / num_segments as f32;
         i_step = 1i32 as libc::c_uint;
         while i_step <= num_segments {
-            let mut t: libc::c_float = t_step * i_step as libc::c_float;
-            let mut u: libc::c_float = 1.0f32 - t;
-            let mut w1: libc::c_float = u * u * u;
-            let mut w2: libc::c_float = 3i32 as libc::c_float * u * u * t;
-            let mut w3: libc::c_float = 3i32 as libc::c_float * u * t * t;
-            let mut w4: libc::c_float = t * t * t;
-            let mut x: libc::c_float = w1 * p1.x + w2 * p2.x + w3 * p3.x + w4 * p4.x;
-            let mut y: libc::c_float = w1 * p1.y + w2 * p2.y + w3 * p3.y + w4 * p4.y;
+            let mut t: f32 = t_step * i_step as f32;
+            let mut u: f32 = 1.0f32 - t;
+            let mut w1: f32 = u * u * u;
+            let mut w2: f32 = 3i32 as f32 * u * u * t;
+            let mut w3: f32 = 3i32 as f32 * u * t * t;
+            let mut w4: f32 = t * t * t;
+            let mut x: f32 = w1 * p1.x + w2 * p2.x + w3 * p3.x + w4 * p4.x;
+            let mut y: f32 = w1 * p1.y + w2 * p2.y + w3 * p3.y + w4 * p4.y;
             nk_draw_list_path_line_to(list, nk_vec2(x, y));
             i_step = i_step.wrapping_add(1)
         }
@@ -7174,7 +7174,7 @@ pub unsafe fn nk_draw_list_stroke_line(
     mut a: nk_vec2,
     mut b: nk_vec2,
     mut col: nk_color,
-    mut thickness: libc::c_float,
+    mut thickness: f32,
 ) -> () {
     if list.is_null() || 0 == col.a {
         return;
@@ -7640,23 +7640,23 @@ unsafe fn nk_panel_begin(
             (*layout).flags = (*win).flags;
             (*layout).bounds = (*win).bounds;
             (*layout).bounds.x += panel_padding.x;
-            (*layout).bounds.w -= 2i32 as libc::c_float * panel_padding.x;
+            (*layout).bounds.w -= 2i32 as f32 * panel_padding.x;
             if 0 != (*win).flags & NK_WINDOW_BORDER as libc::c_int as libc::c_uint {
                 (*layout).border = nk_panel_get_border(style, (*win).flags, panel_type);
                 (*layout).bounds = nk_shrink_rect((*layout).bounds, (*layout).border)
             } else {
-                (*layout).border = 0i32 as libc::c_float
+                (*layout).border = 0i32 as f32
             }
             (*layout).at_y = (*layout).bounds.y;
             (*layout).at_x = (*layout).bounds.x;
-            (*layout).max_x = 0i32 as libc::c_float;
-            (*layout).header_height = 0i32 as libc::c_float;
-            (*layout).footer_height = 0i32 as libc::c_float;
+            (*layout).max_x = 0i32 as f32;
+            (*layout).header_height = 0i32 as f32;
+            (*layout).footer_height = 0i32 as f32;
             nk_layout_reset_min_row_height(ctx);
             (*layout).row.index = 0i32;
             (*layout).row.columns = 0i32;
-            (*layout).row.ratio = 0 as *const libc::c_float;
-            (*layout).row.item_width = 0i32 as libc::c_float;
+            (*layout).row.ratio = 0 as *const f32;
+            (*layout).row.item_width = 0i32 as f32;
             (*layout).row.tree_depth = 0i32;
             (*layout).row.height = panel_padding.y;
             (*layout).has_scrolling = nk_true as libc::c_int as libc::c_uint;
@@ -7664,7 +7664,7 @@ unsafe fn nk_panel_begin(
                 (*layout).bounds.w -= scrollbar_size.x
             }
             if 0 == nk_panel_is_nonblock(panel_type) {
-                (*layout).footer_height = 0i32 as libc::c_float;
+                (*layout).footer_height = 0i32 as f32;
                 if 0 == (*win).flags & NK_WINDOW_NO_SCROLLBAR as libc::c_int as libc::c_uint
                     || 0 != (*win).flags & NK_WINDOW_SCALABLE as libc::c_int as libc::c_uint
                 {
@@ -7735,7 +7735,7 @@ unsafe fn nk_panel_begin(
                     nk_fill_rect(
                         out,
                         header_0,
-                        0i32 as libc::c_float,
+                        0i32 as f32,
                         (*background).data.color,
                     );
                 }
@@ -7747,7 +7747,7 @@ unsafe fn nk_panel_begin(
                     h: 0.,
                 };
                 button.y = header_0.y + (*style).window.header.padding.y;
-                button.h = header_0.h - 2i32 as libc::c_float * (*style).window.header.padding.y;
+                button.h = header_0.h - 2i32 as f32 * (*style).window.header.padding.y;
                 button.w = button.h;
                 if 0 != (*win).flags & NK_WINDOW_CLOSABLE as libc::c_int as libc::c_uint {
                     let mut ws: nk_flags = 0i32 as nk_flags;
@@ -7829,31 +7829,31 @@ unsafe fn nk_panel_begin(
                 /* window header title */
                 let mut text_len: libc::c_int = nk_strlen(title);
                 let mut label: nk_rect = nk_rect {
-                    x: 0i32 as libc::c_float,
-                    y: 0i32 as libc::c_float,
-                    w: 0i32 as libc::c_float,
-                    h: 0i32 as libc::c_float,
+                    x: 0i32 as f32,
+                    y: 0i32 as f32,
+                    w: 0i32 as f32,
+                    h: 0i32 as f32,
                 };
-                let mut t: libc::c_float = (*font).width.expect("non-null function pointer")(
+                let mut t: f32 = (*font).width.expect("non-null function pointer")(
                     (*font).userdata,
                     (*font).height,
                     title,
                     text_len,
                 );
-                text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+                text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
                 label.x = header_0.x + (*style).window.header.padding.x;
                 label.x += (*style).window.header.label_padding.x;
                 label.y = header_0.y + (*style).window.header.label_padding.y;
                 label.h =
-                    (*font).height + 2i32 as libc::c_float * (*style).window.header.label_padding.y;
-                label.w = t + 2i32 as libc::c_float * (*style).window.header.spacing.x;
+                    (*font).height + 2i32 as f32 * (*style).window.header.label_padding.y;
+                label.w = t + 2i32 as f32 * (*style).window.header.spacing.x;
                 label.w = if if label.w < header_0.x + header_0.w - label.x {
                     label.w
                 } else {
                     header_0.x + header_0.w - label.x
-                } < 0i32 as libc::c_float
+                } < 0i32 as f32
                 {
-                    0i32 as libc::c_float
+                    0i32 as f32
                 } else if label.w < header_0.x + header_0.w - label.x {
                     label.w
                 } else {
@@ -7896,7 +7896,7 @@ unsafe fn nk_panel_begin(
                     nk_fill_rect(
                         out,
                         body,
-                        0i32 as libc::c_float,
+                        0i32 as f32,
                         (*style).window.fixed_background.data.color,
                     );
                 }
@@ -7945,15 +7945,15 @@ pub unsafe fn nk_push_scissor(mut b: *mut nk_command_buffer, mut r: nk_rect) -> 
         } else {
             (*cmd).x = r.x as libc::c_short;
             (*cmd).y = r.y as libc::c_short;
-            (*cmd).w = (if (0i32 as libc::c_float) < r.w {
+            (*cmd).w = (if (0i32 as f32) < r.w {
                 r.w
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
-            (*cmd).h = (if (0i32 as libc::c_float) < r.h {
+            (*cmd).h = (if (0i32 as f32) < r.h {
                 r.h
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
             return;
         }
@@ -7962,10 +7962,10 @@ pub unsafe fn nk_push_scissor(mut b: *mut nk_command_buffer, mut r: nk_rect) -> 
 unsafe fn nk_unify(
     mut clip: *mut nk_rect,
     mut a: *const nk_rect,
-    mut x0: libc::c_float,
-    mut y0: libc::c_float,
-    mut x1: libc::c_float,
-    mut y1: libc::c_float,
+    mut x0: f32,
+    mut y0: f32,
+    mut x1: f32,
+    mut y1: f32,
 ) -> () {
     (*clip).x = if (*a).x < x0 { x0 } else { (*a).x };
     (*clip).y = if (*a).y < y0 { y0 } else { (*a).y };
@@ -7979,29 +7979,29 @@ unsafe fn nk_unify(
     } else {
         y1
     } - (*clip).y;
-    (*clip).w = if (0i32 as libc::c_float) < (*clip).w {
+    (*clip).w = if (0i32 as f32) < (*clip).w {
         (*clip).w
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     };
-    (*clip).h = if (0i32 as libc::c_float) < (*clip).h {
+    (*clip).h = if (0i32 as f32) < (*clip).h {
         (*clip).h
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     };
 }
 #[no_mangle]
 pub unsafe fn nk_fill_rect(
     mut b: *mut nk_command_buffer,
     mut rect: nk_rect,
-    mut rounding: libc::c_float,
+    mut rounding: f32,
     mut c: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_rect_filled = 0 as *mut nk_command_rect_filled;
     if b.is_null()
         || c.a as libc::c_int == 0i32
-        || rect.w == 0i32 as libc::c_float
-        || rect.h == 0i32 as libc::c_float
+        || rect.w == 0i32 as f32
+        || rect.h == 0i32 as f32
     {
         return;
     } else {
@@ -8026,15 +8026,15 @@ pub unsafe fn nk_fill_rect(
             (*cmd).rounding = rounding as libc::c_ushort;
             (*cmd).x = rect.x as libc::c_short;
             (*cmd).y = rect.y as libc::c_short;
-            (*cmd).w = (if (0i32 as libc::c_float) < rect.w {
+            (*cmd).w = (if (0i32 as f32) < rect.w {
                 rect.w
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
-            (*cmd).h = (if (0i32 as libc::c_float) < rect.h {
+            (*cmd).h = (if (0i32 as f32) < rect.h {
                 rect.h
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
             (*cmd).color = c;
             return;
@@ -8068,22 +8068,22 @@ unsafe fn nk_widget_text(
         w: 0.,
         h: 0.,
     };
-    let mut text_width: libc::c_float = 0.;
+    let mut text_width: f32 = 0.;
     if o.is_null() || t.is_null() {
         return;
     } else {
-        b.h = if b.h < 2i32 as libc::c_float * (*t).padding.y {
-            2i32 as libc::c_float * (*t).padding.y
+        b.h = if b.h < 2i32 as f32 * (*t).padding.y {
+            2i32 as f32 * (*t).padding.y
         } else {
             b.h
         };
-        label.x = 0i32 as libc::c_float;
-        label.w = 0i32 as libc::c_float;
+        label.x = 0i32 as f32;
+        label.w = 0i32 as f32;
         label.y = b.y + (*t).padding.y;
-        label.h = if (*f).height < b.h - 2i32 as libc::c_float * (*t).padding.y {
+        label.h = if (*f).height < b.h - 2i32 as f32 * (*t).padding.y {
             (*f).height
         } else {
-            b.h - 2i32 as libc::c_float * (*t).padding.y
+            b.h - 2i32 as f32 * (*t).padding.y
         };
         text_width =
             (*f).width.expect("non-null function pointer")((*f).userdata, (*f).height, string, len);
@@ -8091,21 +8091,21 @@ unsafe fn nk_widget_text(
         /* align in x-axis */
         if 0 != a & NK_TEXT_ALIGN_LEFT as libc::c_int as libc::c_uint {
             label.x = b.x + (*t).padding.x;
-            label.w = if (0i32 as libc::c_float) < b.w - 2i32 as libc::c_float * (*t).padding.x {
-                b.w - 2i32 as libc::c_float * (*t).padding.x
+            label.w = if (0i32 as f32) < b.w - 2i32 as f32 * (*t).padding.x {
+                b.w - 2i32 as f32 * (*t).padding.x
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }
         } else if 0 != a & NK_TEXT_ALIGN_CENTERED as libc::c_int as libc::c_uint {
             label.w =
-                if (1i32 as libc::c_float) < 2i32 as libc::c_float * (*t).padding.x + text_width {
-                    2i32 as libc::c_float * (*t).padding.x + text_width
+                if (1i32 as f32) < 2i32 as f32 * (*t).padding.x + text_width {
+                    2i32 as f32 * (*t).padding.x + text_width
                 } else {
-                    1i32 as libc::c_float
+                    1i32 as f32
                 };
             label.x = b.x
                 + (*t).padding.x
-                + (b.w - 2i32 as libc::c_float * (*t).padding.x - label.w) / 2i32 as libc::c_float;
+                + (b.w - 2i32 as f32 * (*t).padding.x - label.w) / 2i32 as f32;
             label.x = if b.x + (*t).padding.x < label.x {
                 label.x
             } else {
@@ -8121,13 +8121,13 @@ unsafe fn nk_widget_text(
             }
         } else if 0 != a & NK_TEXT_ALIGN_RIGHT as libc::c_int as libc::c_uint {
             label.x = if b.x + (*t).padding.x
-                < b.x + b.w - (2i32 as libc::c_float * (*t).padding.x + text_width)
+                < b.x + b.w - (2i32 as f32 * (*t).padding.x + text_width)
             {
-                b.x + b.w - (2i32 as libc::c_float * (*t).padding.x + text_width)
+                b.x + b.w - (2i32 as f32 * (*t).padding.x + text_width)
             } else {
                 b.x + (*t).padding.x
             };
-            label.w = text_width + 2i32 as libc::c_float * (*t).padding.x
+            label.w = text_width + 2i32 as f32 * (*t).padding.x
         } else {
             return;
         }
@@ -8158,8 +8158,8 @@ pub unsafe fn nk_draw_text(
     mut fg: nk_color,
 ) -> () {
     let mut glyphs: libc::c_int = 0;
-    let mut txt_width: libc::c_float = 0.;
-    let mut text_width: libc::c_float = 0i32 as libc::c_float;
+    let mut txt_width: f32 = 0.;
+    let mut text_width: f32 = 0i32 as f32;
     let mut cmd: *mut nk_command_text = 0 as *mut nk_command_text;
     if b.is_null()
         || string.is_null()
@@ -8170,7 +8170,7 @@ pub unsafe fn nk_draw_text(
     } else {
         if 0 != (*b).use_clipping {
             let mut c: *const nk_rect = &mut (*b).clip as *mut nk_rect;
-            if (*c).w == 0i32 as libc::c_float || (*c).h == 0i32 as libc::c_float
+            if (*c).w == 0i32 as f32 || (*c).h == 0i32 as f32
                 || ((*c).x > r.x + r.w
                     || (*c).x + (*c).w < r.x
                     || (*c).y > r.y + r.h
@@ -8237,23 +8237,23 @@ unsafe fn nk_text_clamp(
     mut font: *const nk_user_font,
     mut text: *const libc::c_char,
     mut text_len: libc::c_int,
-    mut space: libc::c_float,
+    mut space: f32,
     mut glyphs: *mut libc::c_int,
-    mut text_width: *mut libc::c_float,
+    mut text_width: *mut f32,
     mut sep_list: *mut nk_rune,
     mut sep_count: libc::c_int,
 ) -> libc::c_int {
     let mut i: libc::c_int = 0i32;
     let mut glyph_len: libc::c_int = 0i32;
-    let mut last_width: libc::c_float = 0i32 as libc::c_float;
+    let mut last_width: f32 = 0i32 as f32;
     let mut unicode: nk_rune = 0i32 as nk_rune;
-    let mut width: libc::c_float = 0i32 as libc::c_float;
+    let mut width: f32 = 0i32 as f32;
     let mut len: libc::c_int = 0i32;
     let mut g: libc::c_int = 0i32;
-    let mut s: libc::c_float = 0.;
+    let mut s: f32 = 0.;
     let mut sep_len: libc::c_int = 0i32;
     let mut sep_g: libc::c_int = 0i32;
-    let mut sep_width: libc::c_float = 0i32 as libc::c_float;
+    let mut sep_width: f32 = 0i32 as f32;
     sep_count = if sep_count < 0i32 { 0i32 } else { sep_count };
     glyph_len = nk_utf_decode(text, &mut unicode, text_len);
     while 0 != glyph_len && width < space && len < text_len {
@@ -8362,7 +8362,7 @@ unsafe fn nk_draw_button_symbol(
     } else {
         sym = (*style).text_normal
     }
-    nk_draw_symbol(out, type_0, *content, bg, sym, 1i32 as libc::c_float, font);
+    nk_draw_symbol(out, type_0, *content, bg, sym, 1i32 as f32, font);
 }
 unsafe fn nk_draw_symbol(
     mut out: *mut nk_command_buffer,
@@ -8370,7 +8370,7 @@ unsafe fn nk_draw_symbol(
     mut content: nk_rect,
     mut background: nk_color,
     mut foreground: nk_color,
-    mut border_width: libc::c_float,
+    mut border_width: f32,
     mut font: *const nk_user_font,
 ) -> () {
     let mut text: nk_text = nk_text {
@@ -8417,7 +8417,7 @@ unsafe fn nk_draw_symbol(
                     a: 0,
                 },
             };
-            text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+            text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
             text.background = background;
             text.text = foreground;
             nk_widget_text(
@@ -8435,12 +8435,12 @@ unsafe fn nk_draw_symbol(
             if type_0 as libc::c_uint == NK_SYMBOL_RECT_SOLID as libc::c_int as libc::c_uint
                 || type_0 as libc::c_uint == NK_SYMBOL_RECT_OUTLINE as libc::c_int as libc::c_uint
             {
-                nk_fill_rect(out, content, 0i32 as libc::c_float, foreground);
+                nk_fill_rect(out, content, 0i32 as f32, foreground);
                 if type_0 as libc::c_uint == NK_SYMBOL_RECT_OUTLINE as libc::c_int as libc::c_uint {
                     nk_fill_rect(
                         out,
                         nk_shrink_rect(content, border_width),
-                        0i32 as libc::c_float,
+                        0i32 as f32,
                         background,
                     );
                 }
@@ -8450,7 +8450,7 @@ unsafe fn nk_draw_symbol(
                 {
                     nk_fill_circle(
                         out,
-                        nk_shrink_rect(content, 1i32 as libc::c_float),
+                        nk_shrink_rect(content, 1i32 as f32),
                         background,
                     );
                 }
@@ -8476,8 +8476,8 @@ unsafe fn nk_draw_symbol(
             nk_triangle_from_direction(
                 points.as_mut_ptr(),
                 content,
-                0i32 as libc::c_float,
-                0i32 as libc::c_float,
+                0i32 as f32,
+                0i32 as f32,
                 heading,
             );
             nk_fill_triangle(
@@ -8497,12 +8497,12 @@ unsafe fn nk_draw_symbol(
 #[no_mangle]
 pub unsafe fn nk_fill_triangle(
     mut b: *mut nk_command_buffer,
-    mut x0: libc::c_float,
-    mut y0: libc::c_float,
-    mut x1: libc::c_float,
-    mut y1: libc::c_float,
-    mut x2: libc::c_float,
-    mut y2: libc::c_float,
+    mut x0: f32,
+    mut y0: f32,
+    mut x1: f32,
+    mut y1: f32,
+    mut x2: f32,
+    mut y2: f32,
     mut c: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_triangle_filled = 0 as *mut nk_command_triangle_filled;
@@ -8549,24 +8549,24 @@ pub unsafe fn nk_fill_triangle(
 pub unsafe fn nk_triangle_from_direction(
     mut result: *mut nk_vec2,
     mut r: nk_rect,
-    mut pad_x: libc::c_float,
-    mut pad_y: libc::c_float,
+    mut pad_x: f32,
+    mut pad_y: f32,
     mut direction: nk_heading,
 ) -> () {
-    let mut w_half: libc::c_float = 0.;
-    let mut h_half: libc::c_float = 0.;
-    r.w = if 2i32 as libc::c_float * pad_x < r.w {
+    let mut w_half: f32 = 0.;
+    let mut h_half: f32 = 0.;
+    r.w = if 2i32 as f32 * pad_x < r.w {
         r.w
     } else {
-        2i32 as libc::c_float * pad_x
+        2i32 as f32 * pad_x
     };
-    r.h = if 2i32 as libc::c_float * pad_y < r.h {
+    r.h = if 2i32 as f32 * pad_y < r.h {
         r.h
     } else {
-        2i32 as libc::c_float * pad_y
+        2i32 as f32 * pad_y
     };
-    r.w = r.w - 2i32 as libc::c_float * pad_x;
-    r.h = r.h - 2i32 as libc::c_float * pad_y;
+    r.w = r.w - 2i32 as f32 * pad_x;
+    r.h = r.h - 2i32 as f32 * pad_y;
     r.x = r.x + pad_x;
     r.y = r.y + pad_y;
     w_half = r.w / 2.0f32;
@@ -8589,27 +8589,27 @@ pub unsafe fn nk_triangle_from_direction(
         *result.offset(2isize) = nk_vec2(r.x + r.w, r.y + r.h)
     };
 }
-unsafe fn nk_shrink_rect(mut r: nk_rect, mut amount: libc::c_float) -> nk_rect {
+unsafe fn nk_shrink_rect(mut r: nk_rect, mut amount: f32) -> nk_rect {
     let mut res: nk_rect = nk_rect {
         x: 0.,
         y: 0.,
         w: 0.,
         h: 0.,
     };
-    r.w = if r.w < 2i32 as libc::c_float * amount {
-        2i32 as libc::c_float * amount
+    r.w = if r.w < 2i32 as f32 * amount {
+        2i32 as f32 * amount
     } else {
         r.w
     };
-    r.h = if r.h < 2i32 as libc::c_float * amount {
-        2i32 as libc::c_float * amount
+    r.h = if r.h < 2i32 as f32 * amount {
+        2i32 as f32 * amount
     } else {
         r.h
     };
     res.x = r.x + amount;
     res.y = r.y + amount;
-    res.w = r.w - 2i32 as libc::c_float * amount;
-    res.h = r.h - 2i32 as libc::c_float * amount;
+    res.w = r.w - 2i32 as f32 * amount;
+    res.h = r.h - 2i32 as f32 * amount;
     return res;
 }
 #[no_mangle]
@@ -8617,8 +8617,8 @@ pub unsafe fn nk_fill_circle(mut b: *mut nk_command_buffer, mut r: nk_rect, mut 
     let mut cmd: *mut nk_command_circle_filled = 0 as *mut nk_command_circle_filled;
     if b.is_null()
         || c.a as libc::c_int == 0i32
-        || r.w == 0i32 as libc::c_float
-        || r.h == 0i32 as libc::c_float
+        || r.w == 0i32 as f32
+        || r.h == 0i32 as f32
     {
         return;
     } else {
@@ -8642,13 +8642,13 @@ pub unsafe fn nk_fill_circle(mut b: *mut nk_command_buffer, mut r: nk_rect, mut 
         } else {
             (*cmd).x = r.x as libc::c_short;
             (*cmd).y = r.y as libc::c_short;
-            (*cmd).w = (if r.w < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            (*cmd).w = (if r.w < 0i32 as f32 {
+                0i32 as f32
             } else {
                 r.w
             }) as libc::c_ushort;
-            (*cmd).h = (if r.h < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            (*cmd).h = (if r.h < 0i32 as f32 {
+                0i32 as f32
             } else {
                 r.h
             }) as libc::c_ushort;
@@ -8689,16 +8689,16 @@ unsafe fn nk_draw_button(
 pub unsafe fn nk_stroke_rect(
     mut b: *mut nk_command_buffer,
     mut rect: nk_rect,
-    mut rounding: libc::c_float,
-    mut line_thickness: libc::c_float,
+    mut rounding: f32,
+    mut line_thickness: f32,
     mut c: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_rect = 0 as *mut nk_command_rect;
     if b.is_null()
         || c.a as libc::c_int == 0i32
-        || rect.w == 0i32 as libc::c_float
-        || rect.h == 0i32 as libc::c_float
-        || line_thickness <= 0i32 as libc::c_float
+        || rect.w == 0i32 as f32
+        || rect.h == 0i32 as f32
+        || line_thickness <= 0i32 as f32
     {
         return;
     } else {
@@ -8724,15 +8724,15 @@ pub unsafe fn nk_stroke_rect(
             (*cmd).line_thickness = line_thickness as libc::c_ushort;
             (*cmd).x = rect.x as libc::c_short;
             (*cmd).y = rect.y as libc::c_short;
-            (*cmd).w = (if (0i32 as libc::c_float) < rect.w {
+            (*cmd).w = (if (0i32 as f32) < rect.w {
                 rect.w
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
-            (*cmd).h = (if (0i32 as libc::c_float) < rect.h {
+            (*cmd).h = (if (0i32 as f32) < rect.h {
                 rect.h
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
             (*cmd).color = c;
             return;
@@ -8760,17 +8760,17 @@ unsafe fn nk_do_button(
         /* calculate button content space */
         (*content).x = r.x + (*style).padding.x + (*style).border + (*style).rounding;
         (*content).y = r.y + (*style).padding.y + (*style).border + (*style).rounding;
-        (*content).w = r.w - (2i32 as libc::c_float * (*style).padding.x
+        (*content).w = r.w - (2i32 as f32 * (*style).padding.x
             + (*style).border
-            + (*style).rounding * 2i32 as libc::c_float);
-        (*content).h = r.h - (2i32 as libc::c_float * (*style).padding.y
+            + (*style).rounding * 2i32 as f32);
+        (*content).h = r.h - (2i32 as f32 * (*style).padding.y
             + (*style).border
-            + (*style).rounding * 2i32 as libc::c_float);
+            + (*style).rounding * 2i32 as f32);
         /* execute button behavior */
         bounds.x = r.x - (*style).touch_padding.x;
         bounds.y = r.y - (*style).touch_padding.y;
-        bounds.w = r.w + 2i32 as libc::c_float * (*style).touch_padding.x;
-        bounds.h = r.h + 2i32 as libc::c_float * (*style).touch_padding.y;
+        bounds.w = r.w + 2i32 as f32 * (*style).touch_padding.x;
+        bounds.h = r.h + 2i32 as f32 * (*style).touch_padding.y;
         return nk_button_behavior(state, bounds, in_0, behavior);
     };
 }
@@ -8915,9 +8915,9 @@ pub unsafe fn nk_layout_reset_min_row_height(mut ctx: *mut nk_context) -> () {
         win = (*ctx).current;
         layout = (*win).layout;
         (*layout).row.min_height = (*(*ctx).style.font).height;
-        (*layout).row.min_height += (*ctx).style.text.padding.y * 2i32 as libc::c_float;
+        (*layout).row.min_height += (*ctx).style.text.padding.y * 2i32 as f32;
         (*layout).row.min_height +=
-            (*ctx).style.window.min_row_height_padding * 2i32 as libc::c_float;
+            (*ctx).style.window.min_row_height_padding * 2i32 as f32;
         return;
     };
 }
@@ -8925,7 +8925,7 @@ unsafe fn nk_panel_get_border(
     mut style: *const nk_style,
     mut flags: nk_flags,
     mut type_0: nk_panel_type,
-) -> libc::c_float {
+) -> f32 {
     if 0 != flags & NK_WINDOW_BORDER as libc::c_int as libc::c_uint {
         match type_0 as libc::c_uint {
             2 => return (*style).window.group_border,
@@ -8937,7 +8937,7 @@ unsafe fn nk_panel_get_border(
             1 | _ => return (*style).window.border,
         }
     } else {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     };
 }
 #[no_mangle]
@@ -9308,7 +9308,7 @@ unsafe fn nk_free_panel(mut ctx: *mut nk_context, mut pan: *mut nk_panel) -> () 
     nk_free_page_element(ctx, pe);
 }
 unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
-    let mut padding_y: libc::c_float = 0.;
+    let mut padding_y: f32 = 0.;
     let mut border_color: nk_color = nk_color {
         r: 0,
         g: 0,
@@ -9372,7 +9372,7 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
             nk_fill_rect(
                 out,
                 empty_space,
-                0i32 as libc::c_float,
+                0i32 as f32,
                 (*style).window.background,
             );
             /* fill left empty space */
@@ -9383,7 +9383,7 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
             nk_fill_rect(
                 out,
                 empty_space,
-                0i32 as libc::c_float,
+                0i32 as f32,
                 (*style).window.background,
             );
             /* fill right empty space */
@@ -9399,11 +9399,11 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
             nk_fill_rect(
                 out,
                 empty_space,
-                0i32 as libc::c_float,
+                0i32 as f32,
                 (*style).window.background,
             );
             /* fill bottom empty space */
-            if (*layout).footer_height > 0i32 as libc::c_float {
+            if (*layout).footer_height > 0i32 as f32 {
                 empty_space.x = (*window).bounds.x;
                 empty_space.y = (*layout).bounds.y + (*layout).bounds.h;
                 empty_space.w = (*window).bounds.w;
@@ -9411,7 +9411,7 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
                 nk_fill_rect(
                     out,
                     empty_space,
-                    0i32 as libc::c_float,
+                    0i32 as f32,
                     (*style).window.background,
                 );
             }
@@ -9428,10 +9428,10 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
                 h: 0.,
             };
             let mut scroll_has_scrolling: libc::c_int = 0;
-            let mut scroll_target: libc::c_float = 0.;
-            let mut scroll_offset: libc::c_float = 0.;
-            let mut scroll_step: libc::c_float = 0.;
-            let mut scroll_inc: libc::c_float = 0.;
+            let mut scroll_target: f32 = 0.;
+            let mut scroll_offset: f32 = 0.;
+            let mut scroll_step: f32 = 0.;
+            let mut scroll_inc: f32 = 0.;
             /* mouse wheel scrolling */
             if 0 != nk_panel_is_sub((*layout).type_0) {
                 /* sub-window mouse wheel scrolling */
@@ -9468,8 +9468,8 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
                 scroll_has_scrolling =
                     (window == (*ctx).active && 0 != (*layout).has_scrolling) as libc::c_int;
                 if !in_0.is_null()
-                    && ((*in_0).mouse.scroll_delta.y > 0i32 as libc::c_float
-                        || (*in_0).mouse.scroll_delta.x > 0i32 as libc::c_float)
+                    && ((*in_0).mouse.scroll_delta.y > 0i32 as f32
+                        || (*in_0).mouse.scroll_delta.x > 0i32 as f32)
                     && 0 != scroll_has_scrolling
                 {
                     (*window).scrolled = nk_true as libc::c_int as libc::c_uint
@@ -9485,10 +9485,10 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
             scroll.y = (*layout).bounds.y;
             scroll.w = scrollbar_size.x;
             scroll.h = (*layout).bounds.h;
-            scroll_offset = *(*layout).offset_y as libc::c_float;
+            scroll_offset = *(*layout).offset_y as f32;
             scroll_step = scroll.h * 0.10000000149011612f32;
             scroll_inc = scroll.h * 0.009999999776482582f32;
-            scroll_target = ((*layout).at_y - scroll.y) as libc::c_int as libc::c_float;
+            scroll_target = ((*layout).at_y - scroll.y) as libc::c_int as f32;
             scroll_offset = nk_do_scrollbarv(
                 &mut state,
                 out,
@@ -9504,7 +9504,7 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
             );
             *(*layout).offset_y = scroll_offset as nk_uint;
             if !in_0.is_null() && 0 != scroll_has_scrolling {
-                (*in_0).mouse.scroll_delta.y = 0i32 as libc::c_float
+                (*in_0).mouse.scroll_delta.y = 0i32 as f32
             }
             /* horizontal scrollbar */
             let mut state_0: nk_flags = 0i32 as nk_flags;
@@ -9512,8 +9512,8 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
             scroll.y = (*layout).bounds.y + (*layout).bounds.h;
             scroll.w = (*layout).bounds.w;
             scroll.h = scrollbar_size.y;
-            scroll_offset = *(*layout).offset_x as libc::c_float;
-            scroll_target = ((*layout).max_x - scroll.x) as libc::c_int as libc::c_float;
+            scroll_offset = *(*layout).offset_x as f32;
+            scroll_target = ((*layout).max_x - scroll.x) as libc::c_int as f32;
             scroll_step = (*layout).max_x * 0.05000000074505806f32;
             scroll_inc = (*layout).max_x * 0.004999999888241291f32;
             scroll_offset = nk_do_scrollbarh(
@@ -9533,9 +9533,9 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
         }
         /* hide scroll if no user input */
         if 0 != (*window).flags & NK_WINDOW_SCROLL_AUTO_HIDE as libc::c_int as libc::c_uint {
-            let mut has_input: libc::c_int = ((*ctx).input.mouse.delta.x != 0i32 as libc::c_float
-                || (*ctx).input.mouse.delta.y != 0i32 as libc::c_float
-                || (*ctx).input.mouse.scroll_delta.y != 0i32 as libc::c_float)
+            let mut has_input: libc::c_int = ((*ctx).input.mouse.delta.x != 0i32 as f32
+                || (*ctx).input.mouse.delta.y != 0i32 as f32
+                || (*ctx).input.mouse.scroll_delta.y != 0i32 as f32)
                 as libc::c_int;
             let mut is_window_hovered: libc::c_int = nk_window_is_hovered(ctx);
             let mut any_item_active: libc::c_int = ((*ctx).last_widget_state
@@ -9546,10 +9546,10 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
             {
                 (*window).scrollbar_hiding_timer += (*ctx).delta_time_seconds
             } else {
-                (*window).scrollbar_hiding_timer = 0i32 as libc::c_float
+                (*window).scrollbar_hiding_timer = 0i32 as f32
             }
         } else {
-            (*window).scrollbar_hiding_timer = 0i32 as libc::c_float
+            (*window).scrollbar_hiding_timer = 0i32 as f32
         }
         /* window border */
         if 0 != (*layout).flags & NK_WINDOW_BORDER as libc::c_int as libc::c_uint {
@@ -9567,7 +9567,7 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
             nk_stroke_rect(
                 out,
                 b,
-                0i32 as libc::c_float,
+                0i32 as f32,
                 (*layout).border,
                 border_color,
             );
@@ -9636,15 +9636,15 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
                         nk_true as libc::c_int,
                     );
                 if 0 != left_mouse_down && 0 != left_mouse_click_in_scaler {
-                    let mut delta_x: libc::c_float = (*in_0).mouse.delta.x;
+                    let mut delta_x: f32 = (*in_0).mouse.delta.x;
                     if 0 != (*layout).flags & NK_WINDOW_SCALE_LEFT as libc::c_int as libc::c_uint {
                         delta_x = -delta_x;
                         (*window).bounds.x += (*in_0).mouse.delta.x
                     }
                     /* dragging in x-direction  */
                     if (*window).bounds.w + delta_x >= window_size.x {
-                        if delta_x < 0i32 as libc::c_float
-                            || delta_x > 0i32 as libc::c_float && (*in_0).mouse.pos.x >= scaler.x
+                        if delta_x < 0i32 as f32
+                            || delta_x > 0i32 as f32 && (*in_0).mouse.pos.x >= scaler.x
                         {
                             (*window).bounds.w = (*window).bounds.w + delta_x;
                             scaler.x += (*in_0).mouse.delta.x
@@ -9653,8 +9653,8 @@ unsafe fn nk_panel_end(mut ctx: *mut nk_context) -> () {
                     /* dragging in y-direction (only possible if static window) */
                     if 0 == (*layout).flags & NK_WINDOW_DYNAMIC as libc::c_int as libc::c_uint {
                         if window_size.y < (*window).bounds.h + (*in_0).mouse.delta.y {
-                            if (*in_0).mouse.delta.y < 0i32 as libc::c_float
-                                || (*in_0).mouse.delta.y > 0i32 as libc::c_float
+                            if (*in_0).mouse.delta.y < 0i32 as f32
+                                || (*in_0).mouse.delta.y > 0i32 as f32
                                     && (*in_0).mouse.pos.y >= scaler.y
                             {
                                 (*window).bounds.h = (*window).bounds.h + (*in_0).mouse.delta.y;
@@ -9797,14 +9797,14 @@ unsafe fn nk_do_scrollbarh(
     mut out: *mut nk_command_buffer,
     mut scroll: nk_rect,
     mut has_scrolling: libc::c_int,
-    mut offset: libc::c_float,
-    mut target: libc::c_float,
-    mut step: libc::c_float,
-    mut button_pixel_inc: libc::c_float,
+    mut offset: f32,
+    mut target: f32,
+    mut step: f32,
+    mut button_pixel_inc: f32,
     mut style: *const nk_style_scrollbar,
     mut in_0: *mut nk_input,
     mut font: *const nk_user_font,
-) -> libc::c_float {
+) -> f32 {
     let mut cursor: nk_rect = nk_rect {
         x: 0.,
         y: 0.,
@@ -9823,31 +9823,31 @@ unsafe fn nk_do_scrollbarh(
         w: 0.,
         h: 0.,
     };
-    let mut scroll_step: libc::c_float = 0.;
-    let mut scroll_offset: libc::c_float = 0.;
-    let mut scroll_off: libc::c_float = 0.;
-    let mut scroll_ratio: libc::c_float = 0.;
+    let mut scroll_step: f32 = 0.;
+    let mut scroll_offset: f32 = 0.;
+    let mut scroll_off: f32 = 0.;
+    let mut scroll_ratio: f32 = 0.;
     if out.is_null() || style.is_null() {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
         /* scrollbar background */
-        scroll.h = if scroll.h < 1i32 as libc::c_float {
-            1i32 as libc::c_float
+        scroll.h = if scroll.h < 1i32 as f32 {
+            1i32 as f32
         } else {
             scroll.h
         };
-        scroll.w = if scroll.w < 2i32 as libc::c_float * scroll.h {
-            2i32 as libc::c_float * scroll.h
+        scroll.w = if scroll.w < 2i32 as f32 * scroll.h {
+            2i32 as f32 * scroll.h
         } else {
             scroll.w
         };
         if target <= scroll.w {
-            return 0i32 as libc::c_float;
+            return 0i32 as f32;
         } else {
             /* optional scrollbar buttons */
             if 0 != (*style).show_buttons {
                 let mut ws: nk_flags = 0;
-                let mut scroll_w: libc::c_float = 0.;
+                let mut scroll_w: f32 = 0.;
                 let mut button: nk_rect = nk_rect {
                     x: 0.,
                     y: 0.,
@@ -9857,7 +9857,7 @@ unsafe fn nk_do_scrollbarh(
                 button.y = scroll.y;
                 button.w = scroll.h;
                 button.h = scroll.h;
-                scroll_w = scroll.w - 2i32 as libc::c_float * button.w;
+                scroll_w = scroll.w - 2i32 as f32 * button.w;
                 scroll_step = if step < button_pixel_inc {
                     step
                 } else {
@@ -9900,9 +9900,9 @@ unsafe fn nk_do_scrollbarh(
                 offset
             } else {
                 target - scroll.w
-            } < 0i32 as libc::c_float
+            } < 0i32 as f32
             {
-                0i32 as libc::c_float
+                0i32 as f32
             } else if offset < target - scroll.w {
                 offset
             } else {
@@ -9912,12 +9912,12 @@ unsafe fn nk_do_scrollbarh(
             scroll_off = scroll_offset / target;
             /* calculate cursor bounds */
             cursor.w = scroll_ratio * scroll.w
-                - (2i32 as libc::c_float * (*style).border
-                    + 2i32 as libc::c_float * (*style).padding.x);
+                - (2i32 as f32 * (*style).border
+                    + 2i32 as f32 * (*style).padding.x);
             cursor.x = scroll.x + scroll_off * scroll.w + (*style).border + (*style).padding.x;
             cursor.h = scroll.h
-                - (2i32 as libc::c_float * (*style).border
-                    + 2i32 as libc::c_float * (*style).padding.y);
+                - (2i32 as f32 * (*style).border
+                    + 2i32 as f32 * (*style).padding.y);
             cursor.y = scroll.y + (*style).border + (*style).padding.y;
             /* calculate empty space around cursor */
             empty_west.x = scroll.x;
@@ -10011,17 +10011,17 @@ unsafe fn nk_scrollbar_behavior(
     mut cursor: *const nk_rect,
     mut empty0: *const nk_rect,
     mut empty1: *const nk_rect,
-    mut scroll_offset: libc::c_float,
-    mut target: libc::c_float,
-    mut scroll_step: libc::c_float,
+    mut scroll_offset: f32,
+    mut target: f32,
+    mut scroll_step: f32,
     mut o: nk_orientation,
-) -> libc::c_float {
-    let mut cursor_y: libc::c_float = 0.;
+) -> f32 {
+    let mut cursor_y: f32 = 0.;
     let mut ws: nk_flags = 0i32 as nk_flags;
     let mut left_mouse_down: libc::c_int = 0;
     let mut left_mouse_clicked: libc::c_int = 0;
     let mut left_mouse_click_in_cursor: libc::c_int = 0;
-    let mut scroll_delta: libc::c_float = 0.;
+    let mut scroll_delta: f32 = 0.;
     if 0 != *state & NK_WIDGET_STATE_MODIFIED as libc::c_int as libc::c_uint {
         *state = (NK_WIDGET_STATE_INACTIVE as libc::c_int | NK_WIDGET_STATE_MODIFIED as libc::c_int)
             as nk_flags
@@ -10049,9 +10049,9 @@ unsafe fn nk_scrollbar_behavior(
             (*in_0).mouse.scroll_delta.x
         };
         if 0 != left_mouse_down && 0 != left_mouse_click_in_cursor && 0 == left_mouse_clicked {
-            let mut pixel: libc::c_float = 0.;
+            let mut pixel: f32 = 0.;
             /* update cursor by mouse dragging */
-            let mut delta: libc::c_float = 0.;
+            let mut delta: f32 = 0.;
             *state = NK_WIDGET_STATE_ACTIVE as libc::c_int as nk_flags;
             if o as libc::c_uint == NK_VERTICAL as libc::c_int as libc::c_uint {
                 cursor_y = 0.;
@@ -10061,9 +10061,9 @@ unsafe fn nk_scrollbar_behavior(
                     scroll_offset + delta
                 } else {
                     target - (*scroll).h
-                } < 0i32 as libc::c_float
+                } < 0i32 as f32
                 {
-                    0i32 as libc::c_float
+                    0i32 as f32
                 } else if scroll_offset + delta < target - (*scroll).h {
                     scroll_offset + delta
                 } else {
@@ -10074,16 +10074,16 @@ unsafe fn nk_scrollbar_behavior(
                     .clicked_pos
                     .y = cursor_y + (*cursor).h / 2.0f32
             } else {
-                let mut cursor_x: libc::c_float = 0.;
+                let mut cursor_x: f32 = 0.;
                 pixel = (*in_0).mouse.delta.x;
                 delta = pixel / (*scroll).w * target;
                 scroll_offset = if if scroll_offset + delta < target - (*scroll).w {
                     scroll_offset + delta
                 } else {
                     target - (*scroll).w
-                } < 0i32 as libc::c_float
+                } < 0i32 as f32
                 {
-                    0i32 as libc::c_float
+                    0i32 as f32
                 } else if scroll_offset + delta < target - (*scroll).w {
                     scroll_offset + delta
                 } else {
@@ -10101,16 +10101,16 @@ unsafe fn nk_scrollbar_behavior(
         {
             /* scroll page up by click on empty space or shortcut */
             if o as libc::c_uint == NK_VERTICAL as libc::c_int as libc::c_uint {
-                scroll_offset = if (0i32 as libc::c_float) < scroll_offset - (*scroll).h {
+                scroll_offset = if (0i32 as f32) < scroll_offset - (*scroll).h {
                     scroll_offset - (*scroll).h
                 } else {
-                    0i32 as libc::c_float
+                    0i32 as f32
                 }
             } else {
-                scroll_offset = if (0i32 as libc::c_float) < scroll_offset - (*scroll).w {
+                scroll_offset = if (0i32 as f32) < scroll_offset - (*scroll).w {
                     scroll_offset - (*scroll).w
                 } else {
-                    0i32 as libc::c_float
+                    0i32 as f32
                 }
             }
         } else if 0 != nk_input_is_key_pressed(in_0, NK_KEY_SCROLL_DOWN)
@@ -10133,7 +10133,7 @@ unsafe fn nk_scrollbar_behavior(
                 }
             }
         } else if 0 != has_scrolling {
-            if scroll_delta < 0i32 as libc::c_float || scroll_delta > 0i32 as libc::c_float {
+            if scroll_delta < 0i32 as f32 || scroll_delta > 0i32 as f32 {
                 /* update cursor by mouse scrolling */
                 scroll_offset = scroll_offset + scroll_step * -scroll_delta;
                 if o as libc::c_uint == NK_VERTICAL as libc::c_int as libc::c_uint {
@@ -10141,9 +10141,9 @@ unsafe fn nk_scrollbar_behavior(
                         scroll_offset
                     } else {
                         target - (*scroll).h
-                    } < 0i32 as libc::c_float
+                    } < 0i32 as f32
                     {
-                        0i32 as libc::c_float
+                        0i32 as f32
                     } else if scroll_offset < target - (*scroll).h {
                         scroll_offset
                     } else {
@@ -10154,9 +10154,9 @@ unsafe fn nk_scrollbar_behavior(
                         scroll_offset
                     } else {
                         target - (*scroll).w
-                    } < 0i32 as libc::c_float
+                    } < 0i32 as f32
                     {
-                        0i32 as libc::c_float
+                        0i32 as f32
                     } else if scroll_offset < target - (*scroll).w {
                         scroll_offset
                     } else {
@@ -10166,7 +10166,7 @@ unsafe fn nk_scrollbar_behavior(
             } else if 0 != nk_input_is_key_pressed(in_0, NK_KEY_SCROLL_START) {
                 /* update cursor to the beginning  */
                 if o as libc::c_uint == NK_VERTICAL as libc::c_int as libc::c_uint {
-                    scroll_offset = 0i32 as libc::c_float
+                    scroll_offset = 0i32 as f32
                 }
             } else if 0 != nk_input_is_key_pressed(in_0, NK_KEY_SCROLL_END) {
                 /* update cursor to the end */
@@ -10206,14 +10206,14 @@ unsafe fn nk_do_scrollbarv(
     mut out: *mut nk_command_buffer,
     mut scroll: nk_rect,
     mut has_scrolling: libc::c_int,
-    mut offset: libc::c_float,
-    mut target: libc::c_float,
-    mut step: libc::c_float,
-    mut button_pixel_inc: libc::c_float,
+    mut offset: f32,
+    mut target: f32,
+    mut step: f32,
+    mut button_pixel_inc: f32,
     mut style: *const nk_style_scrollbar,
     mut in_0: *mut nk_input,
     mut font: *const nk_user_font,
-) -> libc::c_float {
+) -> f32 {
     let mut empty_north: nk_rect = nk_rect {
         x: 0.,
         y: 0.,
@@ -10232,30 +10232,30 @@ unsafe fn nk_do_scrollbarv(
         w: 0.,
         h: 0.,
     };
-    let mut scroll_step: libc::c_float = 0.;
-    let mut scroll_offset: libc::c_float = 0.;
-    let mut scroll_off: libc::c_float = 0.;
-    let mut scroll_ratio: libc::c_float = 0.;
+    let mut scroll_step: f32 = 0.;
+    let mut scroll_offset: f32 = 0.;
+    let mut scroll_off: f32 = 0.;
+    let mut scroll_ratio: f32 = 0.;
     if out.is_null() || style.is_null() {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
-        scroll.w = if scroll.w < 1i32 as libc::c_float {
-            1i32 as libc::c_float
+        scroll.w = if scroll.w < 1i32 as f32 {
+            1i32 as f32
         } else {
             scroll.w
         };
-        scroll.h = if scroll.h < 0i32 as libc::c_float {
-            0i32 as libc::c_float
+        scroll.h = if scroll.h < 0i32 as f32 {
+            0i32 as f32
         } else {
             scroll.h
         };
         if target <= scroll.h {
-            return 0i32 as libc::c_float;
+            return 0i32 as f32;
         } else {
             /* optional scrollbar buttons */
             if 0 != (*style).show_buttons {
                 let mut ws: nk_flags = 0;
-                let mut scroll_h: libc::c_float = 0.;
+                let mut scroll_h: f32 = 0.;
                 let mut button: nk_rect = nk_rect {
                     x: 0.,
                     y: 0.,
@@ -10265,10 +10265,10 @@ unsafe fn nk_do_scrollbarv(
                 button.x = scroll.x;
                 button.w = scroll.w;
                 button.h = scroll.w;
-                scroll_h = if scroll.h - 2i32 as libc::c_float * button.h < 0i32 as libc::c_float {
-                    0i32 as libc::c_float
+                scroll_h = if scroll.h - 2i32 as f32 * button.h < 0i32 as f32 {
+                    0i32 as f32
                 } else {
-                    scroll.h - 2i32 as libc::c_float * button.h
+                    scroll.h - 2i32 as f32 * button.h
                 };
                 scroll_step = if step < button_pixel_inc {
                     step
@@ -10312,9 +10312,9 @@ unsafe fn nk_do_scrollbarv(
                 offset
             } else {
                 target - scroll.h
-            } < 0i32 as libc::c_float
+            } < 0i32 as f32
             {
-                0i32 as libc::c_float
+                0i32 as f32
             } else if offset < target - scroll.h {
                 offset
             } else {
@@ -10324,35 +10324,35 @@ unsafe fn nk_do_scrollbarv(
             scroll_off = scroll_offset / target;
             /* calculate scrollbar cursor bounds */
             cursor.h = if scroll_ratio * scroll.h
-                - (2i32 as libc::c_float * (*style).border
-                    + 2i32 as libc::c_float * (*style).padding.y)
-                < 0i32 as libc::c_float
+                - (2i32 as f32 * (*style).border
+                    + 2i32 as f32 * (*style).padding.y)
+                < 0i32 as f32
             {
-                0i32 as libc::c_float
+                0i32 as f32
             } else {
                 scroll_ratio * scroll.h
-                    - (2i32 as libc::c_float * (*style).border
-                        + 2i32 as libc::c_float * (*style).padding.y)
+                    - (2i32 as f32 * (*style).border
+                        + 2i32 as f32 * (*style).padding.y)
             };
             cursor.y = scroll.y + scroll_off * scroll.h + (*style).border + (*style).padding.y;
             cursor.w = scroll.w
-                - (2i32 as libc::c_float * (*style).border
-                    + 2i32 as libc::c_float * (*style).padding.x);
+                - (2i32 as f32 * (*style).border
+                    + 2i32 as f32 * (*style).padding.x);
             cursor.x = scroll.x + (*style).border + (*style).padding.x;
             /* calculate empty space around cursor */
             empty_north.x = scroll.x;
             empty_north.y = scroll.y;
             empty_north.w = scroll.w;
-            empty_north.h = if cursor.y - scroll.y < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            empty_north.h = if cursor.y - scroll.y < 0i32 as f32 {
+                0i32 as f32
             } else {
                 cursor.y - scroll.y
             };
             empty_south.x = scroll.x;
             empty_south.y = cursor.y + cursor.h;
             empty_south.w = scroll.w;
-            empty_south.h = if scroll.y + scroll.h - (cursor.y + cursor.h) < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            empty_south.h = if scroll.y + scroll.h - (cursor.y + cursor.h) < 0i32 as f32 {
+                0i32 as f32
             } else {
                 scroll.y + scroll.h - (cursor.y + cursor.h)
             };
@@ -10404,10 +10404,10 @@ pub unsafe fn nk_window_find(
 pub unsafe fn nk_window_get_bounds(mut ctx: *const nk_context) -> nk_rect {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_rect(
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
+            0i32 as f32,
+            0i32 as f32,
+            0i32 as f32,
+            0i32 as f32,
         );
     } else {
         return (*(*ctx).current).bounds;
@@ -10416,7 +10416,7 @@ pub unsafe fn nk_window_get_bounds(mut ctx: *const nk_context) -> nk_rect {
 #[no_mangle]
 pub unsafe fn nk_window_get_position(mut ctx: *const nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
-        return nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        return nk_vec2(0i32 as f32, 0i32 as f32);
     } else {
         return nk_vec2((*(*ctx).current).bounds.x, (*(*ctx).current).bounds.y);
     };
@@ -10424,23 +10424,23 @@ pub unsafe fn nk_window_get_position(mut ctx: *const nk_context) -> nk_vec2 {
 #[no_mangle]
 pub unsafe fn nk_window_get_size(mut ctx: *const nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
-        return nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        return nk_vec2(0i32 as f32, 0i32 as f32);
     } else {
         return nk_vec2((*(*ctx).current).bounds.w, (*(*ctx).current).bounds.h);
     };
 }
 #[no_mangle]
-pub unsafe fn nk_window_get_width(mut ctx: *const nk_context) -> libc::c_float {
+pub unsafe fn nk_window_get_width(mut ctx: *const nk_context) -> f32 {
     if ctx.is_null() || (*ctx).current.is_null() {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
         return (*(*ctx).current).bounds.w;
     };
 }
 #[no_mangle]
-pub unsafe fn nk_window_get_height(mut ctx: *const nk_context) -> libc::c_float {
+pub unsafe fn nk_window_get_height(mut ctx: *const nk_context) -> f32 {
     if ctx.is_null() || (*ctx).current.is_null() {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
         return (*(*ctx).current).bounds.h;
     };
@@ -10457,10 +10457,10 @@ pub unsafe fn nk_window_get_panel(mut ctx: *mut nk_context) -> *mut nk_panel {
 pub unsafe fn nk_window_get_content_region(mut ctx: *mut nk_context) -> nk_rect {
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_rect(
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
+            0i32 as f32,
+            0i32 as f32,
+            0i32 as f32,
+            0i32 as f32,
         );
     } else {
         return (*(*(*ctx).current).layout).clip;
@@ -10469,7 +10469,7 @@ pub unsafe fn nk_window_get_content_region(mut ctx: *mut nk_context) -> nk_rect 
 #[no_mangle]
 pub unsafe fn nk_window_get_content_region_min(mut ctx: *mut nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
-        return nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        return nk_vec2(0i32 as f32, 0i32 as f32);
     } else {
         return nk_vec2(
             (*(*(*ctx).current).layout).clip.x,
@@ -10480,7 +10480,7 @@ pub unsafe fn nk_window_get_content_region_min(mut ctx: *mut nk_context) -> nk_v
 #[no_mangle]
 pub unsafe fn nk_window_get_content_region_max(mut ctx: *mut nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
-        return nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        return nk_vec2(0i32 as f32, 0i32 as f32);
     } else {
         return nk_vec2(
             (*(*(*ctx).current).layout).clip.x + (*(*(*ctx).current).layout).clip.w,
@@ -10491,7 +10491,7 @@ pub unsafe fn nk_window_get_content_region_max(mut ctx: *mut nk_context) -> nk_v
 #[no_mangle]
 pub unsafe fn nk_window_get_content_region_size(mut ctx: *mut nk_context) -> nk_vec2 {
     if ctx.is_null() || (*ctx).current.is_null() {
-        return nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        return nk_vec2(0i32 as f32, 0i32 as f32);
     } else {
         return nk_vec2(
             (*(*(*ctx).current).layout).clip.w,
@@ -10636,7 +10636,7 @@ pub unsafe fn nk_window_is_any_hovered(mut ctx: *mut nk_context) -> libc::c_int 
                 } else if 0 != (*iter).flags & NK_WINDOW_MINIMIZED as libc::c_int as libc::c_uint {
                     let mut header: nk_rect = (*iter).bounds;
                     header.h = (*(*ctx).style.font).height
-                        + 2i32 as libc::c_float * (*ctx).style.window.header.padding.y;
+                        + 2i32 as f32 * (*ctx).style.window.header.padding.y;
                     if 0 != nk_input_is_mouse_hovering_rect(&mut (*ctx).input, header) {
                         return 1i32;
                     }
@@ -10840,7 +10840,7 @@ pub unsafe fn nk_window_show_if(
 #[no_mangle]
 pub unsafe fn nk_layout_set_min_row_height(
     mut ctx: *mut nk_context,
-    mut height: libc::c_float,
+    mut height: f32,
 ) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -10867,8 +10867,8 @@ pub unsafe fn nk_layout_widget_bounds(mut ctx: *mut nk_context) -> nk_rect {
     layout = (*win).layout;
     ret.x = (*layout).at_x;
     ret.y = (*layout).at_y;
-    ret.w = (*layout).bounds.w - if (*layout).at_x - (*layout).bounds.x < 0i32 as libc::c_float {
-        0i32 as libc::c_float
+    ret.w = (*layout).bounds.w - if (*layout).at_x - (*layout).bounds.x < 0i32 as f32 {
+        0i32 as f32
     } else {
         (*layout).at_x - (*layout).bounds.x
     };
@@ -10878,11 +10878,11 @@ pub unsafe fn nk_layout_widget_bounds(mut ctx: *mut nk_context) -> nk_rect {
 #[no_mangle]
 pub unsafe fn nk_layout_ratio_from_pixel(
     mut ctx: *mut nk_context,
-    mut pixel_width: libc::c_float,
-) -> libc::c_float {
+    mut pixel_width: f32,
+) -> f32 {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     if ctx.is_null() || (*ctx).current.is_null() || (*(*ctx).current).layout.is_null() {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
         win = (*ctx).current;
         return if if pixel_width / (*win).bounds.x < 1.0f32 {
@@ -10902,7 +10902,7 @@ pub unsafe fn nk_layout_ratio_from_pixel(
 #[no_mangle]
 pub unsafe fn nk_layout_row_dynamic(
     mut ctx: *mut nk_context,
-    mut height: libc::c_float,
+    mut height: f32,
     mut cols: libc::c_int,
 ) -> () {
     nk_row_layout(ctx, NK_DYNAMIC, height, cols, 0i32);
@@ -10910,7 +10910,7 @@ pub unsafe fn nk_layout_row_dynamic(
 unsafe fn nk_row_layout(
     mut ctx: *mut nk_context,
     mut fmt: nk_layout_format,
-    mut height: libc::c_float,
+    mut height: f32,
     mut cols: libc::c_int,
     mut width: libc::c_int,
 ) -> () {
@@ -10926,17 +10926,17 @@ unsafe fn nk_row_layout(
         } else {
             (*(*win).layout).row.type_0 = NK_LAYOUT_STATIC_FIXED
         }
-        (*(*win).layout).row.ratio = 0 as *const libc::c_float;
-        (*(*win).layout).row.filled = 0i32 as libc::c_float;
-        (*(*win).layout).row.item_offset = 0i32 as libc::c_float;
-        (*(*win).layout).row.item_width = width as libc::c_float;
+        (*(*win).layout).row.ratio = 0 as *const f32;
+        (*(*win).layout).row.filled = 0i32 as f32;
+        (*(*win).layout).row.item_offset = 0i32 as f32;
+        (*(*win).layout).row.item_width = width as f32;
         return;
     };
 }
 unsafe fn nk_panel_layout(
     mut ctx: *const nk_context,
     mut win: *mut nk_window,
-    mut height: libc::c_float,
+    mut height: f32,
     mut cols: libc::c_int,
 ) -> () {
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -10976,7 +10976,7 @@ unsafe fn nk_panel_layout(
         } else {
             (*layout).row.height = height + item_spacing.y
         }
-        (*layout).row.item_offset = 0i32 as libc::c_float;
+        (*layout).row.item_offset = 0i32 as f32;
         if 0 != (*layout).flags & NK_WINDOW_DYNAMIC as libc::c_int as libc::c_uint {
             /* draw background for dynamic panels */
             let mut background: nk_rect = nk_rect {
@@ -10989,7 +10989,7 @@ unsafe fn nk_panel_layout(
             background.w = (*win).bounds.w;
             background.y = (*layout).at_y - 1.0f32;
             background.h = (*layout).row.height + 1.0f32;
-            nk_fill_rect(out, background, 0i32 as libc::c_float, color);
+            nk_fill_rect(out, background, 0i32 as f32, color);
         }
         return;
     };
@@ -10997,7 +10997,7 @@ unsafe fn nk_panel_layout(
 #[no_mangle]
 pub unsafe fn nk_layout_row_static(
     mut ctx: *mut nk_context,
-    mut height: libc::c_float,
+    mut height: f32,
     mut item_width: libc::c_int,
     mut cols: libc::c_int,
 ) -> () {
@@ -11007,7 +11007,7 @@ pub unsafe fn nk_layout_row_static(
 pub unsafe fn nk_layout_row_begin(
     mut ctx: *mut nk_context,
     mut fmt: nk_layout_format,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
     mut cols: libc::c_int,
 ) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
@@ -11023,10 +11023,10 @@ pub unsafe fn nk_layout_row_begin(
         } else {
             (*layout).row.type_0 = NK_LAYOUT_STATIC_ROW
         }
-        (*layout).row.ratio = 0 as *const libc::c_float;
-        (*layout).row.filled = 0i32 as libc::c_float;
-        (*layout).row.item_width = 0i32 as libc::c_float;
-        (*layout).row.item_offset = 0i32 as libc::c_float;
+        (*layout).row.ratio = 0 as *const f32;
+        (*layout).row.filled = 0i32 as f32;
+        (*layout).row.item_width = 0i32 as f32;
+        (*layout).row.item_offset = 0i32 as f32;
         (*layout).row.columns = cols;
         return;
     };
@@ -11034,7 +11034,7 @@ pub unsafe fn nk_layout_row_begin(
 #[no_mangle]
 pub unsafe fn nk_layout_row_push(
     mut ctx: *mut nk_context,
-    mut ratio_or_width: libc::c_float,
+    mut ratio_or_width: f32,
 ) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11053,19 +11053,19 @@ pub unsafe fn nk_layout_row_push(
             if (*layout).row.type_0 as libc::c_uint
                 == NK_LAYOUT_DYNAMIC_ROW as libc::c_int as libc::c_uint
             {
-                let mut ratio: libc::c_float = ratio_or_width;
+                let mut ratio: f32 = ratio_or_width;
                 if ratio + (*layout).row.filled > 1.0f32 {
                     return;
                 } else if ratio > 0.0f32 {
                     (*layout).row.item_width =
-                        if (0i32 as libc::c_float) < if 1.0f32 < ratio { 1.0f32 } else { ratio } {
+                        if (0i32 as f32) < if 1.0f32 < ratio { 1.0f32 } else { ratio } {
                             if 1.0f32 < ratio {
                                 1.0f32
                             } else {
                                 ratio
                             }
                         } else {
-                            0i32 as libc::c_float
+                            0i32 as f32
                         }
                 } else {
                     (*layout).row.item_width = 1.0f32 - (*layout).row.filled
@@ -11093,8 +11093,8 @@ pub unsafe fn nk_layout_row_end(mut ctx: *mut nk_context) -> () {
         {
             return;
         } else {
-            (*layout).row.item_width = 0i32 as libc::c_float;
-            (*layout).row.item_offset = 0i32 as libc::c_float;
+            (*layout).row.item_width = 0i32 as f32;
+            (*layout).row.item_offset = 0i32 as f32;
             return;
         }
     };
@@ -11103,9 +11103,9 @@ pub unsafe fn nk_layout_row_end(mut ctx: *mut nk_context) -> () {
 pub unsafe fn nk_layout_row(
     mut ctx: *mut nk_context,
     mut fmt: nk_layout_format,
-    mut height: libc::c_float,
+    mut height: f32,
     mut cols: libc::c_int,
-    mut ratio: *const libc::c_float,
+    mut ratio: *const f32,
 ) -> () {
     let mut i: libc::c_int = 0;
     let mut n_undef: libc::c_int = 0i32;
@@ -11119,7 +11119,7 @@ pub unsafe fn nk_layout_row(
         nk_panel_layout(ctx, win, height, cols);
         if fmt as libc::c_uint == NK_DYNAMIC as libc::c_int as libc::c_uint {
             /* calculate width of undefined widget ratios */
-            let mut r: libc::c_float = 0i32 as libc::c_float;
+            let mut r: f32 = 0i32 as f32;
             (*layout).row.ratio = ratio;
             i = 0i32;
             while i < cols {
@@ -11130,7 +11130,7 @@ pub unsafe fn nk_layout_row(
                 }
                 i += 1
             }
-            r = if (0i32 as libc::c_float) < if 1.0f32 < 1.0f32 - r {
+            r = if (0i32 as f32) < if 1.0f32 < 1.0f32 - r {
                 1.0f32
             } else {
                 1.0f32 - r
@@ -11141,29 +11141,29 @@ pub unsafe fn nk_layout_row(
                     1.0f32 - r
                 }
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             };
             (*layout).row.type_0 = NK_LAYOUT_DYNAMIC;
-            (*layout).row.item_width = if r > 0i32 as libc::c_float && n_undef > 0i32 {
-                r / n_undef as libc::c_float
+            (*layout).row.item_width = if r > 0i32 as f32 && n_undef > 0i32 {
+                r / n_undef as f32
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }
         } else {
             (*layout).row.ratio = ratio;
             (*layout).row.type_0 = NK_LAYOUT_STATIC;
-            (*layout).row.item_width = 0i32 as libc::c_float;
-            (*layout).row.item_offset = 0i32 as libc::c_float
+            (*layout).row.item_width = 0i32 as f32;
+            (*layout).row.item_offset = 0i32 as f32
         }
-        (*layout).row.item_offset = 0i32 as libc::c_float;
-        (*layout).row.filled = 0i32 as libc::c_float;
+        (*layout).row.item_offset = 0i32 as f32;
+        (*layout).row.filled = 0i32 as f32;
         return;
     };
 }
 #[no_mangle]
 pub unsafe fn nk_layout_row_template_begin(
     mut ctx: *mut nk_context,
-    mut height: libc::c_float,
+    mut height: f32,
 ) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11175,15 +11175,15 @@ pub unsafe fn nk_layout_row_template_begin(
         nk_panel_layout(ctx, win, height, 1i32);
         (*layout).row.type_0 = NK_LAYOUT_TEMPLATE;
         (*layout).row.columns = 0i32;
-        (*layout).row.ratio = 0 as *const libc::c_float;
-        (*layout).row.item_width = 0i32 as libc::c_float;
-        (*layout).row.item_height = 0i32 as libc::c_float;
-        (*layout).row.item_offset = 0i32 as libc::c_float;
-        (*layout).row.filled = 0i32 as libc::c_float;
-        (*layout).row.item.x = 0i32 as libc::c_float;
-        (*layout).row.item.y = 0i32 as libc::c_float;
-        (*layout).row.item.w = 0i32 as libc::c_float;
-        (*layout).row.item.h = 0i32 as libc::c_float;
+        (*layout).row.ratio = 0 as *const f32;
+        (*layout).row.item_width = 0i32 as f32;
+        (*layout).row.item_height = 0i32 as f32;
+        (*layout).row.item_offset = 0i32 as f32;
+        (*layout).row.filled = 0i32 as f32;
+        (*layout).row.item.x = 0i32 as f32;
+        (*layout).row.item.y = 0i32 as f32;
+        (*layout).row.item.w = 0i32 as f32;
+        (*layout).row.item.h = 0i32 as f32;
         return;
     };
 }
@@ -11212,7 +11212,7 @@ pub unsafe fn nk_layout_row_template_push_dynamic(mut ctx: *mut nk_context) -> (
 #[no_mangle]
 pub unsafe fn nk_layout_row_template_push_variable(
     mut ctx: *mut nk_context,
-    mut min_width: libc::c_float,
+    mut min_width: f32,
 ) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11237,7 +11237,7 @@ pub unsafe fn nk_layout_row_template_push_variable(
 #[no_mangle]
 pub unsafe fn nk_layout_row_template_push_static(
     mut ctx: *mut nk_context,
-    mut width: libc::c_float,
+    mut width: f32,
 ) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -11266,9 +11266,9 @@ pub unsafe fn nk_layout_row_template_end(mut ctx: *mut nk_context) -> () {
     let mut i: libc::c_int = 0i32;
     let mut variable_count: libc::c_int = 0i32;
     let mut min_variable_count: libc::c_int = 0i32;
-    let mut min_fixed_width: libc::c_float = 0.0f32;
-    let mut total_fixed_width: libc::c_float = 0.0f32;
-    let mut max_variable_width: libc::c_float = 0.0f32;
+    let mut min_fixed_width: f32 = 0.0f32;
+    let mut total_fixed_width: f32 = 0.0f32;
+    let mut max_variable_width: f32 = 0.0f32;
     if ctx.is_null() || (*ctx).current.is_null() || (*(*ctx).current).layout.is_null() {
         return;
     } else {
@@ -11280,7 +11280,7 @@ pub unsafe fn nk_layout_row_template_end(mut ctx: *mut nk_context) -> () {
         } else {
             i = 0i32;
             while i < (*layout).row.columns {
-                let mut width: libc::c_float = (*layout).row.templates[i as usize];
+                let mut width: f32 = (*layout).row.templates[i as usize];
                 if width >= 0.0f32 {
                     total_fixed_width += width;
                     min_fixed_width += width
@@ -11300,31 +11300,31 @@ pub unsafe fn nk_layout_row_template_end(mut ctx: *mut nk_context) -> () {
                 i += 1
             }
             if 0 != variable_count {
-                let mut space: libc::c_float = nk_layout_row_calculate_usable_space(
+                let mut space: f32 = nk_layout_row_calculate_usable_space(
                     &mut (*ctx).style,
                     (*layout).type_0,
                     (*layout).bounds.w,
                     (*layout).row.columns,
                 );
-                let mut var_width: libc::c_float = if space - min_fixed_width < 0.0f32 {
+                let mut var_width: f32 = if space - min_fixed_width < 0.0f32 {
                     0.0f32
                 } else {
                     space - min_fixed_width
                 }
-                    / variable_count as libc::c_float;
+                    / variable_count as f32;
                 let mut enough_space: libc::c_int =
                     (var_width >= max_variable_width) as libc::c_int;
                 if 0 == enough_space {
-                    var_width = if space - total_fixed_width < 0i32 as libc::c_float {
-                        0i32 as libc::c_float
+                    var_width = if space - total_fixed_width < 0i32 as f32 {
+                        0i32 as f32
                     } else {
                         space - total_fixed_width
-                    } / min_variable_count as libc::c_float
+                    } / min_variable_count as f32
                 }
                 i = 0i32;
                 while i < (*layout).row.columns {
-                    let mut width_0: *mut libc::c_float =
-                        &mut (*layout).row.templates[i as usize] as *mut libc::c_float;
+                    let mut width_0: *mut f32 =
+                        &mut (*layout).row.templates[i as usize] as *mut f32;
                     *width_0 = if *width_0 >= 0.0f32 {
                         *width_0
                     } else if *width_0 < -1.0f32 && 0 == enough_space {
@@ -11342,23 +11342,23 @@ pub unsafe fn nk_layout_row_template_end(mut ctx: *mut nk_context) -> () {
 unsafe fn nk_layout_row_calculate_usable_space(
     mut style: *const nk_style,
     mut type_0: nk_panel_type,
-    mut total_space: libc::c_float,
+    mut total_space: f32,
     mut columns: libc::c_int,
-) -> libc::c_float {
-    let mut panel_padding: libc::c_float = 0.;
-    let mut panel_spacing: libc::c_float = 0.;
-    let mut panel_space: libc::c_float = 0.;
+) -> f32 {
+    let mut panel_padding: f32 = 0.;
+    let mut panel_spacing: f32 = 0.;
+    let mut panel_space: f32 = 0.;
     let mut spacing: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     let mut padding: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     spacing = (*style).window.spacing;
     padding = nk_panel_get_padding(style, type_0);
     /* calculate the usable panel space */
-    panel_padding = 2i32 as libc::c_float * padding.x;
+    panel_padding = 2i32 as f32 * padding.x;
     panel_spacing = (if columns - 1i32 < 0i32 {
         0i32
     } else {
         columns - 1i32
-    }) as libc::c_float * spacing.x;
+    }) as f32 * spacing.x;
     panel_space = total_space - panel_padding - panel_spacing;
     return panel_space;
 }
@@ -11366,7 +11366,7 @@ unsafe fn nk_layout_row_calculate_usable_space(
 pub unsafe fn nk_layout_space_begin(
     mut ctx: *mut nk_context,
     mut fmt: nk_layout_format,
-    mut height: libc::c_float,
+    mut height: f32,
     mut widget_count: libc::c_int,
 ) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
@@ -11382,10 +11382,10 @@ pub unsafe fn nk_layout_space_begin(
         } else {
             (*layout).row.type_0 = NK_LAYOUT_DYNAMIC_FREE
         }
-        (*layout).row.ratio = 0 as *const libc::c_float;
-        (*layout).row.filled = 0i32 as libc::c_float;
-        (*layout).row.item_width = 0i32 as libc::c_float;
-        (*layout).row.item_offset = 0i32 as libc::c_float;
+        (*layout).row.ratio = 0 as *const f32;
+        (*layout).row.filled = 0i32 as f32;
+        (*layout).row.item_width = 0i32 as f32;
+        (*layout).row.item_offset = 0i32 as f32;
         return;
     };
 }
@@ -11411,9 +11411,9 @@ pub unsafe fn nk_layout_space_end(mut ctx: *mut nk_context) -> () {
     } else {
         win = (*ctx).current;
         layout = (*win).layout;
-        (*layout).row.item_width = 0i32 as libc::c_float;
-        (*layout).row.item_height = 0i32 as libc::c_float;
-        (*layout).row.item_offset = 0i32 as libc::c_float;
+        (*layout).row.item_width = 0i32 as f32;
+        (*layout).row.item_height = 0i32 as f32;
+        (*layout).row.item_offset = 0i32 as f32;
         nk_zero(
             &mut (*layout).row.item as *mut nk_rect as *mut libc::c_void,
             ::std::mem::size_of::<nk_rect>() as libc::c_ulong,
@@ -11445,8 +11445,8 @@ pub unsafe fn nk_layout_space_to_screen(mut ctx: *mut nk_context, mut ret: nk_ve
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
     win = (*ctx).current;
     layout = (*win).layout;
-    ret.x += (*layout).at_x - *(*layout).offset_x as libc::c_float;
-    ret.y += (*layout).at_y - *(*layout).offset_y as libc::c_float;
+    ret.x += (*layout).at_x - *(*layout).offset_x as f32;
+    ret.y += (*layout).at_y - *(*layout).offset_y as f32;
     return ret;
 }
 #[no_mangle]
@@ -11455,8 +11455,8 @@ pub unsafe fn nk_layout_space_to_local(mut ctx: *mut nk_context, mut ret: nk_vec
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
     win = (*ctx).current;
     layout = (*win).layout;
-    ret.x += -(*layout).at_x + *(*layout).offset_x as libc::c_float;
-    ret.y += -(*layout).at_y + *(*layout).offset_y as libc::c_float;
+    ret.x += -(*layout).at_x + *(*layout).offset_x as f32;
+    ret.y += -(*layout).at_y + *(*layout).offset_y as f32;
     return ret;
 }
 #[no_mangle]
@@ -11468,8 +11468,8 @@ pub unsafe fn nk_layout_space_rect_to_screen(
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
     win = (*ctx).current;
     layout = (*win).layout;
-    ret.x += (*layout).at_x - *(*layout).offset_x as libc::c_float;
-    ret.y += (*layout).at_y - *(*layout).offset_y as libc::c_float;
+    ret.x += (*layout).at_x - *(*layout).offset_x as f32;
+    ret.y += (*layout).at_y - *(*layout).offset_y as f32;
     return ret;
 }
 #[no_mangle]
@@ -11478,8 +11478,8 @@ pub unsafe fn nk_layout_space_rect_to_local(mut ctx: *mut nk_context, mut ret: n
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
     win = (*ctx).current;
     layout = (*win).layout;
-    ret.x += -(*layout).at_x + *(*layout).offset_x as libc::c_float;
-    ret.y += -(*layout).at_y + *(*layout).offset_y as libc::c_float;
+    ret.x += -(*layout).at_x + *(*layout).offset_x as f32;
+    ret.y += -(*layout).at_y + *(*layout).offset_y as f32;
     return ret;
 }
 #[no_mangle]
@@ -11808,13 +11808,13 @@ pub unsafe fn nk_group_scrolled_end(mut ctx: *mut nk_context) -> () {
         panel_padding = nk_panel_get_padding(&mut (*ctx).style, NK_PANEL_GROUP);
         pan.bounds.y = (*g).bounds.y - ((*g).header_height + (*g).menu.h);
         pan.bounds.x = (*g).bounds.x - panel_padding.x;
-        pan.bounds.w = (*g).bounds.w + 2i32 as libc::c_float * panel_padding.x;
+        pan.bounds.w = (*g).bounds.w + 2i32 as f32 * panel_padding.x;
         pan.bounds.h = (*g).bounds.h + (*g).header_height + (*g).menu.h;
         if 0 != (*g).flags & NK_WINDOW_BORDER as libc::c_int as libc::c_uint {
             pan.bounds.x -= (*g).border;
             pan.bounds.y -= (*g).border;
-            pan.bounds.w += 2i32 as libc::c_float * (*g).border;
-            pan.bounds.h += 2i32 as libc::c_float * (*g).border
+            pan.bounds.w += 2i32 as f32 * (*g).border;
+            pan.bounds.h += 2i32 as f32 * (*g).border
         }
         if 0 == (*g).flags & NK_WINDOW_NO_SCROLLBAR as libc::c_int as libc::c_uint {
             pan.bounds.w += (*ctx).style.window.scrollbar_size.x;
@@ -11870,15 +11870,15 @@ unsafe fn nk_layout_widget_space(
     mut win: *mut nk_window,
     mut modify: libc::c_int,
 ) -> () {
-    let mut w: libc::c_float = 0.;
+    let mut w: f32 = 0.;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
     let mut style: *const nk_style = 0 as *const nk_style;
     let mut spacing: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     let mut padding: nk_vec2 = nk_vec2 { x: 0., y: 0. };
-    let mut item_offset: libc::c_float = 0i32 as libc::c_float;
-    let mut item_width: libc::c_float = 0i32 as libc::c_float;
-    let mut item_spacing: libc::c_float = 0i32 as libc::c_float;
-    let mut panel_space: libc::c_float = 0i32 as libc::c_float;
+    let mut item_offset: f32 = 0i32 as f32;
+    let mut item_width: f32 = 0i32 as f32;
+    let mut item_spacing: f32 = 0i32 as f32;
+    let mut panel_space: f32 = 0i32 as f32;
     if ctx.is_null() || (*ctx).current.is_null() || (*(*ctx).current).layout.is_null() {
         return;
     } else {
@@ -11902,17 +11902,17 @@ unsafe fn nk_layout_widget_space(
                     panel_space
                 } else {
                     1.0f32
-                } / (*layout).row.columns as libc::c_float;
-                item_offset = (*layout).row.index as libc::c_float * w;
-                item_width = w + (item_offset - item_offset as libc::c_int as libc::c_float);
-                item_spacing = (*layout).row.index as libc::c_float * spacing.x
+                } / (*layout).row.columns as f32;
+                item_offset = (*layout).row.index as f32 * w;
+                item_width = w + (item_offset - item_offset as libc::c_int as f32);
+                item_spacing = (*layout).row.index as f32 * spacing.x
             }
             1 => {
                 /* scaling single ratio widget width */
-                let mut w_0: libc::c_float = (*layout).row.item_width * panel_space;
+                let mut w_0: f32 = (*layout).row.item_width * panel_space;
                 item_offset = (*layout).row.item_offset;
-                item_width = w_0 + (item_offset - item_offset as libc::c_int as libc::c_float);
-                item_spacing = 0i32 as libc::c_float;
+                item_width = w_0 + (item_offset - item_offset as libc::c_int as f32);
+                item_spacing = 0i32 as f32;
                 if 0 != modify {
                     (*layout).row.item_offset += w_0 + spacing.x;
                     (*layout).row.filled += (*layout).row.item_width;
@@ -11922,30 +11922,30 @@ unsafe fn nk_layout_widget_space(
             2 => {
                 /* panel width depended free widget placing */
                 (*bounds).x = (*layout).at_x + (*layout).bounds.w * (*layout).row.item.x;
-                (*bounds).x -= *(*layout).offset_x as libc::c_float;
+                (*bounds).x -= *(*layout).offset_x as f32;
                 (*bounds).y = (*layout).at_y + (*layout).row.height * (*layout).row.item.y;
-                (*bounds).y -= *(*layout).offset_y as libc::c_float;
+                (*bounds).y -= *(*layout).offset_y as f32;
                 (*bounds).w = (*layout).bounds.w * (*layout).row.item.w
-                    + ((*bounds).x - (*bounds).x as libc::c_int as libc::c_float);
+                    + ((*bounds).x - (*bounds).x as libc::c_int as f32);
                 (*bounds).h = (*layout).row.height * (*layout).row.item.h
-                    + ((*bounds).y - (*bounds).y as libc::c_int as libc::c_float);
+                    + ((*bounds).y - (*bounds).y as libc::c_int as f32);
                 return;
             }
             3 => {
                 /* scaling arrays of panel width ratios for every widget */
-                let mut ratio: libc::c_float = 0.;
-                let mut w_1: libc::c_float = 0.;
+                let mut ratio: f32 = 0.;
+                let mut w_1: f32 = 0.;
                 ratio = if *(*layout).row.ratio.offset((*layout).row.index as isize)
-                    < 0i32 as libc::c_float
+                    < 0i32 as f32
                 {
                     (*layout).row.item_width
                 } else {
                     *(*layout).row.ratio.offset((*layout).row.index as isize)
                 };
                 w_1 = ratio * panel_space;
-                item_spacing = (*layout).row.index as libc::c_float * spacing.x;
+                item_spacing = (*layout).row.index as f32 * spacing.x;
                 item_offset = (*layout).row.item_offset;
-                item_width = w_1 + (item_offset - item_offset as libc::c_int as libc::c_float);
+                item_width = w_1 + (item_offset - item_offset as libc::c_int as f32);
                 if 0 != modify {
                     (*layout).row.item_offset += w_1;
                     (*layout).row.filled += ratio
@@ -11954,14 +11954,14 @@ unsafe fn nk_layout_widget_space(
             4 => {
                 /* non-scaling fixed widgets item width */
                 item_width = (*layout).row.item_width;
-                item_offset = (*layout).row.index as libc::c_float * item_width;
-                item_spacing = (*layout).row.index as libc::c_float * spacing.x
+                item_offset = (*layout).row.index as f32 * item_width;
+                item_spacing = (*layout).row.index as f32 * spacing.x
             }
             5 => {
                 /* scaling single ratio widget width */
                 item_width = (*layout).row.item_width;
                 item_offset = (*layout).row.item_offset;
-                item_spacing = (*layout).row.index as libc::c_float * spacing.x;
+                item_spacing = (*layout).row.index as f32 * spacing.x;
                 if 0 != modify {
                     (*layout).row.item_offset += item_width
                 }
@@ -11973,15 +11973,15 @@ unsafe fn nk_layout_widget_space(
                 if (*bounds).x + (*bounds).w > (*layout).max_x && 0 != modify {
                     (*layout).max_x = (*bounds).x + (*bounds).w
                 }
-                (*bounds).x -= *(*layout).offset_x as libc::c_float;
+                (*bounds).x -= *(*layout).offset_x as f32;
                 (*bounds).y = (*layout).at_y + (*layout).row.item.y;
-                (*bounds).y -= *(*layout).offset_y as libc::c_float;
+                (*bounds).y -= *(*layout).offset_y as f32;
                 (*bounds).h = (*layout).row.item.h;
                 return;
             }
             7 => {
                 /* non-scaling array of panel pixel width for every widget */
-                item_spacing = (*layout).row.index as libc::c_float * spacing.x;
+                item_spacing = (*layout).row.index as f32 * spacing.x;
                 item_width = *(*layout).row.ratio.offset((*layout).row.index as isize);
                 item_offset = (*layout).row.item_offset;
                 if 0 != modify {
@@ -11990,11 +11990,11 @@ unsafe fn nk_layout_widget_space(
             }
             8 => {
                 /* stretchy row layout with combined dynamic/static widget width*/
-                let mut w_2: libc::c_float = 0.;
+                let mut w_2: f32 = 0.;
                 w_2 = (*layout).row.templates[(*layout).row.index as usize];
                 item_offset = (*layout).row.item_offset;
-                item_width = w_2 + (item_offset - item_offset as libc::c_int as libc::c_float);
-                item_spacing = (*layout).row.index as libc::c_float * spacing.x;
+                item_width = w_2 + (item_offset - item_offset as libc::c_int as f32);
+                item_spacing = (*layout).row.index as f32 * spacing.x;
                 if 0 != modify {
                     (*layout).row.item_offset += w_2
                 }
@@ -12004,19 +12004,19 @@ unsafe fn nk_layout_widget_space(
         /* set the bounds of the newly allocated widget */
         (*bounds).w = item_width;
         (*bounds).h = (*layout).row.height - spacing.y;
-        (*bounds).y = (*layout).at_y - *(*layout).offset_y as libc::c_float;
+        (*bounds).y = (*layout).at_y - *(*layout).offset_y as f32;
         (*bounds).x = (*layout).at_x + item_offset + item_spacing + padding.x;
         if (*bounds).x + (*bounds).w > (*layout).max_x && 0 != modify {
             (*layout).max_x = (*bounds).x + (*bounds).w
         }
-        (*bounds).x -= *(*layout).offset_x as libc::c_float;
+        (*bounds).x -= *(*layout).offset_x as f32;
         return;
     };
 }
 unsafe fn nk_panel_alloc_row(mut ctx: *const nk_context, mut win: *mut nk_window) -> () {
     let mut layout: *mut nk_panel = (*win).layout;
     let mut spacing: nk_vec2 = (*ctx).style.window.spacing;
-    let row_height: libc::c_float = (*layout).row.height - spacing.y;
+    let row_height: f32 = (*layout).row.height - spacing.y;
     nk_panel_layout(ctx, win, row_height, (*layout).row.columns);
 }
 unsafe fn nk_find_value(mut win: *mut nk_window, mut name: nk_hash) -> *mut nk_uint {
@@ -12187,19 +12187,19 @@ unsafe fn nk_tree_state_base(
     let mut in_0: *const nk_input = 0 as *const nk_input;
     let mut button: *const nk_style_button = 0 as *const nk_style_button;
     let mut symbol: nk_symbol_type = NK_SYMBOL_NONE;
-    let mut row_height: libc::c_float = 0.;
+    let mut row_height: f32 = 0.;
     let mut item_spacing: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     let mut header: nk_rect = nk_rect {
-        x: 0i32 as libc::c_float,
-        y: 0i32 as libc::c_float,
-        w: 0i32 as libc::c_float,
-        h: 0i32 as libc::c_float,
+        x: 0i32 as f32,
+        y: 0i32 as f32,
+        w: 0i32 as f32,
+        h: 0i32 as f32,
     };
     let mut sym: nk_rect = nk_rect {
-        x: 0i32 as libc::c_float,
-        y: 0i32 as libc::c_float,
-        w: 0i32 as libc::c_float,
-        h: 0i32 as libc::c_float,
+        x: 0i32 as f32,
+        y: 0i32 as f32,
+        w: 0i32 as f32,
+        h: 0i32 as f32,
     };
     let mut text: nk_text = nk_text {
         padding: nk_vec2 { x: 0., y: 0. },
@@ -12228,7 +12228,7 @@ unsafe fn nk_tree_state_base(
         style = &mut (*ctx).style as *mut nk_style;
         item_spacing = (*style).window.spacing;
         /* calculate header bounds and draw background */
-        row_height = (*(*style).font).height + 2i32 as libc::c_float * (*style).tab.padding.y;
+        row_height = (*(*style).font).height + 2i32 as f32 * (*style).tab.padding.y;
         nk_layout_set_min_row_height(ctx, row_height);
         nk_layout_row_dynamic(ctx, row_height, 1i32);
         nk_layout_reset_min_row_height(ctx);
@@ -12246,7 +12246,7 @@ unsafe fn nk_tree_state_base(
                 nk_fill_rect(
                     out,
                     header,
-                    0i32 as libc::c_float,
+                    0i32 as f32,
                     (*style).tab.border_color,
                 );
                 nk_fill_rect(
@@ -12312,7 +12312,7 @@ unsafe fn nk_tree_state_base(
         );
         if !img.is_null() {
             /* draw optional image icon */
-            sym.x = sym.x + sym.w + 4i32 as libc::c_float * item_spacing.x;
+            sym.x = sym.x + sym.w + 4i32 as f32 * item_spacing.x;
             nk_draw_image(&mut (*win).buffer, sym, img, nk_white);
             sym.w = (*(*style).font).height + (*style).tab.spacing.x
         }
@@ -12333,7 +12333,7 @@ unsafe fn nk_tree_state_base(
         label.w = header.w - (sym.w + item_spacing.y + (*style).tab.indent);
         label.h = (*(*style).font).height;
         text.text = (*style).tab.text;
-        text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
         nk_widget_text(
             out,
             label,
@@ -12345,7 +12345,7 @@ unsafe fn nk_tree_state_base(
         );
         /* increase x-axis cursor widget position pointer */
         if *state as libc::c_uint == NK_MAXIMIZED as libc::c_int as libc::c_uint {
-            (*layout).at_x = header.x + *(*layout).offset_x as libc::c_float + (*style).tab.indent;
+            (*layout).at_x = header.x + *(*layout).offset_x as f32 + (*style).tab.indent;
             (*layout).bounds.w = if (*layout).bounds.w < (*style).tab.indent {
                 (*style).tab.indent
             } else {
@@ -12394,14 +12394,14 @@ pub unsafe fn nk_widget(
             if (nk_begin(...) {...} nk_end(...); or
             if (nk_group_begin(...) { nk_group_end(...);} */
         /* need to convert to int here to remove floating point errors */
-        (*bounds).x = (*bounds).x as libc::c_int as libc::c_float;
-        (*bounds).y = (*bounds).y as libc::c_int as libc::c_float;
-        (*bounds).w = (*bounds).w as libc::c_int as libc::c_float;
-        (*bounds).h = (*bounds).h as libc::c_int as libc::c_float;
-        c.x = c.x as libc::c_int as libc::c_float;
-        c.y = c.y as libc::c_int as libc::c_float;
-        c.w = c.w as libc::c_int as libc::c_float;
-        c.h = c.h as libc::c_int as libc::c_float;
+        (*bounds).x = (*bounds).x as libc::c_int as f32;
+        (*bounds).y = (*bounds).y as libc::c_int as f32;
+        (*bounds).w = (*bounds).w as libc::c_int as f32;
+        (*bounds).h = (*bounds).h as libc::c_int as f32;
+        c.x = c.x as libc::c_int as f32;
+        c.y = c.y as libc::c_int as f32;
+        c.w = c.w as libc::c_int as f32;
+        c.h = c.h as libc::c_int as f32;
         nk_unify(
             &mut v,
             &mut c,
@@ -12553,22 +12553,22 @@ unsafe fn nk_tree_element_image_push_hashed_base(
     let mut in_0: *const nk_input = 0 as *const nk_input;
     let mut button: *const nk_style_button = 0 as *const nk_style_button;
     let mut symbol: nk_symbol_type = NK_SYMBOL_NONE;
-    let mut row_height: libc::c_float = 0.;
+    let mut row_height: f32 = 0.;
     let mut padding: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     let mut text_len: libc::c_int = 0;
-    let mut text_width: libc::c_float = 0.;
+    let mut text_width: f32 = 0.;
     let mut item_spacing: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     let mut header: nk_rect = nk_rect {
-        x: 0i32 as libc::c_float,
-        y: 0i32 as libc::c_float,
-        w: 0i32 as libc::c_float,
-        h: 0i32 as libc::c_float,
+        x: 0i32 as f32,
+        y: 0i32 as f32,
+        w: 0i32 as f32,
+        h: 0i32 as f32,
     };
     let mut sym: nk_rect = nk_rect {
-        x: 0i32 as libc::c_float,
-        y: 0i32 as libc::c_float,
-        w: 0i32 as libc::c_float,
-        h: 0i32 as libc::c_float,
+        x: 0i32 as f32,
+        y: 0i32 as f32,
+        w: 0i32 as f32,
+        h: 0i32 as f32,
     };
     let mut text: nk_text = nk_text {
         padding: nk_vec2 { x: 0., y: 0. },
@@ -12598,7 +12598,7 @@ unsafe fn nk_tree_element_image_push_hashed_base(
         item_spacing = (*style).window.spacing;
         padding = (*style).selectable.padding;
         /* calculate header bounds and draw background */
-        row_height = (*(*style).font).height + 2i32 as libc::c_float * (*style).tab.padding.y;
+        row_height = (*(*style).font).height + 2i32 as f32 * (*style).tab.padding.y;
         nk_layout_set_min_row_height(ctx, row_height);
         nk_layout_row_dynamic(ctx, row_height, 1i32);
         nk_layout_reset_min_row_height(ctx);
@@ -12616,7 +12616,7 @@ unsafe fn nk_tree_element_image_push_hashed_base(
                 nk_fill_rect(
                     out,
                     header,
-                    0i32 as libc::c_float,
+                    0i32 as f32,
                     (*style).tab.border_color,
                 );
                 nk_fill_rect(
@@ -12694,7 +12694,7 @@ unsafe fn nk_tree_element_image_push_hashed_base(
             title,
             text_len,
         );
-        text_width += 4i32 as libc::c_float * padding.x;
+        text_width += 4i32 as f32 * padding.x;
         header.w = if header.w < sym.w + item_spacing.x {
             sym.w + item_spacing.x
         } else {
@@ -12738,7 +12738,7 @@ unsafe fn nk_tree_element_image_push_hashed_base(
         }
         /* increase x-axis cursor widget position pointer */
         if *state as libc::c_uint == NK_MAXIMIZED as libc::c_int as libc::c_uint {
-            (*layout).at_x = header.x + *(*layout).offset_x as libc::c_float + (*style).tab.indent;
+            (*layout).at_x = header.x + *(*layout).offset_x as f32 + (*style).tab.indent;
             (*layout).bounds.w = if (*layout).bounds.w < (*style).tab.indent {
                 (*style).tab.indent
             } else {
@@ -12785,8 +12785,8 @@ unsafe fn nk_do_selectable(
         /* remove padding */
         touch.x = bounds.x - (*style).touch_padding.x;
         touch.y = bounds.y - (*style).touch_padding.y;
-        touch.w = bounds.w + (*style).touch_padding.x * 2i32 as libc::c_float;
-        touch.h = bounds.h + (*style).touch_padding.y * 2i32 as libc::c_float;
+        touch.w = bounds.w + (*style).touch_padding.x * 2i32 as f32;
+        touch.h = bounds.h + (*style).touch_padding.y * 2i32 as f32;
         /* update button */
         if 0 != nk_button_behavior(state, touch, in_0, NK_BUTTON_DEFAULT) {
             *value = (0 == *value) as libc::c_int
@@ -12886,7 +12886,7 @@ unsafe fn nk_draw_selectable(
                 *icon,
                 text.background,
                 text.text,
-                1i32 as libc::c_float,
+                1i32 as f32,
                 font,
             );
         }
@@ -12933,28 +12933,28 @@ unsafe fn nk_do_selectable_image(
         /* toggle behavior */
         touch.x = bounds.x - (*style).touch_padding.x;
         touch.y = bounds.y - (*style).touch_padding.y;
-        touch.w = bounds.w + (*style).touch_padding.x * 2i32 as libc::c_float;
-        touch.h = bounds.h + (*style).touch_padding.y * 2i32 as libc::c_float;
+        touch.w = bounds.w + (*style).touch_padding.x * 2i32 as f32;
+        touch.h = bounds.h + (*style).touch_padding.y * 2i32 as f32;
         if 0 != nk_button_behavior(state, touch, in_0, NK_BUTTON_DEFAULT) {
             *value = (0 == *value) as libc::c_int
         }
         icon.y = bounds.y + (*style).padding.y;
-        icon.h = bounds.h - 2i32 as libc::c_float * (*style).padding.y;
+        icon.h = bounds.h - 2i32 as f32 * (*style).padding.y;
         icon.w = icon.h;
         if 0 != align & NK_TEXT_ALIGN_LEFT as libc::c_int as libc::c_uint {
-            icon.x = bounds.x + bounds.w - (2i32 as libc::c_float * (*style).padding.x + icon.w);
-            icon.x = if icon.x < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            icon.x = bounds.x + bounds.w - (2i32 as f32 * (*style).padding.x + icon.w);
+            icon.x = if icon.x < 0i32 as f32 {
+                0i32 as f32
             } else {
                 icon.x
             }
         } else {
-            icon.x = bounds.x + 2i32 as libc::c_float * (*style).padding.x
+            icon.x = bounds.x + 2i32 as f32 * (*style).padding.x
         }
         icon.x += (*style).image_padding.x;
         icon.y += (*style).image_padding.y;
-        icon.w -= 2i32 as libc::c_float * (*style).image_padding.x;
-        icon.h -= 2i32 as libc::c_float * (*style).image_padding.y;
+        icon.w -= 2i32 as f32 * (*style).image_padding.x;
+        icon.h -= 2i32 as f32 * (*style).image_padding.y;
         /* draw selectable */
         if (*style).draw_begin.is_some() {
             (*style).draw_begin.expect("non-null function pointer")(out, (*style).userdata);
@@ -13069,15 +13069,15 @@ pub unsafe fn nk_list_view_begin(
         layout = (*win).layout;
         (*view).total_height = row_height * if row_count < 1i32 { 1i32 } else { row_count };
         (*view).begin =
-            (if ((*view).scroll_value as libc::c_float / row_height as libc::c_float) < 0.0f32 {
+            (if ((*view).scroll_value as f32 / row_height as f32) < 0.0f32 {
                 0.0f32
             } else {
-                (*view).scroll_value as libc::c_float / row_height as libc::c_float
+                (*view).scroll_value as f32 / row_height as f32
             }) as libc::c_int;
-        (*view).count = if nk_iceilf((*layout).clip.h / row_height as libc::c_float) < 0i32 {
+        (*view).count = if nk_iceilf((*layout).clip.h / row_height as f32) < 0i32 {
             0i32
         } else {
-            nk_iceilf((*layout).clip.h / row_height as libc::c_float)
+            nk_iceilf((*layout).clip.h / row_height as f32)
         };
         (*view).count = if (*view).count < row_count - (*view).begin {
             (*view).count
@@ -13089,13 +13089,13 @@ pub unsafe fn nk_list_view_begin(
         return result;
     };
 }
-unsafe fn nk_iceilf(mut x: libc::c_float) -> libc::c_int {
-    if x >= 0i32 as libc::c_float {
+unsafe fn nk_iceilf(mut x: f32) -> libc::c_int {
+    if x >= 0i32 as f32 {
         let mut i: libc::c_int = x as libc::c_int;
-        return if x > i as libc::c_float { i + 1i32 } else { i };
+        return if x > i as f32 { i + 1i32 } else { i };
     } else {
         let mut t: libc::c_int = x as libc::c_int;
-        let mut r: libc::c_float = x - t as libc::c_float;
+        let mut r: f32 = x - t as f32;
         return if r > 0.0f32 { t + 1i32 } else { t };
     };
 }
@@ -13110,7 +13110,7 @@ pub unsafe fn nk_list_view_end(mut view: *mut nk_list_view) -> () {
         ctx = (*view).ctx;
         win = (*ctx).current;
         layout = (*win).layout;
-        (*layout).at_y = (*layout).bounds.y + (*view).total_height as libc::c_float;
+        (*layout).at_y = (*layout).bounds.y + (*view).total_height as f32;
         *(*view).scroll_pointer = (*(*view).scroll_pointer).wrapping_add((*view).scroll_value);
         nk_group_end((*view).ctx);
         return;
@@ -13160,10 +13160,10 @@ pub unsafe fn nk_widget_bounds(mut ctx: *mut nk_context) -> nk_rect {
     };
     if ctx.is_null() || (*ctx).current.is_null() {
         return nk_rect(
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
-            0i32 as libc::c_float,
+            0i32 as f32,
+            0i32 as f32,
+            0i32 as f32,
+            0i32 as f32,
         );
     } else {
         nk_layout_peek(&mut bounds, ctx);
@@ -13171,7 +13171,7 @@ pub unsafe fn nk_widget_bounds(mut ctx: *mut nk_context) -> nk_rect {
     };
 }
 unsafe fn nk_layout_peek(mut bounds: *mut nk_rect, mut ctx: *mut nk_context) -> () {
-    let mut y: libc::c_float = 0.;
+    let mut y: f32 = 0.;
     let mut index: libc::c_int = 0;
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
@@ -13204,7 +13204,7 @@ pub unsafe fn nk_widget_position(mut ctx: *mut nk_context) -> nk_vec2 {
         h: 0.,
     };
     if ctx.is_null() || (*ctx).current.is_null() {
-        return nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        return nk_vec2(0i32 as f32, 0i32 as f32);
     } else {
         nk_layout_peek(&mut bounds, ctx);
         return nk_vec2(bounds.x, bounds.y);
@@ -13219,14 +13219,14 @@ pub unsafe fn nk_widget_size(mut ctx: *mut nk_context) -> nk_vec2 {
         h: 0.,
     };
     if ctx.is_null() || (*ctx).current.is_null() {
-        return nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        return nk_vec2(0i32 as f32, 0i32 as f32);
     } else {
         nk_layout_peek(&mut bounds, ctx);
         return nk_vec2(bounds.w, bounds.h);
     };
 }
 #[no_mangle]
-pub unsafe fn nk_widget_width(mut ctx: *mut nk_context) -> libc::c_float {
+pub unsafe fn nk_widget_width(mut ctx: *mut nk_context) -> f32 {
     let mut bounds: nk_rect = nk_rect {
         x: 0.,
         y: 0.,
@@ -13234,14 +13234,14 @@ pub unsafe fn nk_widget_width(mut ctx: *mut nk_context) -> libc::c_float {
         h: 0.,
     };
     if ctx.is_null() || (*ctx).current.is_null() {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
         nk_layout_peek(&mut bounds, ctx);
         return bounds.w;
     };
 }
 #[no_mangle]
-pub unsafe fn nk_widget_height(mut ctx: *mut nk_context) -> libc::c_float {
+pub unsafe fn nk_widget_height(mut ctx: *mut nk_context) -> f32 {
     let mut bounds: nk_rect = nk_rect {
         x: 0.,
         y: 0.,
@@ -13249,7 +13249,7 @@ pub unsafe fn nk_widget_height(mut ctx: *mut nk_context) -> libc::c_float {
         h: 0.,
     };
     if ctx.is_null() || (*ctx).current.is_null() {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
         nk_layout_peek(&mut bounds, ctx);
         return bounds.h;
@@ -13279,10 +13279,10 @@ pub unsafe fn nk_widget_is_hovered(mut ctx: *mut nk_context) -> libc::c_int {
         return 0i32;
     } else {
         c = (*(*(*ctx).current).layout).clip;
-        c.x = c.x as libc::c_int as libc::c_float;
-        c.y = c.y as libc::c_int as libc::c_float;
-        c.w = c.w as libc::c_int as libc::c_float;
-        c.h = c.h as libc::c_int as libc::c_float;
+        c.x = c.x as libc::c_int as f32;
+        c.y = c.y as libc::c_int as f32;
+        c.w = c.w as libc::c_int as f32;
+        c.h = c.h as libc::c_int as f32;
         nk_layout_peek(&mut bounds, ctx);
         nk_unify(
             &mut v,
@@ -13330,10 +13330,10 @@ pub unsafe fn nk_widget_is_mouse_clicked(
         return 0i32;
     } else {
         c = (*(*(*ctx).current).layout).clip;
-        c.x = c.x as libc::c_int as libc::c_float;
-        c.y = c.y as libc::c_int as libc::c_float;
-        c.w = c.w as libc::c_int as libc::c_float;
-        c.h = c.h as libc::c_int as libc::c_float;
+        c.x = c.x as libc::c_int as f32;
+        c.y = c.y as libc::c_int as f32;
+        c.w = c.w as libc::c_int as f32;
+        c.h = c.h as libc::c_int as f32;
         nk_layout_peek(&mut bounds, ctx);
         nk_unify(
             &mut v,
@@ -13416,10 +13416,10 @@ pub unsafe fn nk_widget_has_mouse_click_down(
         return 0i32;
     } else {
         c = (*(*(*ctx).current).layout).clip;
-        c.x = c.x as libc::c_int as libc::c_float;
-        c.y = c.y as libc::c_int as libc::c_float;
-        c.w = c.w as libc::c_int as libc::c_float;
-        c.h = c.h as libc::c_int as libc::c_float;
+        c.x = c.x as libc::c_int as f32;
+        c.y = c.y as libc::c_int as f32;
+        c.w = c.w as libc::c_int as f32;
+        c.h = c.h as libc::c_int as f32;
         nk_layout_peek(&mut bounds, ctx);
         nk_unify(
             &mut v,
@@ -13628,7 +13628,7 @@ unsafe fn nk_widget_text_wrap(
     mut t: *const nk_text,
     mut f: *const nk_user_font,
 ) -> () {
-    let mut width: libc::c_float = 0.;
+    let mut width: f32 = 0.;
     let mut glyphs: libc::c_int = 0i32;
     let mut fitting: libc::c_int = 0i32;
     let mut done: libc::c_int = 0i32;
@@ -13657,24 +13657,24 @@ unsafe fn nk_widget_text_wrap(
     if o.is_null() || t.is_null() {
         return;
     } else {
-        text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
         text.background = (*t).background;
         text.text = (*t).text;
-        b.w = if b.w < 2i32 as libc::c_float * (*t).padding.x {
-            2i32 as libc::c_float * (*t).padding.x
+        b.w = if b.w < 2i32 as f32 * (*t).padding.x {
+            2i32 as f32 * (*t).padding.x
         } else {
             b.w
         };
-        b.h = if b.h < 2i32 as libc::c_float * (*t).padding.y {
-            2i32 as libc::c_float * (*t).padding.y
+        b.h = if b.h < 2i32 as f32 * (*t).padding.y {
+            2i32 as f32 * (*t).padding.y
         } else {
             b.h
         };
-        b.h = b.h - 2i32 as libc::c_float * (*t).padding.y;
+        b.h = b.h - 2i32 as f32 * (*t).padding.y;
         line.x = b.x + (*t).padding.x;
         line.y = b.y + (*t).padding.y;
-        line.w = b.w - 2i32 as libc::c_float * (*t).padding.x;
-        line.h = 2i32 as libc::c_float * (*t).padding.y + (*f).height;
+        line.w = b.w - 2i32 as f32 * (*t).padding.x;
+        line.h = 2i32 as f32 * (*t).padding.y + (*f).height;
         fitting = nk_text_clamp(
             f,
             string,
@@ -13701,7 +13701,7 @@ unsafe fn nk_widget_text_wrap(
                 f,
             );
             done += fitting;
-            line.y += (*f).height + 2i32 as libc::c_float * (*t).padding.y;
+            line.y += (*f).height + 2i32 as f32 * (*t).padding.y;
             fitting = nk_text_clamp(
                 f,
                 &*string.offset(done as isize),
@@ -13937,7 +13937,7 @@ unsafe fn nk_draw_button_text(
     } else {
         text.text = (*style).text_normal
     }
-    text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+    text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
     nk_widget_text(out, *content, txt, len, &mut text, text_alignment, font);
 }
 #[no_mangle]
@@ -14217,8 +14217,8 @@ unsafe fn nk_do_button_image(
         ret = nk_do_button(state, out, bounds, style, in_0, b, &mut content);
         content.x += (*style).image_padding.x;
         content.y += (*style).image_padding.y;
-        content.w -= 2i32 as libc::c_float * (*style).image_padding.x;
-        content.h -= 2i32 as libc::c_float * (*style).image_padding.y;
+        content.w -= 2i32 as f32 * (*style).image_padding.x;
+        content.h -= 2i32 as f32 * (*style).image_padding.y;
         if (*style).draw_begin.is_some() {
             (*style).draw_begin.expect("non-null function pointer")(out, (*style).userdata);
         }
@@ -14336,10 +14336,10 @@ unsafe fn nk_do_button_text_symbol(
 ) -> libc::c_int {
     let mut ret: libc::c_int = 0;
     let mut tri: nk_rect = nk_rect {
-        x: 0i32 as libc::c_float,
-        y: 0i32 as libc::c_float,
-        w: 0i32 as libc::c_float,
-        h: 0i32 as libc::c_float,
+        x: 0i32 as f32,
+        y: 0i32 as f32,
+        w: 0i32 as f32,
+        h: 0i32 as f32,
     };
     let mut content: nk_rect = nk_rect {
         x: 0.,
@@ -14352,18 +14352,18 @@ unsafe fn nk_do_button_text_symbol(
     } else {
         ret = nk_do_button(state, out, bounds, style, in_0, behavior, &mut content);
         tri.y =
-            content.y + content.h / 2i32 as libc::c_float - (*font).height / 2i32 as libc::c_float;
+            content.y + content.h / 2i32 as f32 - (*font).height / 2i32 as f32;
         tri.w = (*font).height;
         tri.h = (*font).height;
         if 0 != align & NK_TEXT_ALIGN_LEFT as libc::c_int as libc::c_uint {
-            tri.x = content.x + content.w - (2i32 as libc::c_float * (*style).padding.x + tri.w);
-            tri.x = if tri.x < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            tri.x = content.x + content.w - (2i32 as f32 * (*style).padding.x + tri.w);
+            tri.x = if tri.x < 0i32 as f32 {
+                0i32 as f32
             } else {
                 tri.x
             }
         } else {
-            tri.x = content.x + 2i32 as libc::c_float * (*style).padding.x
+            tri.x = content.x + 2i32 as f32 * (*style).padding.x
         }
         /* draw button */
         if (*style).draw_begin.is_some() {
@@ -14439,14 +14439,14 @@ unsafe fn nk_draw_button_text_symbol(
         sym = (*style).text_normal;
         text.text = (*style).text_normal
     }
-    text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+    text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
     nk_draw_symbol(
         out,
         type_0,
         *symbol,
         (*style).text_background,
         sym,
-        0i32 as libc::c_float,
+        0i32 as f32,
         font,
     );
     nk_widget_text(
@@ -14560,22 +14560,22 @@ unsafe fn nk_do_button_text_image(
     } else {
         ret = nk_do_button(state, out, bounds, style, in_0, behavior, &mut content);
         icon.y = bounds.y + (*style).padding.y;
-        icon.h = bounds.h - 2i32 as libc::c_float * (*style).padding.y;
+        icon.h = bounds.h - 2i32 as f32 * (*style).padding.y;
         icon.w = icon.h;
         if 0 != align & NK_TEXT_ALIGN_LEFT as libc::c_int as libc::c_uint {
-            icon.x = bounds.x + bounds.w - (2i32 as libc::c_float * (*style).padding.x + icon.w);
-            icon.x = if icon.x < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            icon.x = bounds.x + bounds.w - (2i32 as f32 * (*style).padding.x + icon.w);
+            icon.x = if icon.x < 0i32 as f32 {
+                0i32 as f32
             } else {
                 icon.x
             }
         } else {
-            icon.x = bounds.x + 2i32 as libc::c_float * (*style).padding.x
+            icon.x = bounds.x + 2i32 as f32 * (*style).padding.x
         }
         icon.x += (*style).image_padding.x;
         icon.y += (*style).image_padding.y;
-        icon.w -= 2i32 as libc::c_float * (*style).image_padding.x;
-        icon.h -= 2i32 as libc::c_float * (*style).image_padding.y;
+        icon.w -= 2i32 as f32 * (*style).image_padding.x;
+        icon.h -= 2i32 as f32 * (*style).image_padding.y;
         if (*style).draw_begin.is_some() {
             (*style).draw_begin.expect("non-null function pointer")(out, (*style).userdata);
         }
@@ -14639,7 +14639,7 @@ unsafe fn nk_draw_button_text_image(
     } else {
         text.text = (*style).text_normal
     }
-    text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+    text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
     nk_widget_text(
         out,
         *label,
@@ -14845,21 +14845,21 @@ unsafe fn nk_do_toggle(
     if out.is_null() || style.is_null() || font.is_null() || active.is_null() {
         return 0i32;
     } else {
-        r.w = if r.w < (*font).height + 2i32 as libc::c_float * (*style).padding.x {
-            (*font).height + 2i32 as libc::c_float * (*style).padding.x
+        r.w = if r.w < (*font).height + 2i32 as f32 * (*style).padding.x {
+            (*font).height + 2i32 as f32 * (*style).padding.x
         } else {
             r.w
         };
-        r.h = if r.h < (*font).height + 2i32 as libc::c_float * (*style).padding.y {
-            (*font).height + 2i32 as libc::c_float * (*style).padding.y
+        r.h = if r.h < (*font).height + 2i32 as f32 * (*style).padding.y {
+            (*font).height + 2i32 as f32 * (*style).padding.y
         } else {
             r.h
         };
         /* add additional touch padding for touch screen devices */
         bounds.x = r.x - (*style).touch_padding.x;
         bounds.y = r.y - (*style).touch_padding.y;
-        bounds.w = r.w + 2i32 as libc::c_float * (*style).touch_padding.x;
-        bounds.h = r.h + 2i32 as libc::c_float * (*style).touch_padding.y;
+        bounds.w = r.w + 2i32 as f32 * (*style).touch_padding.x;
+        bounds.h = r.h + 2i32 as f32 * (*style).touch_padding.y;
         /* calculate the selector space */
         select.w = (*font).height;
         select.h = select.w;
@@ -14869,11 +14869,11 @@ unsafe fn nk_do_toggle(
         cursor.x = select.x + (*style).padding.x + (*style).border;
         cursor.y = select.y + (*style).padding.y + (*style).border;
         cursor.w = select.w
-            - (2i32 as libc::c_float * (*style).padding.x
-                + 2i32 as libc::c_float * (*style).border);
+            - (2i32 as f32 * (*style).padding.x
+                + 2i32 as f32 * (*style).border);
         cursor.h = select.h
-            - (2i32 as libc::c_float * (*style).padding.y
-                + 2i32 as libc::c_float * (*style).border);
+            - (2i32 as f32 * (*style).padding.y
+                + 2i32 as f32 * (*style).border);
         /* label behind the selector */
         label.x = select.x + select.w + (*style).spacing;
         label.y = select.y;
@@ -14984,8 +14984,8 @@ unsafe fn nk_draw_option(
             nk_fill_circle(out, *cursors, (*cursor).data.color);
         }
     }
-    text.padding.x = 0i32 as libc::c_float;
-    text.padding.y = 0i32 as libc::c_float;
+    text.padding.x = 0i32 as f32;
+    text.padding.y = 0i32 as f32;
     text.background = (*style).text_background;
     nk_widget_text(
         out,
@@ -15042,11 +15042,11 @@ unsafe fn nk_draw_checkbox(
     }
     /* draw background and cursor */
     if (*background).type_0 as libc::c_uint == NK_STYLE_ITEM_COLOR as libc::c_int as libc::c_uint {
-        nk_fill_rect(out, *selector, 0i32 as libc::c_float, (*style).border_color);
+        nk_fill_rect(out, *selector, 0i32 as f32, (*style).border_color);
         nk_fill_rect(
             out,
             nk_shrink_rect(*selector, (*style).border),
-            0i32 as libc::c_float,
+            0i32 as f32,
             (*background).data.color,
         );
     } else {
@@ -15056,11 +15056,11 @@ unsafe fn nk_draw_checkbox(
         if (*cursor).type_0 as libc::c_uint == NK_STYLE_ITEM_IMAGE as libc::c_int as libc::c_uint {
             nk_draw_image(out, *cursors, &(*cursor).data.image, nk_white);
         } else {
-            nk_fill_rect(out, *cursors, 0i32 as libc::c_float, (*cursor).data.color);
+            nk_fill_rect(out, *cursors, 0i32 as f32, (*cursor).data.color);
         }
     }
-    text.padding.x = 0i32 as libc::c_float;
-    text.padding.y = 0i32 as libc::c_float;
+    text.padding.x = 0i32 as f32;
+    text.padding.y = 0i32 as f32;
     text.background = (*style).text_background;
     nk_widget_text(
         out,
@@ -15506,28 +15506,28 @@ unsafe fn nk_do_selectable_symbol(
         /* toggle behavior */
         touch.x = bounds.x - (*style).touch_padding.x;
         touch.y = bounds.y - (*style).touch_padding.y;
-        touch.w = bounds.w + (*style).touch_padding.x * 2i32 as libc::c_float;
-        touch.h = bounds.h + (*style).touch_padding.y * 2i32 as libc::c_float;
+        touch.w = bounds.w + (*style).touch_padding.x * 2i32 as f32;
+        touch.h = bounds.h + (*style).touch_padding.y * 2i32 as f32;
         if 0 != nk_button_behavior(state, touch, in_0, NK_BUTTON_DEFAULT) {
             *value = (0 == *value) as libc::c_int
         }
         icon.y = bounds.y + (*style).padding.y;
-        icon.h = bounds.h - 2i32 as libc::c_float * (*style).padding.y;
+        icon.h = bounds.h - 2i32 as f32 * (*style).padding.y;
         icon.w = icon.h;
         if 0 != align & NK_TEXT_ALIGN_LEFT as libc::c_int as libc::c_uint {
-            icon.x = bounds.x + bounds.w - (2i32 as libc::c_float * (*style).padding.x + icon.w);
-            icon.x = if icon.x < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            icon.x = bounds.x + bounds.w - (2i32 as f32 * (*style).padding.x + icon.w);
+            icon.x = if icon.x < 0i32 as f32 {
+                0i32 as f32
             } else {
                 icon.x
             }
         } else {
-            icon.x = bounds.x + 2i32 as libc::c_float * (*style).padding.x
+            icon.x = bounds.x + 2i32 as f32 * (*style).padding.x
         }
         icon.x += (*style).image_padding.x;
         icon.y += (*style).image_padding.y;
-        icon.w -= 2i32 as libc::c_float * (*style).image_padding.x;
-        icon.h -= 2i32 as libc::c_float * (*style).image_padding.y;
+        icon.w -= 2i32 as f32 * (*style).image_padding.x;
+        icon.h -= 2i32 as f32 * (*style).image_padding.y;
         /* draw selectable */
         if (*style).draw_begin.is_some() {
             (*style).draw_begin.expect("non-null function pointer")(out, (*style).userdata);
@@ -15621,28 +15621,28 @@ pub unsafe fn nk_select_symbol_text(
 #[no_mangle]
 pub unsafe fn nk_slide_float(
     mut ctx: *mut nk_context,
-    mut min: libc::c_float,
-    mut val: libc::c_float,
-    mut max: libc::c_float,
-    mut step: libc::c_float,
-) -> libc::c_float {
+    mut min: f32,
+    mut val: f32,
+    mut max: f32,
+    mut step: f32,
+) -> f32 {
     nk_slider_float(ctx, min, &mut val, max, step);
     return val;
 }
 #[no_mangle]
 pub unsafe fn nk_slider_float(
     mut ctx: *mut nk_context,
-    mut min_value: libc::c_float,
-    mut value: *mut libc::c_float,
-    mut max_value: libc::c_float,
-    mut value_step: libc::c_float,
+    mut min_value: f32,
+    mut value: *mut f32,
+    mut max_value: f32,
+    mut value_step: f32,
 ) -> libc::c_int {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut layout: *mut nk_panel = 0 as *mut nk_panel;
     let mut in_0: *mut nk_input = 0 as *mut nk_input;
     let mut style: *const nk_style = 0 as *const nk_style;
     let mut ret: libc::c_int = 0i32;
-    let mut old_value: libc::c_float = 0.;
+    let mut old_value: f32 = 0.;
     let mut bounds: nk_rect = nk_rect {
         x: 0.,
         y: 0.,
@@ -15691,20 +15691,20 @@ unsafe fn nk_do_slider(
     mut state: *mut nk_flags,
     mut out: *mut nk_command_buffer,
     mut bounds: nk_rect,
-    mut min: libc::c_float,
-    mut val: libc::c_float,
-    mut max: libc::c_float,
-    mut step: libc::c_float,
+    mut min: f32,
+    mut val: f32,
+    mut max: f32,
+    mut step: f32,
     mut style: *const nk_style_slider,
     mut in_0: *mut nk_input,
     mut font: *const nk_user_font,
-) -> libc::c_float {
-    let mut slider_range: libc::c_float = 0.;
-    let mut slider_min: libc::c_float = 0.;
-    let mut slider_max: libc::c_float = 0.;
-    let mut slider_value: libc::c_float = 0.;
-    let mut slider_steps: libc::c_float = 0.;
-    let mut cursor_offset: libc::c_float = 0.;
+) -> f32 {
+    let mut slider_range: f32 = 0.;
+    let mut slider_min: f32 = 0.;
+    let mut slider_max: f32 = 0.;
+    let mut slider_value: f32 = 0.;
+    let mut slider_steps: f32 = 0.;
+    let mut cursor_offset: f32 = 0.;
     let mut visual_cursor: nk_rect = nk_rect {
         x: 0.,
         y: 0.,
@@ -15718,24 +15718,24 @@ unsafe fn nk_do_slider(
         h: 0.,
     };
     if out.is_null() || style.is_null() {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
         /* remove padding from slider bounds */
         bounds.x = bounds.x + (*style).padding.x;
         bounds.y = bounds.y + (*style).padding.y;
-        bounds.h = if bounds.h < 2i32 as libc::c_float * (*style).padding.y {
-            2i32 as libc::c_float * (*style).padding.y
+        bounds.h = if bounds.h < 2i32 as f32 * (*style).padding.y {
+            2i32 as f32 * (*style).padding.y
         } else {
             bounds.h
         };
-        bounds.w = if bounds.w < 2i32 as libc::c_float * (*style).padding.x + (*style).cursor_size.x
+        bounds.w = if bounds.w < 2i32 as f32 * (*style).padding.x + (*style).cursor_size.x
         {
-            2i32 as libc::c_float * (*style).padding.x + (*style).cursor_size.x
+            2i32 as f32 * (*style).padding.x + (*style).cursor_size.x
         } else {
             bounds.w
         };
-        bounds.w -= 2i32 as libc::c_float * (*style).padding.x;
-        bounds.h -= 2i32 as libc::c_float * (*style).padding.y;
+        bounds.w -= 2i32 as f32 * (*style).padding.x;
+        bounds.h -= 2i32 as f32 * (*style).padding.y;
         /* optional buttons */
         if 0 != (*style).show_buttons {
             let mut ws: nk_flags = 0;
@@ -15778,7 +15778,7 @@ unsafe fn nk_do_slider(
             }
             bounds.x = bounds.x + button.w + (*style).spacing.x;
             bounds.w = bounds.w
-                - (2i32 as libc::c_float * button.w + 2i32 as libc::c_float * (*style).spacing.x)
+                - (2i32 as f32 * button.w + 2i32 as f32 * (*style).spacing.x)
         }
         /* remove one cursor size to support visual cursor */
         bounds.x += (*style).cursor_size.x * 0.5f32;
@@ -15846,9 +15846,9 @@ unsafe fn nk_draw_slider(
     mut style: *const nk_style_slider,
     mut bounds: *const nk_rect,
     mut visual_cursor: *const nk_rect,
-    mut min: libc::c_float,
-    mut value: libc::c_float,
-    mut max: libc::c_float,
+    mut min: f32,
+    mut value: f32,
+    mut max: f32,
 ) -> () {
     let mut fill: nk_rect = nk_rect {
         x: 0.,
@@ -15886,10 +15886,10 @@ unsafe fn nk_draw_slider(
     }
     /* calculate slider background bar */
     bar.x = (*bounds).x;
-    bar.y = (*visual_cursor).y + (*visual_cursor).h / 2i32 as libc::c_float
-        - (*bounds).h / 12i32 as libc::c_float;
+    bar.y = (*visual_cursor).y + (*visual_cursor).h / 2i32 as f32
+        - (*bounds).h / 12i32 as f32;
     bar.w = (*bounds).w;
-    bar.h = (*bounds).h / 6i32 as libc::c_float;
+    bar.h = (*bounds).h / 6i32 as f32;
     /* filled background bar style */
     fill.w = (*visual_cursor).x + (*visual_cursor).w / 2.0f32 - bar.x;
     fill.x = bar.x;
@@ -15924,12 +15924,12 @@ unsafe fn nk_slider_behavior(
     mut visual_cursor: *mut nk_rect,
     mut in_0: *mut nk_input,
     mut bounds: nk_rect,
-    mut slider_min: libc::c_float,
-    mut slider_max: libc::c_float,
-    mut slider_value: libc::c_float,
-    mut slider_step: libc::c_float,
-    mut slider_steps: libc::c_float,
-) -> libc::c_float {
+    mut slider_min: f32,
+    mut slider_max: f32,
+    mut slider_value: f32,
+    mut slider_step: f32,
+    mut slider_steps: f32,
+) -> f32 {
     let mut left_mouse_down: libc::c_int = 0;
     let mut left_mouse_click_in_cursor: libc::c_int = 0;
     if 0 != *state & NK_WIDGET_STATE_MODIFIED as libc::c_int as libc::c_uint {
@@ -15950,16 +15950,16 @@ unsafe fn nk_slider_behavior(
             nk_true as libc::c_int,
         )) as libc::c_int;
     if 0 != left_mouse_down && 0 != left_mouse_click_in_cursor {
-        let mut ratio: libc::c_float = 0i32 as libc::c_float;
-        let d: libc::c_float =
+        let mut ratio: f32 = 0i32 as f32;
+        let d: f32 =
             (*in_0).mouse.pos.x - ((*visual_cursor).x + (*visual_cursor).w * 0.5f32);
-        let pxstep: libc::c_float = bounds.w / slider_steps;
+        let pxstep: f32 = bounds.w / slider_steps;
         /* only update value if the next slider step is reached */
         *state = NK_WIDGET_STATE_ACTIVE as libc::c_int as nk_flags;
-        if if d < 0i32 as libc::c_float { -d } else { d } >= pxstep {
-            let steps: libc::c_float = (if d < 0i32 as libc::c_float { -d } else { d } / pxstep)
-                as libc::c_int as libc::c_float;
-            slider_value += if d > 0i32 as libc::c_float {
+        if if d < 0i32 as f32 { -d } else { d } >= pxstep {
+            let steps: f32 = (if d < 0i32 as f32 { -d } else { d } / pxstep)
+                as libc::c_int as f32;
+            slider_value += if d > 0i32 as f32 {
                 slider_step * steps
             } else {
                 -(slider_step * steps)
@@ -16004,13 +16004,13 @@ pub unsafe fn nk_slide_int(
     mut max: libc::c_int,
     mut step: libc::c_int,
 ) -> libc::c_int {
-    let mut value: libc::c_float = val as libc::c_float;
+    let mut value: f32 = val as f32;
     nk_slider_float(
         ctx,
-        min as libc::c_float,
+        min as f32,
         &mut value,
-        max as libc::c_float,
-        step as libc::c_float,
+        max as f32,
+        step as f32,
     );
     return value as libc::c_int;
 }
@@ -16023,13 +16023,13 @@ pub unsafe fn nk_slider_int(
     mut step: libc::c_int,
 ) -> libc::c_int {
     let mut ret: libc::c_int = 0;
-    let mut value: libc::c_float = *val as libc::c_float;
+    let mut value: f32 = *val as f32;
     ret = nk_slider_float(
         ctx,
-        min as libc::c_float,
+        min as f32,
         &mut value,
-        max as libc::c_float,
-        step as libc::c_float,
+        max as f32,
+        step as f32,
     );
     *val = value as libc::c_int;
     return ret;
@@ -16099,7 +16099,7 @@ unsafe fn nk_do_progress(
     mut style: *const nk_style_progress,
     mut in_0: *mut nk_input,
 ) -> nk_size {
-    let mut prog_scale: libc::c_float = 0.;
+    let mut prog_scale: f32 = 0.;
     let mut prog_value: nk_size = 0;
     let mut cursor: nk_rect = nk_rect {
         x: 0.,
@@ -16112,16 +16112,16 @@ unsafe fn nk_do_progress(
     } else {
         /* calculate progressbar cursor */
         cursor.w = if bounds.w
-            < 2i32 as libc::c_float * (*style).padding.x + 2i32 as libc::c_float * (*style).border
+            < 2i32 as f32 * (*style).padding.x + 2i32 as f32 * (*style).border
         {
-            2i32 as libc::c_float * (*style).padding.x + 2i32 as libc::c_float * (*style).border
+            2i32 as f32 * (*style).padding.x + 2i32 as f32 * (*style).border
         } else {
             bounds.w
         };
         cursor.h = if bounds.h
-            < 2i32 as libc::c_float * (*style).padding.y + 2i32 as libc::c_float * (*style).border
+            < 2i32 as f32 * (*style).padding.y + 2i32 as f32 * (*style).border
         {
-            2i32 as libc::c_float * (*style).padding.y + 2i32 as libc::c_float * (*style).border
+            2i32 as f32 * (*style).padding.y + 2i32 as f32 * (*style).border
         } else {
             bounds.h
         };
@@ -16132,7 +16132,7 @@ unsafe fn nk_do_progress(
                 (*style).padding.y + (*style).border,
             ),
         );
-        prog_scale = value as libc::c_float / max as libc::c_float;
+        prog_scale = value as f32 / max as f32;
         /* update progressbar */
         prog_value = if value < max { value } else { max };
         prog_value = nk_progress_behavior(state, in_0, bounds, cursor, max, prog_value, modifiable);
@@ -16232,23 +16232,23 @@ unsafe fn nk_progress_behavior(
         }
         if !in_0.is_null() && 0 != left_mouse_down && 0 != left_mouse_click_in_cursor {
             if 0 != left_mouse_down && 0 != left_mouse_click_in_cursor {
-                let mut ratio: libc::c_float =
-                    if (0i32 as libc::c_float) < (*in_0).mouse.pos.x - cursor.x {
+                let mut ratio: f32 =
+                    if (0i32 as f32) < (*in_0).mouse.pos.x - cursor.x {
                         (*in_0).mouse.pos.x - cursor.x
                     } else {
-                        0i32 as libc::c_float
+                        0i32 as f32
                     } / cursor.w;
-                value = (if if max as libc::c_float * ratio < max as libc::c_float {
-                    max as libc::c_float * ratio
+                value = (if if max as f32 * ratio < max as f32 {
+                    max as f32 * ratio
                 } else {
-                    max as libc::c_float
-                } < 0i32 as libc::c_float
+                    max as f32
+                } < 0i32 as f32
                 {
-                    0i32 as libc::c_float
-                } else if max as libc::c_float * ratio < max as libc::c_float {
-                    max as libc::c_float * ratio
+                    0i32 as f32
+                } else if max as f32 * ratio < max as f32 {
+                    max as f32 * ratio
                 } else {
-                    max as libc::c_float
+                    max as f32
                 }) as nk_size;
                 (*in_0).mouse.buttons[NK_BUTTON_LEFT as libc::c_int as usize]
                     .clicked_pos
@@ -16268,20 +16268,20 @@ unsafe fn nk_progress_behavior(
     };
 }
 unsafe fn nk_pad_rect(mut r: nk_rect, mut pad: nk_vec2) -> nk_rect {
-    r.w = if r.w < 2i32 as libc::c_float * pad.x {
-        2i32 as libc::c_float * pad.x
+    r.w = if r.w < 2i32 as f32 * pad.x {
+        2i32 as f32 * pad.x
     } else {
         r.w
     };
-    r.h = if r.h < 2i32 as libc::c_float * pad.y {
-        2i32 as libc::c_float * pad.y
+    r.h = if r.h < 2i32 as f32 * pad.y {
+        2i32 as f32 * pad.y
     } else {
         r.h
     };
     r.x += pad.x;
     r.y += pad.y;
-    r.w -= 2i32 as libc::c_float * pad.x;
-    r.h -= 2i32 as libc::c_float * pad.y;
+    r.w -= 2i32 as f32 * pad.x;
+    r.h -= 2i32 as f32 * pad.y;
     return r;
 }
 #[no_mangle]
@@ -16347,7 +16347,7 @@ pub unsafe fn nk_color_pick(
                 color,
                 fmt,
                 bounds,
-                nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float),
+                nk_vec2(0i32 as f32, 0i32 as f32),
                 in_0,
                 (*config).font,
             );
@@ -16383,19 +16383,19 @@ unsafe fn nk_do_color_picker(
         w: 0.,
         h: 0.,
     };
-    let mut bar_w: libc::c_float = 0.;
+    let mut bar_w: f32 = 0.;
     if out.is_null() || col.is_null() || state.is_null() || font.is_null() {
         return ret;
     } else {
         bar_w = (*font).height;
         bounds.x += padding.x;
         bounds.y += padding.x;
-        bounds.w -= 2i32 as libc::c_float * padding.x;
-        bounds.h -= 2i32 as libc::c_float * padding.y;
+        bounds.w -= 2i32 as f32 * padding.x;
+        bounds.h -= 2i32 as f32 * padding.y;
         matrix.x = bounds.x;
         matrix.y = bounds.y;
         matrix.h = bounds.h;
-        matrix.w = bounds.w - (3i32 as libc::c_float * padding.x + 2i32 as libc::c_float * bar_w);
+        matrix.w = bounds.w - (3i32 as f32 * padding.x + 2i32 as f32 * bar_w);
         hue_bar.w = bar_w;
         hue_bar.y = bounds.y;
         hue_bar.h = matrix.h;
@@ -16438,7 +16438,7 @@ unsafe fn nk_draw_color_picker(
     mut alpha_bar: *const nk_rect,
     mut col: nk_colorf,
 ) -> () {
-    let mut alpha: libc::c_float = 0.;
+    let mut alpha: f32 = 0.;
     static mut black: nk_color = unsafe {
         nk_color {
             r: 0i32 as nk_byte,
@@ -16463,15 +16463,15 @@ unsafe fn nk_draw_color_picker(
             a: 0i32 as nk_byte,
         }
     };
-    let crosshair_size: libc::c_float = 7.0f32;
+    let crosshair_size: f32 = 7.0f32;
     let mut temp: nk_color = nk_color {
         r: 0,
         g: 0,
         b: 0,
         a: 0,
     };
-    let mut hsva: [libc::c_float; 4] = [0.; 4];
-    let mut line_y: libc::c_float = 0.;
+    let mut hsva: [f32; 4] = [0.; 4];
+    let mut line_y: f32 = 0.;
     let mut i: libc::c_int = 0;
     /* draw hue bar */
     nk_colorf_hsva_fv(hsva.as_mut_ptr(), col);
@@ -16527,7 +16527,7 @@ unsafe fn nk_draw_color_picker(
             o,
             nk_rect(
                 (*hue_bar).x,
-                (*hue_bar).y + i as libc::c_float * ((*hue_bar).h / 6.0f32) + 0.5f32,
+                (*hue_bar).y + i as f32 * ((*hue_bar).h / 6.0f32) + 0.5f32,
                 (*hue_bar).w,
                 (*hue_bar).h / 6.0f32 + 0.5f32,
             ),
@@ -16538,19 +16538,19 @@ unsafe fn nk_draw_color_picker(
         );
         i += 1
     }
-    line_y = ((*hue_bar).y + hsva[0usize] * (*matrix).h + 0.5f32) as libc::c_int as libc::c_float;
+    line_y = ((*hue_bar).y + hsva[0usize] * (*matrix).h + 0.5f32) as libc::c_int as f32;
     nk_stroke_line(
         o,
-        (*hue_bar).x - 1i32 as libc::c_float,
+        (*hue_bar).x - 1i32 as f32,
         line_y,
-        (*hue_bar).x + (*hue_bar).w + 2i32 as libc::c_float,
+        (*hue_bar).x + (*hue_bar).w + 2i32 as f32,
         line_y,
-        1i32 as libc::c_float,
+        1i32 as f32,
         nk_rgb(255i32, 255i32, 255i32),
     );
     /* draw alpha bar */
     if !alpha_bar.is_null() {
-        alpha = if (0i32 as libc::c_float) < if 1.0f32 < col.a {
+        alpha = if (0i32 as f32) < if 1.0f32 < col.a {
             1.0f32
         } else {
             col.a
@@ -16561,18 +16561,18 @@ unsafe fn nk_draw_color_picker(
                 col.a
             }
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
         line_y = ((*alpha_bar).y + (1.0f32 - alpha) * (*matrix).h + 0.5f32) as libc::c_int
-            as libc::c_float;
+            as f32;
         nk_fill_rect_multi_color(o, *alpha_bar, white, white, black, black);
         nk_stroke_line(
             o,
-            (*alpha_bar).x - 1i32 as libc::c_float,
+            (*alpha_bar).x - 1i32 as f32,
             line_y,
-            (*alpha_bar).x + (*alpha_bar).w + 2i32 as libc::c_float,
+            (*alpha_bar).x + (*alpha_bar).w + 2i32 as f32,
             line_y,
-            1i32 as libc::c_float,
+            1i32 as f32,
             nk_rgb(255i32, 255i32, 255i32),
         );
     }
@@ -16582,24 +16582,24 @@ unsafe fn nk_draw_color_picker(
     nk_fill_rect_multi_color(o, *matrix, black_trans, black_trans, black, black);
     /* draw cross-hair */
     let mut p: nk_vec2 = nk_vec2 { x: 0., y: 0. };
-    let mut S: libc::c_float = hsva[1usize];
-    let mut V: libc::c_float = hsva[2usize];
-    p.x = ((*matrix).x + S * (*matrix).w) as libc::c_int as libc::c_float;
-    p.y = ((*matrix).y + (1.0f32 - V) * (*matrix).h) as libc::c_int as libc::c_float;
+    let mut S: f32 = hsva[1usize];
+    let mut V: f32 = hsva[2usize];
+    p.x = ((*matrix).x + S * (*matrix).w) as libc::c_int as f32;
+    p.y = ((*matrix).y + (1.0f32 - V) * (*matrix).h) as libc::c_int as f32;
     nk_stroke_line(
         o,
         p.x - crosshair_size,
         p.y,
-        p.x - 2i32 as libc::c_float,
+        p.x - 2i32 as f32,
         p.y,
         1.0f32,
         white,
     );
     nk_stroke_line(
         o,
-        p.x + crosshair_size + 1i32 as libc::c_float,
+        p.x + crosshair_size + 1i32 as f32,
         p.y,
-        p.x + 3i32 as libc::c_float,
+        p.x + 3i32 as f32,
         p.y,
         1.0f32,
         white,
@@ -16607,9 +16607,9 @@ unsafe fn nk_draw_color_picker(
     nk_stroke_line(
         o,
         p.x,
-        p.y + crosshair_size + 1i32 as libc::c_float,
+        p.y + crosshair_size + 1i32 as f32,
         p.x,
-        p.y + 3i32 as libc::c_float,
+        p.y + 3i32 as f32,
         1.0f32,
         white,
     );
@@ -16618,7 +16618,7 @@ unsafe fn nk_draw_color_picker(
         p.x,
         p.y - crosshair_size,
         p.x,
-        p.y - 2i32 as libc::c_float,
+        p.y - 2i32 as f32,
         1.0f32,
         white,
     );
@@ -16626,15 +16626,15 @@ unsafe fn nk_draw_color_picker(
 #[no_mangle]
 pub unsafe fn nk_stroke_line(
     mut b: *mut nk_command_buffer,
-    mut x0: libc::c_float,
-    mut y0: libc::c_float,
-    mut x1: libc::c_float,
-    mut y1: libc::c_float,
-    mut line_thickness: libc::c_float,
+    mut x0: f32,
+    mut y0: f32,
+    mut x1: f32,
+    mut y1: f32,
+    mut line_thickness: f32,
     mut c: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_line = 0 as *mut nk_command_line;
-    if b.is_null() || line_thickness <= 0i32 as libc::c_float {
+    if b.is_null() || line_thickness <= 0i32 as f32 {
         return;
     } else {
         cmd = nk_command_buffer_push(
@@ -16665,7 +16665,7 @@ pub unsafe fn nk_fill_rect_multi_color(
     mut bottom: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_rect_multi_color = 0 as *mut nk_command_rect_multi_color;
-    if b.is_null() || rect.w == 0i32 as libc::c_float || rect.h == 0i32 as libc::c_float {
+    if b.is_null() || rect.w == 0i32 as f32 || rect.h == 0i32 as f32 {
         return;
     } else {
         if 0 != (*b).use_clipping {
@@ -16688,15 +16688,15 @@ pub unsafe fn nk_fill_rect_multi_color(
         } else {
             (*cmd).x = rect.x as libc::c_short;
             (*cmd).y = rect.y as libc::c_short;
-            (*cmd).w = (if (0i32 as libc::c_float) < rect.w {
+            (*cmd).w = (if (0i32 as f32) < rect.w {
                 rect.w
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
-            (*cmd).h = (if (0i32 as libc::c_float) < rect.h {
+            (*cmd).h = (if (0i32 as f32) < rect.h {
                 rect.h
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
             (*cmd).left = left;
             (*cmd).top = top;
@@ -16708,39 +16708,39 @@ pub unsafe fn nk_fill_rect_multi_color(
 }
 #[no_mangle]
 pub unsafe fn nk_hsv_f(
-    mut h: libc::c_float,
-    mut s: libc::c_float,
-    mut v: libc::c_float,
+    mut h: f32,
+    mut s: f32,
+    mut v: f32,
 ) -> nk_color {
     return nk_hsva_f(h, s, v, 1.0f32);
 }
 #[no_mangle]
 pub unsafe fn nk_hsva_f(
-    mut h: libc::c_float,
-    mut s: libc::c_float,
-    mut v: libc::c_float,
-    mut a: libc::c_float,
+    mut h: f32,
+    mut s: f32,
+    mut v: f32,
+    mut a: f32,
 ) -> nk_color {
     let mut c: nk_colorf = nk_hsva_colorf(h, s, v, a);
     return nk_rgba_f(c.r, c.g, c.b, c.a);
 }
 #[no_mangle]
 pub unsafe fn nk_hsva_colorf(
-    mut h: libc::c_float,
-    mut s: libc::c_float,
-    mut v: libc::c_float,
-    mut a: libc::c_float,
+    mut h: f32,
+    mut s: f32,
+    mut v: f32,
+    mut a: f32,
 ) -> nk_colorf {
     let mut i: libc::c_int = 0;
-    let mut p: libc::c_float = 0.;
-    let mut q: libc::c_float = 0.;
-    let mut t: libc::c_float = 0.;
-    let mut f: libc::c_float = 0.;
+    let mut p: f32 = 0.;
+    let mut q: f32 = 0.;
+    let mut t: f32 = 0.;
+    let mut f: f32 = 0.;
     let mut out: nk_colorf = nk_colorf {
-        r: 0i32 as libc::c_float,
-        g: 0i32 as libc::c_float,
-        b: 0i32 as libc::c_float,
-        a: 0i32 as libc::c_float,
+        r: 0i32 as f32,
+        g: 0i32 as f32,
+        b: 0i32 as f32,
+        a: 0i32 as f32,
     };
     if s <= 0.0f32 {
         out.r = v;
@@ -16751,7 +16751,7 @@ pub unsafe fn nk_hsva_colorf(
     } else {
         h = h / (60.0f32 / 360.0f32);
         i = h as libc::c_int;
-        f = h - i as libc::c_float;
+        f = h - i as f32;
         p = v * (1.0f32 - s);
         q = v * (1.0f32 - s * f);
         t = v * (1.0f32 - s * (1.0f32 - f));
@@ -16792,7 +16792,7 @@ pub unsafe fn nk_hsva_colorf(
     };
 }
 #[no_mangle]
-pub unsafe fn nk_colorf_hsva_fv(mut hsva: *mut libc::c_float, mut in_0: nk_colorf) -> () {
+pub unsafe fn nk_colorf_hsva_fv(mut hsva: *mut f32, mut in_0: nk_colorf) -> () {
     nk_colorf_hsva_f(
         &mut *hsva.offset(0isize),
         &mut *hsva.offset(1isize),
@@ -16803,16 +16803,16 @@ pub unsafe fn nk_colorf_hsva_fv(mut hsva: *mut libc::c_float, mut in_0: nk_color
 }
 #[no_mangle]
 pub unsafe fn nk_colorf_hsva_f(
-    mut out_h: *mut libc::c_float,
-    mut out_s: *mut libc::c_float,
-    mut out_v: *mut libc::c_float,
-    mut out_a: *mut libc::c_float,
+    mut out_h: *mut f32,
+    mut out_s: *mut f32,
+    mut out_v: *mut f32,
+    mut out_a: *mut f32,
     mut in_0: nk_colorf,
 ) -> () {
-    let mut t_0: libc::c_float = 0.;
-    let mut t: libc::c_float = 0.;
-    let mut chroma: libc::c_float = 0.;
-    let mut K: libc::c_float = 0.0f32;
+    let mut t_0: f32 = 0.;
+    let mut t: f32 = 0.;
+    let mut chroma: f32 = 0.;
+    let mut K: f32 = 0.0f32;
     if in_0.g < in_0.b {
         t = in_0.g;
         in_0.g = in_0.b;
@@ -16831,7 +16831,7 @@ pub unsafe fn nk_colorf_hsva_f(
         in_0.b
     };
     *out_h = if K + (in_0.g - in_0.b) / (6.0f32 * chroma + 9.999999682655225e-21f32)
-        < 0i32 as libc::c_float
+        < 0i32 as f32
     {
         -(K + (in_0.g - in_0.b) / (6.0f32 * chroma + 9.999999682655225e-21f32))
     } else {
@@ -16850,70 +16850,70 @@ unsafe fn nk_color_picker_behavior(
     mut color: *mut nk_colorf,
     mut in_0: *const nk_input,
 ) -> libc::c_int {
-    let mut hsva: [libc::c_float; 4] = [0.; 4];
+    let mut hsva: [f32; 4] = [0.; 4];
     let mut value_changed: libc::c_int = 0i32;
     let mut hsv_changed: libc::c_int = 0i32;
     /* color matrix */
     nk_colorf_hsva_fv(hsva.as_mut_ptr(), *color);
     if 0 != nk_button_behavior(state, *matrix, in_0, NK_BUTTON_REPEATER) {
-        hsva[1usize] = if (0i32 as libc::c_float)
+        hsva[1usize] = if (0i32 as f32)
             < if 1.0f32
-                < ((*in_0).mouse.pos.x - (*matrix).x) / ((*matrix).w - 1i32 as libc::c_float)
+                < ((*in_0).mouse.pos.x - (*matrix).x) / ((*matrix).w - 1i32 as f32)
             {
                 1.0f32
             } else {
-                ((*in_0).mouse.pos.x - (*matrix).x) / ((*matrix).w - 1i32 as libc::c_float)
+                ((*in_0).mouse.pos.x - (*matrix).x) / ((*matrix).w - 1i32 as f32)
             } {
-            if 1.0f32 < ((*in_0).mouse.pos.x - (*matrix).x) / ((*matrix).w - 1i32 as libc::c_float)
+            if 1.0f32 < ((*in_0).mouse.pos.x - (*matrix).x) / ((*matrix).w - 1i32 as f32)
             {
                 1.0f32
             } else {
-                ((*in_0).mouse.pos.x - (*matrix).x) / ((*matrix).w - 1i32 as libc::c_float)
+                ((*in_0).mouse.pos.x - (*matrix).x) / ((*matrix).w - 1i32 as f32)
             }
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
         hsva[2usize] = 1.0f32
-            - if (0i32 as libc::c_float)
+            - if (0i32 as f32)
                 < if 1.0f32
-                    < ((*in_0).mouse.pos.y - (*matrix).y) / ((*matrix).h - 1i32 as libc::c_float)
+                    < ((*in_0).mouse.pos.y - (*matrix).y) / ((*matrix).h - 1i32 as f32)
                 {
                     1.0f32
                 } else {
-                    ((*in_0).mouse.pos.y - (*matrix).y) / ((*matrix).h - 1i32 as libc::c_float)
+                    ((*in_0).mouse.pos.y - (*matrix).y) / ((*matrix).h - 1i32 as f32)
                 } {
                 if 1.0f32
-                    < ((*in_0).mouse.pos.y - (*matrix).y) / ((*matrix).h - 1i32 as libc::c_float)
+                    < ((*in_0).mouse.pos.y - (*matrix).y) / ((*matrix).h - 1i32 as f32)
                 {
                     1.0f32
                 } else {
-                    ((*in_0).mouse.pos.y - (*matrix).y) / ((*matrix).h - 1i32 as libc::c_float)
+                    ((*in_0).mouse.pos.y - (*matrix).y) / ((*matrix).h - 1i32 as f32)
                 }
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             };
         hsv_changed = 1i32;
         value_changed = hsv_changed
     }
     /* hue bar */
     if 0 != nk_button_behavior(state, *hue_bar, in_0, NK_BUTTON_REPEATER) {
-        hsva[0usize] = if (0i32 as libc::c_float)
+        hsva[0usize] = if (0i32 as f32)
             < if 1.0f32
-                < ((*in_0).mouse.pos.y - (*hue_bar).y) / ((*hue_bar).h - 1i32 as libc::c_float)
+                < ((*in_0).mouse.pos.y - (*hue_bar).y) / ((*hue_bar).h - 1i32 as f32)
             {
                 1.0f32
             } else {
-                ((*in_0).mouse.pos.y - (*hue_bar).y) / ((*hue_bar).h - 1i32 as libc::c_float)
+                ((*in_0).mouse.pos.y - (*hue_bar).y) / ((*hue_bar).h - 1i32 as f32)
             } {
             if 1.0f32
-                < ((*in_0).mouse.pos.y - (*hue_bar).y) / ((*hue_bar).h - 1i32 as libc::c_float)
+                < ((*in_0).mouse.pos.y - (*hue_bar).y) / ((*hue_bar).h - 1i32 as f32)
             {
                 1.0f32
             } else {
-                ((*in_0).mouse.pos.y - (*hue_bar).y) / ((*hue_bar).h - 1i32 as libc::c_float)
+                ((*in_0).mouse.pos.y - (*hue_bar).y) / ((*hue_bar).h - 1i32 as f32)
             }
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
         hsv_changed = 1i32;
         value_changed = hsv_changed
@@ -16922,27 +16922,27 @@ unsafe fn nk_color_picker_behavior(
     if !alpha_bar.is_null() {
         if 0 != nk_button_behavior(state, *alpha_bar, in_0, NK_BUTTON_REPEATER) {
             hsva[3usize] = 1.0f32
-                - if (0i32 as libc::c_float)
+                - if (0i32 as f32)
                     < if 1.0f32
                         < ((*in_0).mouse.pos.y - (*alpha_bar).y)
-                            / ((*alpha_bar).h - 1i32 as libc::c_float)
+                            / ((*alpha_bar).h - 1i32 as f32)
                     {
                         1.0f32
                     } else {
                         ((*in_0).mouse.pos.y - (*alpha_bar).y)
-                            / ((*alpha_bar).h - 1i32 as libc::c_float)
+                            / ((*alpha_bar).h - 1i32 as f32)
                     } {
                     if 1.0f32
                         < ((*in_0).mouse.pos.y - (*alpha_bar).y)
-                            / ((*alpha_bar).h - 1i32 as libc::c_float)
+                            / ((*alpha_bar).h - 1i32 as f32)
                     {
                         1.0f32
                     } else {
                         ((*in_0).mouse.pos.y - (*alpha_bar).y)
-                            / ((*alpha_bar).h - 1i32 as libc::c_float)
+                            / ((*alpha_bar).h - 1i32 as f32)
                     }
                 } else {
-                    0i32 as libc::c_float
+                    0i32 as f32
                 };
             value_changed = 1i32
         }
@@ -16975,7 +16975,7 @@ unsafe fn nk_color_picker_behavior(
     return value_changed;
 }
 #[no_mangle]
-pub unsafe fn nk_hsva_colorfv(mut c: *mut libc::c_float) -> nk_colorf {
+pub unsafe fn nk_hsva_colorfv(mut c: *mut f32) -> nk_colorf {
     return nk_hsva_colorf(
         *c.offset(0isize),
         *c.offset(1isize),
@@ -16991,7 +16991,7 @@ pub unsafe fn nk_property_int(
     mut val: *mut libc::c_int,
     mut max: libc::c_int,
     mut step: libc::c_int,
-    mut inc_per_pixel: libc::c_float,
+    mut inc_per_pixel: f32,
 ) -> () {
     let mut variant: nk_property_variant = nk_property_variant {
         kind: NK_PROPERTY_INT,
@@ -17013,7 +17013,7 @@ unsafe fn nk_property(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
     mut variant: *mut nk_property_variant,
-    mut inc_per_pixel: libc::c_float,
+    mut inc_per_pixel: f32,
     filter: nk_property_filter,
 ) -> () {
     let mut win: *mut nk_window = 0 as *mut nk_window;
@@ -17157,7 +17157,7 @@ unsafe fn nk_do_property(
     mut property: nk_rect,
     mut name: *const libc::c_char,
     mut variant: *mut nk_property_variant,
-    mut inc_per_pixel: libc::c_float,
+    mut inc_per_pixel: f32,
     mut buffer: *mut libc::c_char,
     mut len: *mut libc::c_int,
     mut state: *mut libc::c_int,
@@ -17178,7 +17178,7 @@ unsafe fn nk_do_property(
     let mut num_len: libc::c_int = 0;
     let mut name_len: libc::c_int = 0;
     let mut string: [libc::c_char; 64] = [0; 64];
-    let mut size: libc::c_float = 0.;
+    let mut size: f32 = 0.;
     let mut dst: *mut libc::c_char = 0 as *mut libc::c_char;
     let mut length: *mut libc::c_int = 0 as *mut libc::c_int;
     let mut left: nk_rect = nk_rect {
@@ -17212,10 +17212,10 @@ unsafe fn nk_do_property(
         h: 0.,
     };
     /* left decrement button */
-    left.h = (*font).height / 2i32 as libc::c_float;
+    left.h = (*font).height / 2i32 as f32;
     left.w = left.h;
     left.x = property.x + (*style).border + (*style).padding.x;
-    left.y = property.y + (*style).border + property.h / 2.0f32 - left.h / 2i32 as libc::c_float;
+    left.y = property.y + (*style).border + property.h / 2.0f32 - left.h / 2i32 as f32;
     /* text label */
     name_len = nk_strlen(name);
     size = (*font).width.expect("non-null function pointer")(
@@ -17225,10 +17225,10 @@ unsafe fn nk_do_property(
         name_len,
     );
     label.x = left.x + left.w + (*style).padding.x;
-    label.w = size + 2i32 as libc::c_float * (*style).padding.x;
+    label.w = size + 2i32 as f32 * (*style).padding.x;
     label.y = property.y + (*style).border + (*style).padding.y;
     label.h = property.h
-        - (2i32 as libc::c_float * (*style).border + 2i32 as libc::c_float * (*style).padding.y);
+        - (2i32 as f32 * (*style).border + 2i32 as f32 * (*style).padding.y);
     /* right increment button */
     right.y = left.y;
     right.w = left.w;
@@ -17270,7 +17270,7 @@ unsafe fn nk_do_property(
         dst = string.as_mut_ptr();
         length = &mut num_len
     }
-    edit.w = size + 2i32 as libc::c_float * (*style).padding.x;
+    edit.w = size + 2i32 as f32 * (*style).padding.x;
     edit.w = if edit.w < right.x - (label.x + label.w) {
         edit.w
     } else {
@@ -17278,7 +17278,7 @@ unsafe fn nk_do_property(
     };
     edit.x = right.x - (edit.w + (*style).padding.x);
     edit.y = property.y + (*style).border;
-    edit.h = property.h - 2i32 as libc::c_float * (*style).border;
+    edit.h = property.h - 2i32 as f32 * (*style).border;
     /* empty left space activator */
     empty.w = edit.x - (label.x + label.w);
     empty.x = label.x + label.w;
@@ -18009,11 +18009,11 @@ unsafe fn nk_string_float_limit(
 pub unsafe fn nk_strtof(
     mut str: *const libc::c_char,
     mut endptr: *mut *const libc::c_char,
-) -> libc::c_float {
-    let mut float_value: libc::c_float = 0.;
+) -> f32 {
+    let mut float_value: f32 = 0.;
     let mut double_value: libc::c_double = 0.;
     double_value = nk_strtod(str, endptr);
-    float_value = double_value as libc::c_float;
+    float_value = double_value as f32;
     return float_value;
 }
 #[no_mangle]
@@ -18112,7 +18112,7 @@ unsafe fn nk_do_edit(
         h: 0.,
     };
     let mut ret: nk_flags = 0i32 as nk_flags;
-    let mut row_height: libc::c_float = 0.;
+    let mut row_height: f32 = 0.;
     let mut prev_state: libc::c_char = 0i32 as libc::c_char;
     let mut is_hovered: libc::c_char = 0i32 as libc::c_char;
     let mut select_all: libc::c_char = 0i32 as libc::c_char;
@@ -18135,13 +18135,13 @@ unsafe fn nk_do_edit(
         /* visible text area calculation */
         area.x = bounds.x + (*style).padding.x + (*style).border;
         area.y = bounds.y + (*style).padding.y + (*style).border;
-        area.w = bounds.w - (2.0f32 * (*style).padding.x + 2i32 as libc::c_float * (*style).border);
-        area.h = bounds.h - (2.0f32 * (*style).padding.y + 2i32 as libc::c_float * (*style).border);
+        area.w = bounds.w - (2.0f32 * (*style).padding.x + 2i32 as f32 * (*style).border);
+        area.h = bounds.h - (2.0f32 * (*style).padding.y + 2i32 as f32 * (*style).border);
         if 0 != flags & NK_EDIT_MULTILINE as libc::c_int as libc::c_uint {
-            area.w = if (0i32 as libc::c_float) < area.w - (*style).scrollbar_size.x {
+            area.w = if (0i32 as f32) < area.w - (*style).scrollbar_size.x {
                 area.w - (*style).scrollbar_size.x
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }
         }
         row_height = if 0 != flags & NK_EDIT_MULTILINE as libc::c_int as libc::c_uint {
@@ -18211,8 +18211,8 @@ unsafe fn nk_do_edit(
         if 0 != (*edit).active as libc::c_int && !in_0.is_null() {
             let mut shift_mod: libc::c_int =
                 (*in_0).keyboard.keys[NK_KEY_SHIFT as libc::c_int as usize].down;
-            let mouse_x: libc::c_float = (*in_0).mouse.pos.x - area.x + (*edit).scrollbar.x;
-            let mouse_y: libc::c_float = (*in_0).mouse.pos.y - area.y + (*edit).scrollbar.y;
+            let mouse_x: f32 = (*in_0).mouse.pos.x - area.x + (*edit).scrollbar.x;
+            let mouse_y: f32 = (*in_0).mouse.pos.y - area.y + (*edit).scrollbar.y;
             /* mouse click handler */
             is_hovered = nk_input_is_mouse_hovering_rect(in_0, area) as libc::c_char;
             if 0 != select_all {
@@ -18370,24 +18370,24 @@ unsafe fn nk_do_edit(
         } else {
             nk_draw_image(out, bounds, &(*background).data.image, nk_white);
         }
-        area.w = if (0i32 as libc::c_float) < area.w - (*style).cursor_size {
+        area.w = if (0i32 as f32) < area.w - (*style).cursor_size {
             area.w - (*style).cursor_size
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
         if 0 != (*edit).active {
             let mut total_lines: libc::c_int = 1i32;
-            let mut text_size: nk_vec2 = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+            let mut text_size: nk_vec2 = nk_vec2(0i32 as f32, 0i32 as f32);
             /* text pointer positions */
             let mut cursor_ptr: *const libc::c_char = 0 as *const libc::c_char;
             let mut select_begin_ptr: *const libc::c_char = 0 as *const libc::c_char;
             let mut select_end_ptr: *const libc::c_char = 0 as *const libc::c_char;
             /* 2D pixel positions */
-            let mut cursor_pos: nk_vec2 = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+            let mut cursor_pos: nk_vec2 = nk_vec2(0i32 as f32, 0i32 as f32);
             let mut selection_offset_start: nk_vec2 =
-                nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+                nk_vec2(0i32 as f32, 0i32 as f32);
             let mut selection_offset_end: nk_vec2 =
-                nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+                nk_vec2(0i32 as f32, 0i32 as f32);
             let mut selection_begin: libc::c_int = if (*edit).select_start < (*edit).select_end {
                 (*edit).select_start
             } else {
@@ -18399,10 +18399,10 @@ unsafe fn nk_do_edit(
                 (*edit).select_start
             };
             /* calculate total line count + total space + cursor/selection position */
-            let mut line_width: libc::c_float = 0.0f32;
+            let mut line_width: f32 = 0.0f32;
             if !text_0.is_null() && 0 != len {
                 /* utf8 encoding */
-                let mut glyph_width: libc::c_float = 0.;
+                let mut glyph_width: f32 = 0.;
                 let mut glyph_len_0: libc::c_int = 0i32;
                 let mut unicode_0: nk_rune = 0i32 as nk_rune;
                 let mut text_len: libc::c_int = 0i32;
@@ -18415,7 +18415,7 @@ unsafe fn nk_do_edit(
                     text_0,
                     glyph_len_0,
                 );
-                line_width = 0i32 as libc::c_float;
+                line_width = 0i32 as f32;
                 /* iterate all lines */
                 while text_len < len && 0 != glyph_len_0 {
                     /* set cursor 2D position and line */
@@ -18425,7 +18425,7 @@ unsafe fn nk_do_edit(
                         row_size = nk_vec2 { x: 0., y: 0. };
                         remaining = 0 as *const libc::c_char;
                         /* calculate 2d position */
-                        cursor_pos.y = (total_lines - 1i32) as libc::c_float * row_height;
+                        cursor_pos.y = (total_lines - 1i32) as f32 * row_height;
                         row_size = nk_text_calculate_text_bounds(
                             font,
                             text_0.offset(row_begin as isize),
@@ -18453,7 +18453,7 @@ unsafe fn nk_do_edit(
                             0i32
                         } else {
                             total_lines - 1i32
-                        }) as libc::c_float
+                        }) as f32
                             * row_height;
                         row_size_0 = nk_text_calculate_text_bounds(
                             font,
@@ -18478,7 +18478,7 @@ unsafe fn nk_do_edit(
                         row_size_1 = nk_vec2 { x: 0., y: 0. };
                         remaining_1 = 0 as *const libc::c_char;
                         /* calculate 2d position */
-                        selection_offset_end.y = (total_lines - 1i32) as libc::c_float * row_height;
+                        selection_offset_end.y = (total_lines - 1i32) as f32 * row_height;
                         row_size_1 = nk_text_calculate_text_bounds(
                             font,
                             text_0.offset(row_begin as isize),
@@ -18499,7 +18499,7 @@ unsafe fn nk_do_edit(
                             text_size.x
                         };
                         total_lines += 1;
-                        line_width = 0i32 as libc::c_float;
+                        line_width = 0i32 as f32;
                         text_len += 1;
                         glyphs += 1;
                         row_begin = text_len;
@@ -18531,7 +18531,7 @@ unsafe fn nk_do_edit(
                         )
                     }
                 }
-                text_size.y = total_lines as libc::c_float * row_height;
+                text_size.y = total_lines as f32 * row_height;
                 /* handle case when cursor is at end of text buffer */
                 if cursor_ptr.is_null() && (*edit).cursor == (*edit).string.len {
                     cursor_pos.x = line_width;
@@ -18543,14 +18543,14 @@ unsafe fn nk_do_edit(
                 /* update scrollbar to follow cursor */
                 if 0 == flags & NK_EDIT_NO_HORIZONTAL_SCROLL as libc::c_int as libc::c_uint {
                     /* horizontal scroll */
-                    let scroll_increment: libc::c_float = area.w * 0.25f32;
+                    let scroll_increment: f32 = area.w * 0.25f32;
                     if cursor_pos.x < (*edit).scrollbar.x {
                         (*edit).scrollbar.x = (if 0.0f32 < cursor_pos.x - scroll_increment {
                             cursor_pos.x - scroll_increment
                         } else {
                             0.0f32
                         }) as libc::c_int
-                            as libc::c_float
+                            as f32
                     }
                     if cursor_pos.x >= (*edit).scrollbar.x + area.w {
                         (*edit).scrollbar.x = (if 0.0f32 < (*edit).scrollbar.x + scroll_increment {
@@ -18558,10 +18558,10 @@ unsafe fn nk_do_edit(
                         } else {
                             0.0f32
                         }) as libc::c_int
-                            as libc::c_float
+                            as f32
                     }
                 } else {
-                    (*edit).scrollbar.x = 0i32 as libc::c_float
+                    (*edit).scrollbar.x = 0i32 as f32
                 }
                 if 0 != flags & NK_EDIT_MULTILINE as libc::c_int as libc::c_uint {
                     /* vertical scroll */
@@ -18576,7 +18576,7 @@ unsafe fn nk_do_edit(
                         (*edit).scrollbar.y = (*edit).scrollbar.y + row_height
                     }
                 } else {
-                    (*edit).scrollbar.y = 0i32 as libc::c_float
+                    (*edit).scrollbar.y = 0i32 as f32
                 }
             }
             /* scrollbar widget */
@@ -18588,10 +18588,10 @@ unsafe fn nk_do_edit(
                     w: 0.,
                     h: 0.,
                 };
-                let mut scroll_target: libc::c_float = 0.;
-                let mut scroll_offset: libc::c_float = 0.;
-                let mut scroll_step: libc::c_float = 0.;
-                let mut scroll_inc: libc::c_float = 0.;
+                let mut scroll_target: f32 = 0.;
+                let mut scroll_offset: f32 = 0.;
+                let mut scroll_step: f32 = 0.;
+                let mut scroll_inc: f32 = 0.;
                 scroll = area;
                 scroll.x = bounds.x + bounds.w - (*style).border - (*style).scrollbar_size.x;
                 scroll.w = (*style).scrollbar_size.x;
@@ -18691,7 +18691,7 @@ unsafe fn nk_do_edit(
                     style,
                     area.x - (*edit).scrollbar.x,
                     area.y - (*edit).scrollbar.y,
-                    0i32 as libc::c_float,
+                    0i32 as f32,
                     begin_0,
                     l,
                     row_height,
@@ -18710,7 +18710,7 @@ unsafe fn nk_do_edit(
                         style,
                         area.x - (*edit).scrollbar.x,
                         area.y - (*edit).scrollbar.y,
-                        0i32 as libc::c_float,
+                        0i32 as f32,
                         begin_1,
                         begin_1
                             .ptr_offset_to(select_begin_ptr)
@@ -18788,7 +18788,7 @@ unsafe fn nk_do_edit(
                     cursor.x = area.x + cursor_pos.x - (*edit).scrollbar.x;
                     cursor.y = area.y + cursor_pos.y + row_height / 2.0f32 - cursor.h / 2.0f32;
                     cursor.y -= (*edit).scrollbar.y;
-                    nk_fill_rect(out, cursor, 0i32 as libc::c_float, cursor_color);
+                    nk_fill_rect(out, cursor, 0i32 as f32, cursor_color);
                 } else {
                     /* draw cursor inside text */
                     let mut glyph_len_1: libc::c_int = 0;
@@ -18824,10 +18824,10 @@ unsafe fn nk_do_edit(
                         glyph_len_1,
                     );
                     label.h = row_height;
-                    txt.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+                    txt.padding = nk_vec2(0i32 as f32, 0i32 as f32);
                     txt.background = cursor_color;
                     txt.text = cursor_text_color;
-                    nk_fill_rect(out, label, 0i32 as libc::c_float, cursor_color);
+                    nk_fill_rect(out, label, 0i32 as f32, cursor_color);
                     nk_widget_text(
                         out,
                         label,
@@ -18879,7 +18879,7 @@ unsafe fn nk_do_edit(
                 style,
                 area.x - (*edit).scrollbar.x,
                 area.y - (*edit).scrollbar.y,
-                0i32 as libc::c_float,
+                0i32 as f32,
                 begin_4,
                 l_0,
                 row_height,
@@ -18912,12 +18912,12 @@ pub unsafe fn nk_str_get_const(mut s: *const nk_str) -> *const libc::c_char {
 unsafe fn nk_edit_draw_text(
     mut out: *mut nk_command_buffer,
     mut style: *const nk_style_edit,
-    mut pos_x: libc::c_float,
-    mut pos_y: libc::c_float,
-    mut x_offset: libc::c_float,
+    mut pos_x: f32,
+    mut pos_y: f32,
+    mut x_offset: f32,
     mut text: *const libc::c_char,
     mut byte_len: libc::c_int,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
     mut font: *const nk_user_font,
     mut background: nk_color,
     mut foreground: nk_color,
@@ -18929,10 +18929,10 @@ unsafe fn nk_edit_draw_text(
         let mut glyph_len: libc::c_int = 0i32;
         let mut unicode: nk_rune = 0i32 as nk_rune;
         let mut text_len: libc::c_int = 0i32;
-        let mut line_width: libc::c_float = 0i32 as libc::c_float;
-        let mut glyph_width: libc::c_float = 0.;
+        let mut line_width: f32 = 0i32 as f32;
+        let mut glyph_width: f32 = 0.;
         let mut line: *const libc::c_char = text;
-        let mut line_offset: libc::c_float = 0i32 as libc::c_float;
+        let mut line_offset: f32 = 0i32 as f32;
         let mut line_count: libc::c_int = 0i32;
         let mut txt: nk_text = nk_text {
             padding: nk_vec2 { x: 0., y: 0. },
@@ -18949,7 +18949,7 @@ unsafe fn nk_edit_draw_text(
                 a: 0,
             },
         };
-        txt.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+        txt.padding = nk_vec2(0i32 as f32, 0i32 as f32);
         txt.background = background;
         txt.text = foreground;
         glyph_len = nk_utf_decode(
@@ -18978,7 +18978,7 @@ unsafe fn nk_edit_draw_text(
                     }
                     /* selection needs to draw different background color */
                     if 0 != is_selected {
-                        nk_fill_rect(out, label, 0i32 as libc::c_float, background);
+                        nk_fill_rect(out, label, 0i32 as f32, background);
                     }
                     nk_widget_text(
                         out,
@@ -18993,7 +18993,7 @@ unsafe fn nk_edit_draw_text(
                     );
                     text_len += 1;
                     line_count += 1;
-                    line_width = 0i32 as libc::c_float;
+                    line_width = 0i32 as f32;
                     line = text.offset(text_len as isize);
                     line_offset += row_height;
                     glyph_len = nk_utf_decode(
@@ -19024,7 +19024,7 @@ unsafe fn nk_edit_draw_text(
                     )
                 }
             }
-            if line_width > 0i32 as libc::c_float {
+            if line_width > 0i32 as f32 {
                 /* draw last line */
                 let mut label_0: nk_rect = nk_rect {
                     x: 0.,
@@ -19040,7 +19040,7 @@ unsafe fn nk_edit_draw_text(
                     label_0.x += x_offset
                 }
                 if 0 != is_selected {
-                    nk_fill_rect(out, label_0, 0i32 as libc::c_float, background);
+                    nk_fill_rect(out, label_0, 0i32 as f32, background);
                 }
                 nk_widget_text(
                     out,
@@ -19069,21 +19069,21 @@ unsafe fn nk_text_calculate_text_bounds(
     mut font: *const nk_user_font,
     mut begin: *const libc::c_char,
     mut byte_len: libc::c_int,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
     mut remaining: *mut *const libc::c_char,
     mut out_offset: *mut nk_vec2,
     mut glyphs: *mut libc::c_int,
     mut op: libc::c_int,
 ) -> nk_vec2 {
-    let mut line_height: libc::c_float = row_height;
-    let mut text_size: nk_vec2 = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
-    let mut line_width: libc::c_float = 0.0f32;
-    let mut glyph_width: libc::c_float = 0.;
+    let mut line_height: f32 = row_height;
+    let mut text_size: nk_vec2 = nk_vec2(0i32 as f32, 0i32 as f32);
+    let mut line_width: f32 = 0.0f32;
+    let mut glyph_width: f32 = 0.;
     let mut glyph_len: libc::c_int = 0i32;
     let mut unicode: nk_rune = 0i32 as nk_rune;
     let mut text_len: libc::c_int = 0i32;
     if begin.is_null() || byte_len <= 0i32 || font.is_null() {
-        return nk_vec2(0i32 as libc::c_float, row_height);
+        return nk_vec2(0i32 as f32, row_height);
     } else {
         glyph_len = nk_utf_decode(begin, &mut unicode, byte_len);
         if 0 == glyph_len {
@@ -19104,7 +19104,7 @@ unsafe fn nk_text_calculate_text_bounds(
                         text_size.x
                     };
                     text_size.y += line_height;
-                    line_width = 0i32 as libc::c_float;
+                    line_width = 0i32 as f32;
                     *glyphs += 1i32;
                     if op == NK_STOP_ON_NEW_LINE as libc::c_int {
                         break;
@@ -19146,7 +19146,7 @@ unsafe fn nk_text_calculate_text_bounds(
             if !out_offset.is_null() {
                 *out_offset = nk_vec2(line_width, text_size.y + line_height)
             }
-            if line_width > 0i32 as libc::c_float || text_size.y == 0.0f32 {
+            if line_width > 0i32 as f32 || text_size.y == 0.0f32 {
                 text_size.y += line_height
             }
             if !remaining.is_null() {
@@ -19800,7 +19800,7 @@ unsafe fn nk_textedit_key(
     mut key: nk_keys,
     mut shift_mod: libc::c_int,
     mut font: *const nk_user_font,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
 ) -> () {
     let mut sel: libc::c_int = 0;
     let mut find: nk_text_find = nk_text_find {
@@ -20343,8 +20343,8 @@ unsafe fn nk_textedit_key(
             );
             /* now find character position down a row */
             if 0 != find.length {
-                let mut x: libc::c_float = 0.;
-                let mut goal_x: libc::c_float = if 0 != (*state).has_preferred_x as libc::c_int {
+                let mut x: f32 = 0.;
+                let mut goal_x: f32 = if 0 != (*state).has_preferred_x as libc::c_int {
                     (*state).preferred_x
                 } else {
                     find.x
@@ -20355,7 +20355,7 @@ unsafe fn nk_textedit_key(
                 x = row.x0;
                 i = 0i32;
                 while i < row.num_chars && x < row.x1 {
-                    let mut dx: libc::c_float = nk_textedit_get_width(state, start, i, font);
+                    let mut dx: f32 = nk_textedit_get_width(state, start, i, font);
                     x += dx;
                     if x > goal_x {
                         break;
@@ -20385,8 +20385,8 @@ unsafe fn nk_textedit_key(
             /* can only go up if there's a previous row */
             if find_0.prev_first != find_0.first_char {
                 /* now find character position up a row */
-                let mut x_0: libc::c_float = 0.;
-                let mut goal_x_0: libc::c_float = if 0 != (*state).has_preferred_x as libc::c_int {
+                let mut x_0: f32 = 0.;
+                let mut goal_x_0: f32 = if 0 != (*state).has_preferred_x as libc::c_int {
                     (*state).preferred_x
                 } else {
                     find_0.x
@@ -20396,7 +20396,7 @@ unsafe fn nk_textedit_key(
                 x_0 = row_0.x0;
                 i_0 = 0i32;
                 while i_0 < row_0.num_chars && x_0 < row_0.x1 {
-                    let mut dx_0: libc::c_float =
+                    let mut dx_0: f32 =
                         nk_textedit_get_width(state, find_0.prev_first, i_0, font);
                     x_0 += dx_0;
                     if x_0 > goal_x_0 {
@@ -20422,7 +20422,7 @@ unsafe fn nk_textedit_find_charpos(
     mut n: libc::c_int,
     mut single_line: libc::c_int,
     mut font: *const nk_user_font,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
 ) -> () {
     /* find the x/y location of a character, and remember info about the previous
      * row in case we get a move-up event (for page up, we'll have to rescan) */
@@ -20465,7 +20465,7 @@ unsafe fn nk_textedit_find_charpos(
         return;
     } else {
         /* search rows to find the one that straddles character n */
-        (*find).y = 0i32 as libc::c_float;
+        (*find).y = 0i32 as f32;
         loop {
             nk_textedit_layout_row(&mut r, state, i, row_height, font);
             if n < i + r.num_chars {
@@ -20495,7 +20495,7 @@ unsafe fn nk_textedit_get_width(
     mut line_start: libc::c_int,
     mut char_id: libc::c_int,
     mut font: *const nk_user_font,
-) -> libc::c_float {
+) -> f32 {
     let mut len: libc::c_int = 0i32;
     let mut unicode: nk_rune = 0i32 as nk_rune;
     let mut str: *const libc::c_char = nk_str_at_const(
@@ -20515,7 +20515,7 @@ unsafe fn nk_textedit_layout_row(
     mut r: *mut nk_text_edit_row,
     mut edit: *mut nk_text_edit,
     mut line_start_id: libc::c_int,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
     mut font: *const nk_user_font,
 ) -> () {
     let mut l: libc::c_int = 0;
@@ -20868,10 +20868,10 @@ unsafe fn nk_textedit_discard_redo(mut state: *mut nk_text_undo_state) -> () {
 }
 unsafe fn nk_textedit_drag(
     mut state: *mut nk_text_edit,
-    mut x: libc::c_float,
-    mut y: libc::c_float,
+    mut x: f32,
+    mut y: f32,
     mut font: *const nk_user_font,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
 ) -> () {
     /* API drag: on mouse drag, move the cursor and selection endpoint
      * to the clicked location */
@@ -20884,10 +20884,10 @@ unsafe fn nk_textedit_drag(
 }
 unsafe fn nk_textedit_locate_coord(
     mut edit: *mut nk_text_edit,
-    mut x: libc::c_float,
-    mut y: libc::c_float,
+    mut x: f32,
+    mut y: f32,
     mut font: *const nk_user_font,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
 ) -> libc::c_int {
     let mut r: nk_text_edit_row = nk_text_edit_row {
         x0: 0.,
@@ -20898,13 +20898,13 @@ unsafe fn nk_textedit_locate_coord(
         num_chars: 0,
     };
     let mut n: libc::c_int = (*edit).string.len;
-    let mut base_y: libc::c_float = 0i32 as libc::c_float;
-    let mut prev_x: libc::c_float = 0.;
+    let mut base_y: f32 = 0i32 as f32;
+    let mut prev_x: f32 = 0.;
     let mut i: libc::c_int = 0i32;
     let mut k: libc::c_int = 0;
-    r.x1 = 0i32 as libc::c_float;
+    r.x1 = 0i32 as f32;
     r.x0 = r.x1;
-    r.ymax = 0i32 as libc::c_float;
+    r.ymax = 0i32 as f32;
     r.ymin = r.ymax;
     r.num_chars = 0i32;
     /* search rows to find one that straddles 'y' */
@@ -20935,9 +20935,9 @@ unsafe fn nk_textedit_locate_coord(
             prev_x = r.x0;
             i = 0i32;
             while i < r.num_chars {
-                let mut w: libc::c_float = nk_textedit_get_width(edit, k, i, font);
+                let mut w: f32 = nk_textedit_get_width(edit, k, i, font);
                 if x < prev_x + w {
-                    if x < prev_x + w / 2i32 as libc::c_float {
+                    if x < prev_x + w / 2i32 as f32 {
                         return k + i;
                     } else {
                         return k + i + 1i32;
@@ -20962,10 +20962,10 @@ unsafe fn nk_textedit_locate_coord(
 }
 unsafe fn nk_textedit_click(
     mut state: *mut nk_text_edit,
-    mut x: libc::c_float,
-    mut y: libc::c_float,
+    mut x: f32,
+    mut y: f32,
     mut font: *const nk_user_font,
-    mut row_height: libc::c_float,
+    mut row_height: f32,
 ) -> () {
     /* API click: on mouse down, move the cursor to the clicked location,
      * and reset the selection */
@@ -20988,7 +20988,7 @@ unsafe fn nk_textedit_clear_state(
     (*state).select_end = (*state).select_start;
     (*state).cursor = 0i32;
     (*state).has_preferred_x = 0i32 as libc::c_uchar;
-    (*state).preferred_x = 0i32 as libc::c_float;
+    (*state).preferred_x = 0i32 as f32;
     (*state).cursor_at_end_of_line = 0i32 as libc::c_uchar;
     (*state).initialized = 1i32 as libc::c_uchar;
     (*state).single_line = (type_0 as libc::c_uint
@@ -20996,7 +20996,7 @@ unsafe fn nk_textedit_clear_state(
         as libc::c_int as libc::c_uchar;
     (*state).mode = NK_TEXT_EDIT_MODE_VIEW as libc::c_int as libc::c_uchar;
     (*state).filter = filter;
-    (*state).scrollbar = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+    (*state).scrollbar = nk_vec2(0i32 as f32, 0i32 as f32);
 }
 unsafe fn nk_draw_property(
     mut out: *mut nk_command_buffer,
@@ -21051,7 +21051,7 @@ unsafe fn nk_draw_property(
         );
     }
     /* draw label */
-    text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+    text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
     nk_widget_text(
         out,
         *label,
@@ -21071,7 +21071,7 @@ unsafe fn nk_property_behavior(
     mut empty: nk_rect,
     mut state: *mut libc::c_int,
     mut variant: *mut nk_property_variant,
-    mut inc_per_pixel: libc::c_float,
+    mut inc_per_pixel: f32,
 ) -> () {
     if !in_0.is_null() && *state == NK_PROPERTY_DEFAULT as libc::c_int {
         if 0 != nk_button_behavior(ws, edit, in_0, NK_BUTTON_DEFAULT) {
@@ -21104,7 +21104,7 @@ unsafe fn nk_drag_behavior(
     mut in_0: *const nk_input,
     mut drag: nk_rect,
     mut variant: *mut nk_property_variant,
-    mut inc_per_pixel: libc::c_float,
+    mut inc_per_pixel: f32,
 ) -> () {
     let mut left_mouse_down: libc::c_int = (!in_0.is_null()
         && 0 != (*in_0).mouse.buttons[NK_BUTTON_LEFT as libc::c_int as usize].down)
@@ -21126,8 +21126,8 @@ unsafe fn nk_drag_behavior(
         *state = NK_WIDGET_STATE_HOVERED as libc::c_int as nk_flags
     }
     if 0 != left_mouse_down && 0 != left_mouse_click_in_cursor {
-        let mut delta: libc::c_float = 0.;
-        let mut pixels: libc::c_float = 0.;
+        let mut delta: f32 = 0.;
+        let mut pixels: f32 = 0.;
         pixels = (*in_0).mouse.delta.x;
         delta = pixels * inc_per_pixel;
         match (*variant).kind as libc::c_uint {
@@ -21421,11 +21421,11 @@ unsafe fn nk_property_variant_int(
 pub unsafe fn nk_property_float(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
-    mut min: libc::c_float,
-    mut val: *mut libc::c_float,
-    mut max: libc::c_float,
-    mut step: libc::c_float,
-    mut inc_per_pixel: libc::c_float,
+    mut min: f32,
+    mut val: *mut f32,
+    mut max: f32,
+    mut step: f32,
+    mut inc_per_pixel: f32,
 ) -> () {
     let mut variant: nk_property_variant = nk_property_variant {
         kind: NK_PROPERTY_INT,
@@ -21444,10 +21444,10 @@ pub unsafe fn nk_property_float(
     };
 }
 unsafe fn nk_property_variant_float(
-    mut value: libc::c_float,
-    mut min_value: libc::c_float,
-    mut max_value: libc::c_float,
-    mut step: libc::c_float,
+    mut value: f32,
+    mut min_value: f32,
+    mut max_value: f32,
+    mut step: f32,
 ) -> nk_property_variant {
     let mut result: nk_property_variant = nk_property_variant {
         kind: NK_PROPERTY_INT,
@@ -21471,7 +21471,7 @@ pub unsafe fn nk_property_double(
     mut val: *mut libc::c_double,
     mut max: libc::c_double,
     mut step: libc::c_double,
-    mut inc_per_pixel: libc::c_float,
+    mut inc_per_pixel: f32,
 ) -> () {
     let mut variant: nk_property_variant = nk_property_variant {
         kind: NK_PROPERTY_INT,
@@ -21517,7 +21517,7 @@ pub unsafe fn nk_propertyi(
     mut val: libc::c_int,
     mut max: libc::c_int,
     mut step: libc::c_int,
-    mut inc_per_pixel: libc::c_float,
+    mut inc_per_pixel: f32,
 ) -> libc::c_int {
     let mut variant: nk_property_variant = nk_property_variant {
         kind: NK_PROPERTY_INT,
@@ -21539,12 +21539,12 @@ pub unsafe fn nk_propertyi(
 pub unsafe fn nk_propertyf(
     mut ctx: *mut nk_context,
     mut name: *const libc::c_char,
-    mut min: libc::c_float,
-    mut val: libc::c_float,
-    mut max: libc::c_float,
-    mut step: libc::c_float,
-    mut inc_per_pixel: libc::c_float,
-) -> libc::c_float {
+    mut min: f32,
+    mut val: f32,
+    mut max: f32,
+    mut step: f32,
+    mut inc_per_pixel: f32,
+) -> f32 {
     let mut variant: nk_property_variant = nk_property_variant {
         kind: NK_PROPERTY_INT,
         value: nk_property { i: 0 },
@@ -21569,7 +21569,7 @@ pub unsafe fn nk_propertyd(
     mut val: libc::c_double,
     mut max: libc::c_double,
     mut step: libc::c_double,
-    mut inc_per_pixel: libc::c_float,
+    mut inc_per_pixel: f32,
 ) -> libc::c_double {
     let mut variant: nk_property_variant = nk_property_variant {
         kind: NK_PROPERTY_INT,
@@ -21634,8 +21634,8 @@ pub unsafe fn nk_edit_string(
                 (*edit).select_end = (*win).edit.sel_end
             }
             (*edit).mode = (*win).edit.mode;
-            (*edit).scrollbar.x = (*win).edit.scrollbar.x as libc::c_float;
-            (*edit).scrollbar.y = (*win).edit.scrollbar.y as libc::c_float;
+            (*edit).scrollbar.x = (*win).edit.scrollbar.x as f32;
+            (*edit).scrollbar.y = (*win).edit.scrollbar.y as f32;
             (*edit).active = nk_true as libc::c_int as libc::c_uchar
         } else {
             (*edit).active = nk_false as libc::c_int as libc::c_uchar
@@ -21832,8 +21832,8 @@ pub unsafe fn nk_chart_begin(
     mut ctx: *mut nk_context,
     type_0: nk_chart_type,
     mut count: libc::c_int,
-    mut min_value: libc::c_float,
-    mut max_value: libc::c_float,
+    mut min_value: f32,
+    mut max_value: f32,
 ) -> libc::c_int {
     return nk_chart_begin_colored(
         ctx,
@@ -21852,8 +21852,8 @@ pub unsafe fn nk_chart_begin_colored(
     mut color: nk_color,
     mut highlight: nk_color,
     mut count: libc::c_int,
-    mut min_value: libc::c_float,
-    mut max_value: libc::c_float,
+    mut min_value: f32,
+    mut max_value: f32,
 ) -> libc::c_int {
     let mut win: *mut nk_window = 0 as *mut nk_window;
     let mut chart: *mut nk_chart = 0 as *mut nk_chart;
@@ -21861,10 +21861,10 @@ pub unsafe fn nk_chart_begin_colored(
     let mut style: *const nk_style_chart = 0 as *const nk_style_chart;
     let mut background: *const nk_style_item = 0 as *const nk_style_item;
     let mut bounds: nk_rect = nk_rect {
-        x: 0i32 as libc::c_float,
-        y: 0i32 as libc::c_float,
-        w: 0i32 as libc::c_float,
-        h: 0i32 as libc::c_float,
+        x: 0i32 as f32,
+        y: 0i32 as f32,
+        w: 0i32 as f32,
+        h: 0i32 as f32,
     };
     if ctx.is_null() || (*ctx).current.is_null() || (*(*ctx).current).layout.is_null() {
         return 0i32;
@@ -21887,15 +21887,15 @@ pub unsafe fn nk_chart_begin_colored(
         );
         (*chart).x = bounds.x + (*style).padding.x;
         (*chart).y = bounds.y + (*style).padding.y;
-        (*chart).w = bounds.w - 2i32 as libc::c_float * (*style).padding.x;
-        (*chart).h = bounds.h - 2i32 as libc::c_float * (*style).padding.y;
-        (*chart).w = if (*chart).w < 2i32 as libc::c_float * (*style).padding.x {
-            2i32 as libc::c_float * (*style).padding.x
+        (*chart).w = bounds.w - 2i32 as f32 * (*style).padding.x;
+        (*chart).h = bounds.h - 2i32 as f32 * (*style).padding.y;
+        (*chart).w = if (*chart).w < 2i32 as f32 * (*style).padding.x {
+            2i32 as f32 * (*style).padding.x
         } else {
             (*chart).w
         };
-        (*chart).h = if (*chart).h < 2i32 as libc::c_float * (*style).padding.y {
-            2i32 as libc::c_float * (*style).padding.y
+        (*chart).h = if (*chart).h < 2i32 as f32 * (*style).padding.y {
+            2i32 as f32 * (*style).padding.y
         } else {
             (*chart).h
         };
@@ -21952,8 +21952,8 @@ pub unsafe fn nk_chart_add_slot(
     mut ctx: *mut nk_context,
     type_0: nk_chart_type,
     mut count: libc::c_int,
-    mut min_value: libc::c_float,
-    mut max_value: libc::c_float,
+    mut min_value: f32,
+    mut max_value: f32,
 ) -> () {
     nk_chart_add_slot_colored(
         ctx,
@@ -21972,8 +21972,8 @@ pub unsafe fn nk_chart_add_slot_colored(
     mut color: nk_color,
     mut highlight: nk_color,
     mut count: libc::c_int,
-    mut min_value: libc::c_float,
-    mut max_value: libc::c_float,
+    mut min_value: f32,
+    mut max_value: f32,
 ) -> () {
     if ctx.is_null() || (*ctx).current.is_null() || (*(*ctx).current).layout.is_null() {
         return;
@@ -22005,13 +22005,13 @@ pub unsafe fn nk_chart_add_slot_colored(
     };
 }
 #[no_mangle]
-pub unsafe fn nk_chart_push(mut ctx: *mut nk_context, mut value: libc::c_float) -> nk_flags {
+pub unsafe fn nk_chart_push(mut ctx: *mut nk_context, mut value: f32) -> nk_flags {
     return nk_chart_push_slot(ctx, value, 0i32);
 }
 #[no_mangle]
 pub unsafe fn nk_chart_push_slot(
     mut ctx: *mut nk_context,
-    mut value: libc::c_float,
+    mut value: f32,
     mut slot: libc::c_int,
 ) -> nk_flags {
     let mut flags: nk_flags = 0;
@@ -22040,14 +22040,14 @@ unsafe fn nk_chart_push_column(
     mut ctx: *const nk_context,
     mut win: *mut nk_window,
     mut chart: *mut nk_chart,
-    mut value: libc::c_float,
+    mut value: f32,
     mut slot: libc::c_int,
 ) -> nk_flags {
-    let mut padding: libc::c_float = 0.;
+    let mut padding: f32 = 0.;
     let mut out: *mut nk_command_buffer = &mut (*win).buffer as *mut nk_command_buffer;
     let mut in_0: *const nk_input = &(*ctx).input as *const nk_input;
     let mut layout: *mut nk_panel = (*win).layout;
-    let mut ratio: libc::c_float = 0.;
+    let mut ratio: f32 = 0.;
     let mut ret: nk_flags = 0i32 as nk_flags;
     let mut color: nk_color = nk_color {
         r: 0,
@@ -22056,33 +22056,33 @@ unsafe fn nk_chart_push_column(
         a: 0,
     };
     let mut item: nk_rect = nk_rect {
-        x: 0i32 as libc::c_float,
-        y: 0i32 as libc::c_float,
-        w: 0i32 as libc::c_float,
-        h: 0i32 as libc::c_float,
+        x: 0i32 as f32,
+        y: 0i32 as f32,
+        w: 0i32 as f32,
+        h: 0i32 as f32,
     };
     if (*chart).slots[slot as usize].index >= (*chart).slots[slot as usize].count {
         return nk_false as libc::c_int as nk_flags;
     } else {
         if 0 != (*chart).slots[slot as usize].count {
-            padding = ((*chart).slots[slot as usize].count - 1i32) as libc::c_float;
-            item.w = ((*chart).w - padding) / (*chart).slots[slot as usize].count as libc::c_float
+            padding = ((*chart).slots[slot as usize].count - 1i32) as f32;
+            item.w = ((*chart).w - padding) / (*chart).slots[slot as usize].count as f32
         }
         /* calculate bounds of current bar chart entry */
         color = (*chart).slots[slot as usize].color;
         item.h = (*chart).h
-            * if value / (*chart).slots[slot as usize].range < 0i32 as libc::c_float {
+            * if value / (*chart).slots[slot as usize].range < 0i32 as f32 {
                 -(value / (*chart).slots[slot as usize].range)
             } else {
                 value / (*chart).slots[slot as usize].range
             };
-        if value >= 0i32 as libc::c_float {
-            ratio = (value + if (*chart).slots[slot as usize].min < 0i32 as libc::c_float {
+        if value >= 0i32 as f32 {
+            ratio = (value + if (*chart).slots[slot as usize].min < 0i32 as f32 {
                 -(*chart).slots[slot as usize].min
             } else {
                 (*chart).slots[slot as usize].min
             })
-                / if (*chart).slots[slot as usize].range < 0i32 as libc::c_float {
+                / if (*chart).slots[slot as usize].range < 0i32 as f32 {
                     -(*chart).slots[slot as usize].range
                 } else {
                     (*chart).slots[slot as usize].range
@@ -22091,14 +22091,14 @@ unsafe fn nk_chart_push_column(
         } else {
             ratio =
                 (value - (*chart).slots[slot as usize].max) / (*chart).slots[slot as usize].range;
-            item.y = (*chart).y + (*chart).h * if ratio < 0i32 as libc::c_float {
+            item.y = (*chart).y + (*chart).h * if ratio < 0i32 as f32 {
                 -ratio
             } else {
                 ratio
             } - item.h
         }
-        item.x = (*chart).x + (*chart).slots[slot as usize].index as libc::c_float * item.w;
-        item.x = item.x + (*chart).slots[slot as usize].index as libc::c_float;
+        item.x = (*chart).x + (*chart).slots[slot as usize].index as f32 * item.w;
+        item.x = item.x + (*chart).slots[slot as usize].index as f32;
         /* user chart bar selection */
         if 0 == (*layout).flags & NK_WINDOW_ROM as libc::c_int as libc::c_uint
             && (item.x <= (*in_0).mouse.pos.x
@@ -22115,7 +22115,7 @@ unsafe fn nk_chart_push_column(
             }) as libc::c_uint;
             color = (*chart).slots[slot as usize].highlight
         }
-        nk_fill_rect(out, item, 0i32 as libc::c_float, color);
+        nk_fill_rect(out, item, 0i32 as f32, color);
         (*chart).slots[slot as usize].index += 1i32;
         return ret;
     };
@@ -22124,7 +22124,7 @@ unsafe fn nk_chart_push_line(
     mut ctx: *mut nk_context,
     mut win: *mut nk_window,
     mut g: *mut nk_chart,
-    mut value: libc::c_float,
+    mut value: f32,
     mut slot: libc::c_int,
 ) -> nk_flags {
     let mut layout: *mut nk_panel = (*win).layout;
@@ -22144,30 +22144,30 @@ unsafe fn nk_chart_push_line(
         b: 0,
         a: 0,
     };
-    let mut step: libc::c_float = 0.;
-    let mut range: libc::c_float = 0.;
-    let mut ratio: libc::c_float = 0.;
-    step = (*g).w / (*g).slots[slot as usize].count as libc::c_float;
+    let mut step: f32 = 0.;
+    let mut range: f32 = 0.;
+    let mut ratio: f32 = 0.;
+    step = (*g).w / (*g).slots[slot as usize].count as f32;
     range = (*g).slots[slot as usize].max - (*g).slots[slot as usize].min;
     ratio = (value - (*g).slots[slot as usize].min) / range;
     if (*g).slots[slot as usize].index == 0i32 {
         /* first data point does not have a connection */
         (*g).slots[slot as usize].last.x = (*g).x;
         (*g).slots[slot as usize].last.y = (*g).y + (*g).h - ratio * (*g).h;
-        bounds.x = (*g).slots[slot as usize].last.x - 2i32 as libc::c_float;
-        bounds.y = (*g).slots[slot as usize].last.y - 2i32 as libc::c_float;
-        bounds.h = 4i32 as libc::c_float;
+        bounds.x = (*g).slots[slot as usize].last.x - 2i32 as f32;
+        bounds.y = (*g).slots[slot as usize].last.y - 2i32 as f32;
+        bounds.h = 4i32 as f32;
         bounds.w = bounds.h;
         color = (*g).slots[slot as usize].color;
         if 0 == (*layout).flags & NK_WINDOW_ROM as libc::c_int as libc::c_uint
-            && ((*g).slots[slot as usize].last.x - 3i32 as libc::c_float <= (*i).mouse.pos.x
+            && ((*g).slots[slot as usize].last.x - 3i32 as f32 <= (*i).mouse.pos.x
                 && (*i).mouse.pos.x
-                    < (*g).slots[slot as usize].last.x - 3i32 as libc::c_float
-                        + 6i32 as libc::c_float
-                && ((*g).slots[slot as usize].last.y - 3i32 as libc::c_float <= (*i).mouse.pos.y
+                    < (*g).slots[slot as usize].last.x - 3i32 as f32
+                        + 6i32 as f32
+                && ((*g).slots[slot as usize].last.y - 3i32 as f32 <= (*i).mouse.pos.y
                     && (*i).mouse.pos.y
-                        < (*g).slots[slot as usize].last.y - 3i32 as libc::c_float
-                            + 6i32 as libc::c_float))
+                        < (*g).slots[slot as usize].last.y - 3i32 as f32
+                            + 6i32 as f32))
         {
             ret = (if 0 != nk_input_is_mouse_hovering_rect(i, bounds) {
                 NK_CHART_HOVERING as libc::c_int
@@ -22183,13 +22183,13 @@ unsafe fn nk_chart_push_line(
             }) as libc::c_uint;
             color = (*g).slots[slot as usize].highlight
         }
-        nk_fill_rect(out, bounds, 0i32 as libc::c_float, color);
+        nk_fill_rect(out, bounds, 0i32 as f32, color);
         (*g).slots[slot as usize].index += 1i32;
         return ret;
     } else {
         /* draw a line between the last data point and the new one */
         color = (*g).slots[slot as usize].color;
-        cur.x = (*g).x + step * (*g).slots[slot as usize].index as libc::c_float;
+        cur.x = (*g).x + step * (*g).slots[slot as usize].index as f32;
         cur.y = (*g).y + (*g).h - ratio * (*g).h;
         nk_stroke_line(
             out,
@@ -22200,9 +22200,9 @@ unsafe fn nk_chart_push_line(
             1.0f32,
             color,
         );
-        bounds.x = cur.x - 3i32 as libc::c_float;
-        bounds.y = cur.y - 3i32 as libc::c_float;
-        bounds.h = 6i32 as libc::c_float;
+        bounds.x = cur.x - 3i32 as f32;
+        bounds.y = cur.y - 3i32 as f32;
+        bounds.h = 6i32 as f32;
         bounds.w = bounds.h;
         /* user selection of current data point */
         if 0 == (*layout).flags & NK_WINDOW_ROM as libc::c_int as libc::c_uint {
@@ -22221,12 +22221,12 @@ unsafe fn nk_chart_push_line(
         nk_fill_rect(
             out,
             nk_rect(
-                cur.x - 2i32 as libc::c_float,
-                cur.y - 2i32 as libc::c_float,
-                4i32 as libc::c_float,
-                4i32 as libc::c_float,
+                cur.x - 2i32 as f32,
+                cur.y - 2i32 as f32,
+                4i32 as f32,
+                4i32 as f32,
             ),
-            0i32 as libc::c_float,
+            0i32 as f32,
             color,
         );
         /* save current data point position */
@@ -22257,13 +22257,13 @@ pub unsafe fn nk_chart_end(mut ctx: *mut nk_context) -> () {
 pub unsafe fn nk_plot(
     mut ctx: *mut nk_context,
     mut type_0: nk_chart_type,
-    mut values: *const libc::c_float,
+    mut values: *const f32,
     mut count: libc::c_int,
     mut offset: libc::c_int,
 ) -> () {
     let mut i: libc::c_int = 0i32;
-    let mut min_value: libc::c_float = 0.;
-    let mut max_value: libc::c_float = 0.;
+    let mut min_value: f32 = 0.;
+    let mut max_value: f32 = 0.;
     if ctx.is_null() || values.is_null() || 0 == count {
         return;
     } else {
@@ -22299,13 +22299,13 @@ pub unsafe fn nk_plot_function(
     mut ctx: *mut nk_context,
     mut type_0: nk_chart_type,
     mut userdata: *mut libc::c_void,
-    mut value_getter: Option<unsafe fn(_: *mut libc::c_void, _: libc::c_int) -> libc::c_float>,
+    mut value_getter: Option<unsafe fn(_: *mut libc::c_void, _: libc::c_int) -> f32>,
     mut count: libc::c_int,
     mut offset: libc::c_int,
 ) -> () {
     let mut i: libc::c_int = 0i32;
-    let mut min_value: libc::c_float = 0.;
-    let mut max_value: libc::c_float = 0.;
+    let mut min_value: f32 = 0.;
+    let mut max_value: f32 = 0.;
     if ctx.is_null() || value_getter.is_none() || 0 == count {
         return;
     } else {
@@ -22313,7 +22313,7 @@ pub unsafe fn nk_plot_function(
         max_value = min_value;
         i = 0i32;
         while i < count {
-            let mut value: libc::c_float =
+            let mut value: f32 =
                 value_getter.expect("non-null function pointer")(userdata, i + offset);
             min_value = if value < min_value { value } else { min_value };
             max_value = if value < max_value { max_value } else { value };
@@ -22519,13 +22519,13 @@ pub unsafe fn nk_combo(
             nk_panel_get_padding(&mut (*ctx).style, (*(*(*ctx).current).layout).type_0);
         max_height = count * item_height + count * item_spacing.y as libc::c_int;
         max_height += item_spacing.y as libc::c_int * 2i32 + window_padding.y as libc::c_int * 2i32;
-        size.y = if size.y < max_height as libc::c_float {
+        size.y = if size.y < max_height as f32 {
             size.y
         } else {
-            max_height as libc::c_float
+            max_height as f32
         };
         if 0 != nk_combo_begin_label(ctx, *items.offset(selected as isize), size) {
-            nk_layout_row_dynamic(ctx, item_height as libc::c_float, 1i32);
+            nk_layout_row_dynamic(ctx, item_height as f32, 1i32);
             i = 0i32;
             while i < count {
                 if 0 != nk_combo_item_label(
@@ -22563,10 +22563,10 @@ pub unsafe fn nk_contextual_end(mut ctx: *mut nk_context) -> () {
         click outside the non-blocking popup must close it at that direct frame.
         Instead it will be closed in the next frame.*/
             let mut body: nk_rect = nk_rect {
-                x: 0i32 as libc::c_float,
-                y: 0i32 as libc::c_float,
-                w: 0i32 as libc::c_float,
-                h: 0i32 as libc::c_float,
+                x: 0i32 as f32,
+                y: 0i32 as f32,
+                w: 0i32 as f32,
+                h: 0i32 as f32,
             };
             if (*panel).at_y < (*panel).bounds.y + (*panel).bounds.h {
                 padding = nk_panel_get_padding(&mut (*ctx).style, (*panel).type_0);
@@ -22810,21 +22810,21 @@ pub unsafe fn nk_combo_begin_text(
                 sym = (*style).combo.sym_normal
             }
             /* calculate button */
-            button.w = header.h - 2i32 as libc::c_float * (*style).combo.button_padding.y;
+            button.w = header.h - 2i32 as f32 * (*style).combo.button_padding.y;
             button.x = header.x + header.w - header.h - (*style).combo.button_padding.x;
             button.y = header.y + (*style).combo.button_padding.y;
             button.h = button.w;
             content.x = button.x + (*style).combo.button.padding.x;
             content.y = button.y + (*style).combo.button.padding.y;
-            content.w = button.w - 2i32 as libc::c_float * (*style).combo.button.padding.x;
-            content.h = button.h - 2i32 as libc::c_float * (*style).combo.button.padding.y;
+            content.w = button.w - 2i32 as f32 * (*style).combo.button.padding.x;
+            content.h = button.h - 2i32 as f32 * (*style).combo.button.padding.y;
             /* draw selected label */
-            text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+            text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
             label.x = header.x + (*style).combo.content_padding.x;
             label.y = header.y + (*style).combo.content_padding.y;
             label.w =
                 button.x - ((*style).combo.content_padding.x + (*style).combo.spacing.x) - label.x;
-            label.h = header.h - 2i32 as libc::c_float * (*style).combo.content_padding.y;
+            label.h = header.h - 2i32 as f32 * (*style).combo.content_padding.y;
             nk_widget_text(
                 &mut (*win).buffer,
                 label,
@@ -22896,10 +22896,10 @@ unsafe fn nk_combo_begin(
             body,
             if 0 != is_clicked && 0 != is_open {
                 nk_rect(
-                    0i32 as libc::c_float,
-                    0i32 as libc::c_float,
-                    0i32 as libc::c_float,
-                    0i32 as libc::c_float,
+                    0i32 as f32,
+                    0i32 as f32,
+                    0i32 as f32,
+                    0i32 as f32,
                 )
             } else {
                 header
@@ -23015,10 +23015,10 @@ pub unsafe fn nk_combo_separator(
             nk_panel_get_padding(&mut (*ctx).style, (*(*(*ctx).current).layout).type_0);
         max_height = count * item_height + count * item_spacing.y as libc::c_int;
         max_height += item_spacing.y as libc::c_int * 2i32 + window_padding.y as libc::c_int * 2i32;
-        size.y = if size.y < max_height as libc::c_float {
+        size.y = if size.y < max_height as f32 {
             size.y
         } else {
-            max_height as libc::c_float
+            max_height as f32
         };
         /* find selected item */
         current_item = items_separated_by_separator;
@@ -23038,7 +23038,7 @@ pub unsafe fn nk_combo_separator(
         }
         if 0 != nk_combo_begin_text(ctx, current_item, length, size) {
             current_item = items_separated_by_separator;
-            nk_layout_row_dynamic(ctx, item_height as libc::c_float, 1i32);
+            nk_layout_row_dynamic(ctx, item_height as f32, 1i32);
             i = 0i32;
             while i < count {
                 iter = current_item;
@@ -23117,14 +23117,14 @@ pub unsafe fn nk_combo_callback(
             nk_panel_get_padding(&mut (*ctx).style, (*(*(*ctx).current).layout).type_0);
         max_height = count * item_height + count * item_spacing.y as libc::c_int;
         max_height += item_spacing.y as libc::c_int * 2i32 + window_padding.y as libc::c_int * 2i32;
-        size.y = if size.y < max_height as libc::c_float {
+        size.y = if size.y < max_height as f32 {
             size.y
         } else {
-            max_height as libc::c_float
+            max_height as f32
         };
         item_getter.expect("non-null function pointer")(userdata, selected, &mut item);
         if 0 != nk_combo_begin_label(ctx, item, size) {
-            nk_layout_row_dynamic(ctx, item_height as libc::c_float, 1i32);
+            nk_layout_row_dynamic(ctx, item_height as f32, 1i32);
             i = 0i32;
             while i < count {
                 item_getter.expect("non-null function pointer")(userdata, i, &mut item);
@@ -23315,21 +23315,21 @@ pub unsafe fn nk_combo_begin_color(
                 sym = (*style).combo.sym_normal
             }
             /* calculate button */
-            button.w = header.h - 2i32 as libc::c_float * (*style).combo.button_padding.y;
+            button.w = header.h - 2i32 as f32 * (*style).combo.button_padding.y;
             button.x = header.x + header.w - header.h - (*style).combo.button_padding.x;
             button.y = header.y + (*style).combo.button_padding.y;
             button.h = button.w;
             content.x = button.x + (*style).combo.button.padding.x;
             content.y = button.y + (*style).combo.button.padding.y;
-            content.w = button.w - 2i32 as libc::c_float * (*style).combo.button.padding.x;
-            content.h = button.h - 2i32 as libc::c_float * (*style).combo.button.padding.y;
+            content.w = button.w - 2i32 as f32 * (*style).combo.button.padding.x;
+            content.h = button.h - 2i32 as f32 * (*style).combo.button.padding.y;
             /* draw color */
-            bounds.h = header.h - 4i32 as libc::c_float * (*style).combo.content_padding.y;
-            bounds.y = header.y + 2i32 as libc::c_float * (*style).combo.content_padding.y;
-            bounds.x = header.x + 2i32 as libc::c_float * (*style).combo.content_padding.x;
+            bounds.h = header.h - 4i32 as f32 * (*style).combo.content_padding.y;
+            bounds.y = header.y + 2i32 as f32 * (*style).combo.content_padding.y;
+            bounds.x = header.x + 2i32 as f32 * (*style).combo.content_padding.x;
             bounds.w =
                 button.x - ((*style).combo.content_padding.x + (*style).combo.spacing.x) - bounds.x;
-            nk_fill_rect(&mut (*win).buffer, bounds, 0i32 as libc::c_float, color);
+            nk_fill_rect(&mut (*win).buffer, bounds, 0i32 as f32, color);
             /* draw open/close button */
             nk_draw_button_symbol(
                 &mut (*win).buffer,
@@ -23440,10 +23440,10 @@ pub unsafe fn nk_combo_begin_symbol(
                 );
             }
             let mut bounds: nk_rect = nk_rect {
-                x: 0i32 as libc::c_float,
-                y: 0i32 as libc::c_float,
-                w: 0i32 as libc::c_float,
-                h: 0i32 as libc::c_float,
+                x: 0i32 as f32,
+                y: 0i32 as f32,
+                w: 0i32 as f32,
+                h: 0i32 as f32,
             };
             let mut content: nk_rect = nk_rect {
                 x: 0.,
@@ -23467,16 +23467,16 @@ pub unsafe fn nk_combo_begin_symbol(
                 sym = (*style).combo.sym_normal
             }
             /* calculate button */
-            button.w = header.h - 2i32 as libc::c_float * (*style).combo.button_padding.y;
+            button.w = header.h - 2i32 as f32 * (*style).combo.button_padding.y;
             button.x = header.x + header.w - header.h - (*style).combo.button_padding.y;
             button.y = header.y + (*style).combo.button_padding.y;
             button.h = button.w;
             content.x = button.x + (*style).combo.button.padding.x;
             content.y = button.y + (*style).combo.button.padding.y;
-            content.w = button.w - 2i32 as libc::c_float * (*style).combo.button.padding.x;
-            content.h = button.h - 2i32 as libc::c_float * (*style).combo.button.padding.y;
+            content.w = button.w - 2i32 as f32 * (*style).combo.button.padding.x;
+            content.h = button.h - 2i32 as f32 * (*style).combo.button.padding.y;
             /* draw symbol */
-            bounds.h = header.h - 2i32 as libc::c_float * (*style).combo.content_padding.y;
+            bounds.h = header.h - 2i32 as f32 * (*style).combo.content_padding.y;
             bounds.y = header.y + (*style).combo.content_padding.y;
             bounds.x = header.x + (*style).combo.content_padding.x;
             bounds.w = button.x - (*style).combo.content_padding.y - bounds.x;
@@ -23655,14 +23655,14 @@ pub unsafe fn nk_combo_begin_symbol_text(
                 sym = (*style).combo.sym_normal
             }
             /* calculate button */
-            button.w = header.h - 2i32 as libc::c_float * (*style).combo.button_padding.y;
+            button.w = header.h - 2i32 as f32 * (*style).combo.button_padding.y;
             button.x = header.x + header.w - header.h - (*style).combo.button_padding.x;
             button.y = header.y + (*style).combo.button_padding.y;
             button.h = button.w;
             content.x = button.x + (*style).combo.button.padding.x;
             content.y = button.y + (*style).combo.button.padding.y;
-            content.w = button.w - 2i32 as libc::c_float * (*style).combo.button.padding.x;
-            content.h = button.h - 2i32 as libc::c_float * (*style).combo.button.padding.y;
+            content.w = button.w - 2i32 as f32 * (*style).combo.button.padding.x;
+            content.h = button.h - 2i32 as f32 * (*style).combo.button.padding.y;
             nk_draw_button_symbol(
                 &mut (*win).buffer,
                 &mut button,
@@ -23675,7 +23675,7 @@ pub unsafe fn nk_combo_begin_symbol_text(
             /* draw symbol */
             image.x = header.x + (*style).combo.content_padding.x;
             image.y = header.y + (*style).combo.content_padding.y;
-            image.h = header.h - 2i32 as libc::c_float * (*style).combo.content_padding.y;
+            image.h = header.h - 2i32 as f32 * (*style).combo.content_padding.y;
             image.w = image.h;
             nk_draw_symbol(
                 &mut (*win).buffer,
@@ -23687,12 +23687,12 @@ pub unsafe fn nk_combo_begin_symbol_text(
                 (*style).font,
             );
             /* draw label */
-            text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+            text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
             label.x =
                 image.x + image.w + (*style).combo.spacing.x + (*style).combo.content_padding.x;
             label.y = header.y + (*style).combo.content_padding.y;
             label.w = button.x - (*style).combo.content_padding.x - label.x;
-            label.h = header.h - 2i32 as libc::c_float * (*style).combo.content_padding.y;
+            label.h = header.h - 2i32 as f32 * (*style).combo.content_padding.y;
             nk_widget_text(
                 &mut (*win).buffer,
                 label,
@@ -23785,10 +23785,10 @@ pub unsafe fn nk_combo_begin_image(
                 );
             }
             let mut bounds: nk_rect = nk_rect {
-                x: 0i32 as libc::c_float,
-                y: 0i32 as libc::c_float,
-                w: 0i32 as libc::c_float,
-                h: 0i32 as libc::c_float,
+                x: 0i32 as f32,
+                y: 0i32 as f32,
+                w: 0i32 as f32,
+                h: 0i32 as f32,
             };
             let mut content: nk_rect = nk_rect {
                 x: 0.,
@@ -23812,16 +23812,16 @@ pub unsafe fn nk_combo_begin_image(
                 sym = (*style).combo.sym_normal
             }
             /* calculate button */
-            button.w = header.h - 2i32 as libc::c_float * (*style).combo.button_padding.y;
+            button.w = header.h - 2i32 as f32 * (*style).combo.button_padding.y;
             button.x = header.x + header.w - header.h - (*style).combo.button_padding.y;
             button.y = header.y + (*style).combo.button_padding.y;
             button.h = button.w;
             content.x = button.x + (*style).combo.button.padding.x;
             content.y = button.y + (*style).combo.button.padding.y;
-            content.w = button.w - 2i32 as libc::c_float * (*style).combo.button.padding.x;
-            content.h = button.h - 2i32 as libc::c_float * (*style).combo.button.padding.y;
+            content.w = button.w - 2i32 as f32 * (*style).combo.button.padding.x;
+            content.h = button.h - 2i32 as f32 * (*style).combo.button.padding.y;
             /* draw image */
-            bounds.h = header.h - 2i32 as libc::c_float * (*style).combo.content_padding.y;
+            bounds.h = header.h - 2i32 as f32 * (*style).combo.content_padding.y;
             bounds.y = header.y + (*style).combo.content_padding.y;
             bounds.x = header.x + (*style).combo.content_padding.x;
             bounds.w = button.x - (*style).combo.content_padding.y - bounds.x;
@@ -23983,14 +23983,14 @@ pub unsafe fn nk_combo_begin_image_text(
                 sym = (*style).combo.sym_normal
             }
             /* calculate button */
-            button.w = header.h - 2i32 as libc::c_float * (*style).combo.button_padding.y;
+            button.w = header.h - 2i32 as f32 * (*style).combo.button_padding.y;
             button.x = header.x + header.w - header.h - (*style).combo.button_padding.x;
             button.y = header.y + (*style).combo.button_padding.y;
             button.h = button.w;
             content.x = button.x + (*style).combo.button.padding.x;
             content.y = button.y + (*style).combo.button.padding.y;
-            content.w = button.w - 2i32 as libc::c_float * (*style).combo.button.padding.x;
-            content.h = button.h - 2i32 as libc::c_float * (*style).combo.button.padding.y;
+            content.w = button.w - 2i32 as f32 * (*style).combo.button.padding.x;
+            content.h = button.h - 2i32 as f32 * (*style).combo.button.padding.y;
             nk_draw_button_symbol(
                 &mut (*win).buffer,
                 &mut button,
@@ -24003,16 +24003,16 @@ pub unsafe fn nk_combo_begin_image_text(
             /* draw image */
             image.x = header.x + (*style).combo.content_padding.x;
             image.y = header.y + (*style).combo.content_padding.y;
-            image.h = header.h - 2i32 as libc::c_float * (*style).combo.content_padding.y;
+            image.h = header.h - 2i32 as f32 * (*style).combo.content_padding.y;
             image.w = image.h;
             nk_draw_image(&mut (*win).buffer, image, &mut img, nk_white);
             /* draw label */
-            text.padding = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+            text.padding = nk_vec2(0i32 as f32, 0i32 as f32);
             label.x =
                 image.x + image.w + (*style).combo.spacing.x + (*style).combo.content_padding.x;
             label.y = header.y + (*style).combo.content_padding.y;
             label.w = button.x - (*style).combo.content_padding.x - label.x;
-            label.h = header.h - 2i32 as libc::c_float * (*style).combo.content_padding.y;
+            label.h = header.h - 2i32 as f32 * (*style).combo.content_padding.y;
             nk_widget_text(
                 &mut (*win).buffer,
                 label,
@@ -24213,10 +24213,10 @@ pub unsafe fn nk_contextual_begin(
     };
     static mut null_rect: nk_rect = unsafe {
         nk_rect {
-            x: -1i32 as libc::c_float,
-            y: -1i32 as libc::c_float,
-            w: 0i32 as libc::c_float,
-            h: 0i32 as libc::c_float,
+            x: -1i32 as f32,
+            y: -1i32 as f32,
+            w: 0i32 as f32,
+            h: 0i32 as f32,
         }
     };
     let mut is_clicked: libc::c_int = 0i32;
@@ -24285,8 +24285,8 @@ pub unsafe fn nk_tooltip(mut ctx: *mut nk_context, mut text: *const libc::c_char
     let mut style: *const nk_style = 0 as *const nk_style;
     let mut padding: nk_vec2 = nk_vec2 { x: 0., y: 0. };
     let mut text_len: libc::c_int = 0;
-    let mut text_width: libc::c_float = 0.;
-    let mut text_height: libc::c_float = 0.;
+    let mut text_width: f32 = 0.;
+    let mut text_height: f32 = 0.;
     if ctx.is_null()
         || (*ctx).current.is_null()
         || (*(*ctx).current).layout.is_null()
@@ -24305,8 +24305,8 @@ pub unsafe fn nk_tooltip(mut ctx: *mut nk_context, mut text: *const libc::c_char
             text,
             text_len,
         );
-        text_width += 4i32 as libc::c_float * padding.x;
-        text_height = (*(*style).font).height + 2i32 as libc::c_float * padding.y;
+        text_width += 4i32 as f32 * padding.x;
+        text_height = (*(*style).font).height + 2i32 as f32 * padding.y;
         /* execute tooltip and fill with text */
         if 0 != nk_tooltip_begin(ctx, text_width) {
             nk_layout_row_dynamic(ctx, text_height, 1i32);
@@ -24328,7 +24328,7 @@ pub unsafe fn nk_tooltip_end(mut ctx: *mut nk_context) -> () {
     };
 }
 #[no_mangle]
-pub unsafe fn nk_tooltip_begin(mut ctx: *mut nk_context, mut width: libc::c_float) -> libc::c_int {
+pub unsafe fn nk_tooltip_begin(mut ctx: *mut nk_context, mut width: f32) -> libc::c_int {
     let mut x: libc::c_int = 0;
     let mut y: libc::c_int = 0;
     let mut w: libc::c_int = 0;
@@ -24356,14 +24356,14 @@ pub unsafe fn nk_tooltip_begin(mut ctx: *mut nk_context, mut width: libc::c_floa
         } else {
             w = nk_iceilf(width);
             h = nk_iceilf(nk_null_rect.h);
-            x = nk_ifloorf((*in_0).mouse.pos.x + 1i32 as libc::c_float)
+            x = nk_ifloorf((*in_0).mouse.pos.x + 1i32 as f32)
                 - (*(*win).layout).clip.x as libc::c_int;
-            y = nk_ifloorf((*in_0).mouse.pos.y + 1i32 as libc::c_float)
+            y = nk_ifloorf((*in_0).mouse.pos.y + 1i32 as f32)
                 - (*(*win).layout).clip.y as libc::c_int;
-            bounds.x = x as libc::c_float;
-            bounds.y = y as libc::c_float;
-            bounds.w = w as libc::c_float;
-            bounds.h = h as libc::c_float;
+            bounds.x = x as f32;
+            bounds.y = y as f32;
+            bounds.w = w as f32;
+            bounds.h = h as f32;
             ret = nk_popup_begin(
                 ctx,
                 NK_POPUP_DYNAMIC,
@@ -24381,8 +24381,8 @@ pub unsafe fn nk_tooltip_begin(mut ctx: *mut nk_context, mut width: libc::c_floa
         }
     };
 }
-unsafe fn nk_ifloorf(mut x: libc::c_float) -> libc::c_int {
-    x = (x as libc::c_int - if x < 0.0f32 { 1i32 } else { 0i32 }) as libc::c_float;
+unsafe fn nk_ifloorf(mut x: f32) -> libc::c_int {
+    x = (x as libc::c_int - if x < 0.0f32 { 1i32 } else { 0i32 }) as f32;
     return x as libc::c_int;
 }
 #[no_mangle]
@@ -24999,8 +24999,8 @@ pub unsafe fn nk_style_push_font(
 #[no_mangle]
 pub unsafe fn nk_style_push_float(
     mut ctx: *mut nk_context,
-    mut address: *mut libc::c_float,
-    mut value: libc::c_float,
+    mut address: *mut f32,
+    mut value: f32,
 ) -> libc::c_int {
     let mut type_stack: *mut nk_config_stack_float = 0 as *mut nk_config_stack_float;
     let mut element: *mut nk_config_stack_float_element = 0 as *mut nk_config_stack_float_element;
@@ -25281,9 +25281,9 @@ pub unsafe fn nk_rgb_bv(mut c: *const nk_byte) -> nk_color {
 }
 #[no_mangle]
 pub unsafe fn nk_rgb_f(
-    mut r: libc::c_float,
-    mut g: libc::c_float,
-    mut b: libc::c_float,
+    mut r: f32,
+    mut g: f32,
+    mut b: f32,
 ) -> nk_color {
     let mut ret: nk_color = nk_color {
         r: 0,
@@ -25291,38 +25291,38 @@ pub unsafe fn nk_rgb_f(
         b: 0,
         a: 0,
     };
-    ret.r = (if (0i32 as libc::c_float) < if 1.0f32 < r { 1.0f32 } else { r } {
+    ret.r = (if (0i32 as f32) < if 1.0f32 < r { 1.0f32 } else { r } {
         if 1.0f32 < r {
             1.0f32
         } else {
             r
         }
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     } * 255.0f32) as nk_byte;
-    ret.g = (if (0i32 as libc::c_float) < if 1.0f32 < g { 1.0f32 } else { g } {
+    ret.g = (if (0i32 as f32) < if 1.0f32 < g { 1.0f32 } else { g } {
         if 1.0f32 < g {
             1.0f32
         } else {
             g
         }
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     } * 255.0f32) as nk_byte;
-    ret.b = (if (0i32 as libc::c_float) < if 1.0f32 < b { 1.0f32 } else { b } {
+    ret.b = (if (0i32 as f32) < if 1.0f32 < b { 1.0f32 } else { b } {
         if 1.0f32 < b {
             1.0f32
         } else {
             b
         }
     } else {
-        0i32 as libc::c_float
+        0i32 as f32
     } * 255.0f32) as nk_byte;
     ret.a = 255i32 as nk_byte;
     return ret;
 }
 #[no_mangle]
-pub unsafe fn nk_rgb_fv(mut c: *const libc::c_float) -> nk_color {
+pub unsafe fn nk_rgb_fv(mut c: *const f32) -> nk_color {
     return nk_rgb_f(*c.offset(0isize), *c.offset(1isize), *c.offset(2isize));
 }
 #[no_mangle]
@@ -25432,34 +25432,34 @@ pub unsafe fn nk_hsva(
     mut v: libc::c_int,
     mut a: libc::c_int,
 ) -> nk_color {
-    let mut hf: libc::c_float = (if if h < 255i32 { h } else { 255i32 } < 0i32 {
+    let mut hf: f32 = (if if h < 255i32 { h } else { 255i32 } < 0i32 {
         0i32
     } else if h < 255i32 {
         h
     } else {
         255i32
-    }) as libc::c_float / 255.0f32;
-    let mut sf: libc::c_float = (if if s < 255i32 { s } else { 255i32 } < 0i32 {
+    }) as f32 / 255.0f32;
+    let mut sf: f32 = (if if s < 255i32 { s } else { 255i32 } < 0i32 {
         0i32
     } else if s < 255i32 {
         s
     } else {
         255i32
-    }) as libc::c_float / 255.0f32;
-    let mut vf: libc::c_float = (if if v < 255i32 { v } else { 255i32 } < 0i32 {
+    }) as f32 / 255.0f32;
+    let mut vf: f32 = (if if v < 255i32 { v } else { 255i32 } < 0i32 {
         0i32
     } else if v < 255i32 {
         v
     } else {
         255i32
-    }) as libc::c_float / 255.0f32;
-    let mut af: libc::c_float = (if if a < 255i32 { a } else { 255i32 } < 0i32 {
+    }) as f32 / 255.0f32;
+    let mut af: f32 = (if if a < 255i32 { a } else { 255i32 } < 0i32 {
         0i32
     } else if a < 255i32 {
         a
     } else {
         255i32
-    }) as libc::c_float / 255.0f32;
+    }) as f32 / 255.0f32;
     return nk_hsva_f(hf, sf, vf, af);
 }
 #[no_mangle]
@@ -25475,7 +25475,7 @@ pub unsafe fn nk_hsv_bv(mut c: *const nk_byte) -> nk_color {
     );
 }
 #[no_mangle]
-pub unsafe fn nk_hsv_fv(mut c: *const libc::c_float) -> nk_color {
+pub unsafe fn nk_hsv_fv(mut c: *const f32) -> nk_color {
     return nk_hsv_f(*c.offset(0isize), *c.offset(1isize), *c.offset(2isize));
 }
 #[no_mangle]
@@ -25497,7 +25497,7 @@ pub unsafe fn nk_hsva_bv(mut c: *const nk_byte) -> nk_color {
     );
 }
 #[no_mangle]
-pub unsafe fn nk_hsva_fv(mut c: *const libc::c_float) -> nk_color {
+pub unsafe fn nk_hsva_fv(mut c: *const f32) -> nk_color {
     return nk_hsva_f(
         *c.offset(0isize),
         *c.offset(1isize),
@@ -25636,10 +25636,10 @@ pub unsafe fn nk_color_hsva_i(
     mut out_a: *mut libc::c_int,
     mut in_0: nk_color,
 ) -> () {
-    let mut h: libc::c_float = 0.;
-    let mut s: libc::c_float = 0.;
-    let mut v: libc::c_float = 0.;
-    let mut a: libc::c_float = 0.;
+    let mut h: f32 = 0.;
+    let mut s: f32 = 0.;
+    let mut v: f32 = 0.;
+    let mut a: f32 = 0.;
     nk_color_hsva_f(&mut h, &mut s, &mut v, &mut a, in_0);
     *out_h = (h * 255.0f32) as nk_byte as libc::c_int;
     *out_s = (s * 255.0f32) as nk_byte as libc::c_int;
@@ -25648,10 +25648,10 @@ pub unsafe fn nk_color_hsva_i(
 }
 #[no_mangle]
 pub unsafe fn nk_color_hsva_f(
-    mut out_h: *mut libc::c_float,
-    mut out_s: *mut libc::c_float,
-    mut out_v: *mut libc::c_float,
-    mut out_a: *mut libc::c_float,
+    mut out_h: *mut f32,
+    mut out_s: *mut f32,
+    mut out_v: *mut f32,
+    mut out_a: *mut f32,
     mut in_0: nk_color,
 ) -> () {
     let mut col: nk_colorf = nk_colorf {
@@ -25701,17 +25701,17 @@ pub unsafe fn nk_color_hsv_bv(mut out: *mut nk_byte, mut in_0: nk_color) -> () {
 }
 #[no_mangle]
 pub unsafe fn nk_color_hsv_f(
-    mut out_h: *mut libc::c_float,
-    mut out_s: *mut libc::c_float,
-    mut out_v: *mut libc::c_float,
+    mut out_h: *mut f32,
+    mut out_s: *mut f32,
+    mut out_v: *mut f32,
     mut in_0: nk_color,
 ) -> () {
-    let mut a: libc::c_float = 0.;
+    let mut a: f32 = 0.;
     nk_color_hsva_f(out_h, out_s, out_v, &mut a, in_0);
 }
 #[no_mangle]
-pub unsafe fn nk_color_hsv_fv(mut out: *mut libc::c_float, mut in_0: nk_color) -> () {
-    let mut a: libc::c_float = 0.;
+pub unsafe fn nk_color_hsv_fv(mut out: *mut f32, mut in_0: nk_color) -> () {
+    let mut a: f32 = 0.;
     nk_color_hsva_f(
         &mut *out.offset(0isize),
         &mut *out.offset(1isize),
@@ -25767,7 +25767,7 @@ pub unsafe fn nk_color_hsva_bv(mut out: *mut nk_byte, mut in_0: nk_color) -> () 
     *out.offset(3isize) = tmp[3usize] as nk_byte;
 }
 #[no_mangle]
-pub unsafe fn nk_color_hsva_fv(mut out: *mut libc::c_float, mut in_0: nk_color) -> () {
+pub unsafe fn nk_color_hsva_fv(mut out: *mut f32, mut in_0: nk_color) -> () {
     nk_color_hsva_f(
         &mut *out.offset(0isize),
         &mut *out.offset(1isize),
@@ -25944,12 +25944,12 @@ pub unsafe fn nk_subimage_handle(
 #[no_mangle]
 pub unsafe fn nk_vec2i(mut x: libc::c_int, mut y: libc::c_int) -> nk_vec2 {
     let mut ret: nk_vec2 = nk_vec2 { x: 0., y: 0. };
-    ret.x = x as libc::c_float;
-    ret.y = y as libc::c_float;
+    ret.x = x as f32;
+    ret.y = y as f32;
     return ret;
 }
 #[no_mangle]
-pub unsafe fn nk_vec2v(mut v: *const libc::c_float) -> nk_vec2 {
+pub unsafe fn nk_vec2v(mut v: *const f32) -> nk_vec2 {
     return nk_vec2(*v.offset(0isize), *v.offset(1isize));
 }
 #[no_mangle]
@@ -25973,10 +25973,10 @@ pub unsafe fn nk_recti(
         w: 0.,
         h: 0.,
     };
-    r.x = x as libc::c_float;
-    r.y = y as libc::c_float;
-    r.w = w as libc::c_float;
-    r.h = h as libc::c_float;
+    r.x = x as f32;
+    r.y = y as f32;
+    r.w = w as f32;
+    r.h = h as f32;
     return r;
 }
 #[no_mangle]
@@ -25984,7 +25984,7 @@ pub unsafe fn nk_recta(mut pos: nk_vec2, mut size: nk_vec2) -> nk_rect {
     return nk_rect(pos.x, pos.y, size.x, size.y);
 }
 #[no_mangle]
-pub unsafe fn nk_rectv(mut r: *const libc::c_float) -> nk_rect {
+pub unsafe fn nk_rectv(mut r: *const f32) -> nk_rect {
     return nk_rect(
         *r.offset(0isize),
         *r.offset(1isize),
@@ -26468,7 +26468,7 @@ pub unsafe fn nk_font_atlas_begin(mut atlas: *mut nk_font_atlas) -> () {
     };
 }
 #[no_mangle]
-pub unsafe fn nk_font_config(mut pixel_height: libc::c_float) -> nk_font_config {
+pub unsafe fn nk_font_config(mut pixel_height: f32) -> nk_font_config {
     let mut cfg: nk_font_config = nk_font_config {
         next: 0 as *mut nk_font_config,
         ttf_blob: 0 as *mut libc::c_void,
@@ -26500,7 +26500,7 @@ pub unsafe fn nk_font_config(mut pixel_height: libc::c_float) -> nk_font_config 
     cfg.oversample_v = 1i32 as libc::c_uchar;
     cfg.pixel_snap = 0i32 as libc::c_uchar;
     cfg.coord_type = NK_COORD_UV;
-    cfg.spacing = nk_vec2(0i32 as libc::c_float, 0i32 as libc::c_float);
+    cfg.spacing = nk_vec2(0i32 as f32, 0i32 as f32);
     cfg.range = nk_font_default_glyph_ranges();
     cfg.merge_mode = 0i32 as libc::c_uchar;
     cfg.fallback_glyph = '?' as i32 as nk_rune;
@@ -26617,7 +26617,7 @@ pub unsafe fn nk_font_atlas_add(
 #[no_mangle]
 pub unsafe fn nk_font_atlas_add_default(
     mut atlas: *mut nk_font_atlas,
-    mut pixel_height: libc::c_float,
+    mut pixel_height: f32,
     mut config: *const nk_font_config,
 ) -> *mut nk_font {
     return nk_font_atlas_add_compressed_base85(
@@ -27193,7 +27193,7 @@ static mut nk_proggy_clean_ttf_compressed_data_base85: [libc::c_char; 11981] = u
 pub unsafe fn nk_font_atlas_add_compressed_base85(
     mut atlas: *mut nk_font_atlas,
     mut data_base85: *const libc::c_char,
-    mut height: libc::c_float,
+    mut height: f32,
     mut config: *const nk_font_config,
 ) -> *mut nk_font {
     let mut compressed_size: libc::c_int = 0;
@@ -27241,7 +27241,7 @@ pub unsafe fn nk_font_atlas_add_compressed(
     mut atlas: *mut nk_font_atlas,
     mut compressed_data: *mut libc::c_void,
     mut compressed_size: nk_size,
-    mut height: libc::c_float,
+    mut height: f32,
     mut config: *const nk_font_config,
 ) -> *mut nk_font {
     let mut decompressed_size: libc::c_uint = 0;
@@ -27614,7 +27614,7 @@ pub unsafe fn nk_font_atlas_add_from_memory(
     mut atlas: *mut nk_font_atlas,
     mut memory: *mut libc::c_void,
     mut size: nk_size,
-    mut height: libc::c_float,
+    mut height: f32,
     mut config: *const nk_font_config,
 ) -> *mut nk_font {
     let mut cfg: nk_font_config = nk_font_config {
@@ -27662,7 +27662,7 @@ pub unsafe fn nk_font_atlas_add_from_memory(
 pub unsafe fn nk_font_atlas_add_from_file(
     mut atlas: *mut nk_font_atlas,
     mut file_path: *const libc::c_char,
-    mut height: libc::c_float,
+    mut height: f32,
     mut config: *const nk_font_config,
 ) -> *mut nk_font {
     let mut size: nk_size = 0;
@@ -27899,100 +27899,100 @@ pub unsafe fn nk_font_atlas_bake(
                                         [
                                             [
                                                 nk_vec2 {
-                                                    x: 0i32 as libc::c_float,
-                                                    y: 3i32 as libc::c_float,
+                                                    x: 0i32 as f32,
+                                                    y: 3i32 as f32,
                                                 },
                                                 nk_vec2 {
-                                                    x: 12i32 as libc::c_float,
-                                                    y: 19i32 as libc::c_float,
+                                                    x: 12i32 as f32,
+                                                    y: 19i32 as f32,
                                                 },
                                                 nk_vec2 {
-                                                    x: 0i32 as libc::c_float,
-                                                    y: 0i32 as libc::c_float,
-                                                },
-                                            ],
-                                            [
-                                                nk_vec2 {
-                                                    x: 13i32 as libc::c_float,
-                                                    y: 0i32 as libc::c_float,
-                                                },
-                                                nk_vec2 {
-                                                    x: 7i32 as libc::c_float,
-                                                    y: 16i32 as libc::c_float,
-                                                },
-                                                nk_vec2 {
-                                                    x: 4i32 as libc::c_float,
-                                                    y: 8i32 as libc::c_float,
+                                                    x: 0i32 as f32,
+                                                    y: 0i32 as f32,
                                                 },
                                             ],
                                             [
                                                 nk_vec2 {
-                                                    x: 31i32 as libc::c_float,
-                                                    y: 0i32 as libc::c_float,
+                                                    x: 13i32 as f32,
+                                                    y: 0i32 as f32,
                                                 },
                                                 nk_vec2 {
-                                                    x: 23i32 as libc::c_float,
-                                                    y: 23i32 as libc::c_float,
+                                                    x: 7i32 as f32,
+                                                    y: 16i32 as f32,
                                                 },
                                                 nk_vec2 {
-                                                    x: 11i32 as libc::c_float,
-                                                    y: 11i32 as libc::c_float,
-                                                },
-                                            ],
-                                            [
-                                                nk_vec2 {
-                                                    x: 21i32 as libc::c_float,
-                                                    y: 0i32 as libc::c_float,
-                                                },
-                                                nk_vec2 {
-                                                    x: 9i32 as libc::c_float,
-                                                    y: 23i32 as libc::c_float,
-                                                },
-                                                nk_vec2 {
-                                                    x: 5i32 as libc::c_float,
-                                                    y: 11i32 as libc::c_float,
+                                                    x: 4i32 as f32,
+                                                    y: 8i32 as f32,
                                                 },
                                             ],
                                             [
                                                 nk_vec2 {
-                                                    x: 55i32 as libc::c_float,
-                                                    y: 18i32 as libc::c_float,
+                                                    x: 31i32 as f32,
+                                                    y: 0i32 as f32,
                                                 },
                                                 nk_vec2 {
-                                                    x: 23i32 as libc::c_float,
-                                                    y: 9i32 as libc::c_float,
+                                                    x: 23i32 as f32,
+                                                    y: 23i32 as f32,
                                                 },
                                                 nk_vec2 {
-                                                    x: 11i32 as libc::c_float,
-                                                    y: 5i32 as libc::c_float,
-                                                },
-                                            ],
-                                            [
-                                                nk_vec2 {
-                                                    x: 73i32 as libc::c_float,
-                                                    y: 0i32 as libc::c_float,
-                                                },
-                                                nk_vec2 {
-                                                    x: 17i32 as libc::c_float,
-                                                    y: 17i32 as libc::c_float,
-                                                },
-                                                nk_vec2 {
-                                                    x: 9i32 as libc::c_float,
-                                                    y: 9i32 as libc::c_float,
+                                                    x: 11i32 as f32,
+                                                    y: 11i32 as f32,
                                                 },
                                             ],
                                             [
                                                 nk_vec2 {
-                                                    x: 55i32 as libc::c_float,
-                                                    y: 0i32 as libc::c_float,
+                                                    x: 21i32 as f32,
+                                                    y: 0i32 as f32,
                                                 },
                                                 nk_vec2 {
-                                                    x: 17i32 as libc::c_float,
-                                                    y: 17i32 as libc::c_float,
+                                                    x: 9i32 as f32,
+                                                    y: 23i32 as f32,
                                                 },
                                                 nk_vec2 {
-                                                    x: 9i32 as libc::c_float,
-                                                    y: 9i32 as libc::c_float,
+                                                    x: 5i32 as f32,
+                                                    y: 11i32 as f32,
+                                                },
+                                            ],
+                                            [
+                                                nk_vec2 {
+                                                    x: 55i32 as f32,
+                                                    y: 18i32 as f32,
+                                                },
+                                                nk_vec2 {
+                                                    x: 23i32 as f32,
+                                                    y: 9i32 as f32,
+                                                },
+                                                nk_vec2 {
+                                                    x: 11i32 as f32,
+                                                    y: 5i32 as f32,
+                                                },
+                                            ],
+                                            [
+                                                nk_vec2 {
+                                                    x: 73i32 as f32,
+                                                    y: 0i32 as f32,
+                                                },
+                                                nk_vec2 {
+                                                    x: 17i32 as f32,
+                                                    y: 17i32 as f32,
+                                                },
+                                                nk_vec2 {
+                                                    x: 9i32 as f32,
+                                                    y: 9i32 as f32,
+                                                },
+                                            ],
+                                            [
+                                                nk_vec2 {
+                                                    x: 55i32 as f32,
+                                                    y: 0i32 as f32,
+                                                },
+                                                nk_vec2 {
+                                                    x: 17i32 as f32,
+                                                    y: 17i32 as f32,
+                                                },
+                                                nk_vec2 {
+                                                    x: 9i32 as f32,
+                                                    y: 9i32 as f32,
                                                 },
                                             ],
                                         ]
@@ -28006,11 +28006,11 @@ pub unsafe fn nk_font_atlas_bake(
                                         (*cursor).img.w = *width as libc::c_ushort;
                                         (*cursor).img.h = *height as libc::c_ushort;
                                         (*cursor).img.region[0usize] =
-                                            ((*atlas).custom.x as libc::c_int as libc::c_float
+                                            ((*atlas).custom.x as libc::c_int as f32
                                                 + nk_cursor_data[i as usize][0usize].x)
                                                 as libc::c_ushort;
                                         (*cursor).img.region[1usize] =
-                                            ((*atlas).custom.y as libc::c_int as libc::c_float
+                                            ((*atlas).custom.y as libc::c_int as f32
                                                 + nk_cursor_data[i as usize][0usize].y)
                                                 as libc::c_ushort;
                                         (*cursor).img.region[2usize] =
@@ -28060,7 +28060,7 @@ pub unsafe fn nk_font_atlas_bake(
 }
 unsafe fn nk_font_init(
     mut font: *mut nk_font,
-    mut pixel_height: libc::c_float,
+    mut pixel_height: f32,
     mut fallback_codepoint: nk_rune,
     mut glyphs: *mut nk_font_glyph,
     mut baked_font: *const nk_baked_font,
@@ -28096,12 +28096,12 @@ unsafe fn nk_font_init(
 }
 unsafe fn nk_font_query_font_glyph(
     mut handle: nk_handle,
-    mut height: libc::c_float,
+    mut height: f32,
     mut glyph: *mut nk_user_font_glyph,
     mut codepoint: nk_rune,
     mut next_codepoint: nk_rune,
 ) -> () {
-    let mut scale: libc::c_float = 0.;
+    let mut scale: f32 = 0.;
     let mut g: *const nk_font_glyph = 0 as *const nk_font_glyph;
     let mut font: *mut nk_font = 0 as *mut nk_font;
     font = handle.ptr as *mut nk_font;
@@ -28181,24 +28181,24 @@ unsafe fn nk_range_count(mut range: *const nk_rune) -> libc::c_int {
 }
 unsafe fn nk_font_text_width(
     mut handle: nk_handle,
-    mut height: libc::c_float,
+    mut height: f32,
     mut text: *const libc::c_char,
     mut len: libc::c_int,
-) -> libc::c_float {
+) -> f32 {
     let mut unicode: nk_rune = 0;
     let mut text_len: libc::c_int = 0i32;
-    let mut text_width: libc::c_float = 0i32 as libc::c_float;
+    let mut text_width: f32 = 0i32 as f32;
     let mut glyph_len: libc::c_int = 0i32;
-    let mut scale: libc::c_float = 0i32 as libc::c_float;
+    let mut scale: f32 = 0i32 as f32;
     let mut font: *mut nk_font = handle.ptr as *mut nk_font;
     if font.is_null() || text.is_null() || 0 == len {
-        return 0i32 as libc::c_float;
+        return 0i32 as f32;
     } else {
         scale = height / (*font).info.height;
         text_len = nk_utf_decode(text, &mut unicode, len);
         glyph_len = text_len;
         if 0 == glyph_len {
-            return 0i32 as libc::c_float;
+            return 0i32 as f32;
         } else {
             while text_len <= len && 0 != glyph_len {
                 let mut g: *const nk_font_glyph = 0 as *const nk_font_glyph;
@@ -28481,7 +28481,7 @@ unsafe fn nk_font_bake(
                 let mut tmp_0: *mut nk_font_bake_data =
                     &mut *(*baker).build.offset(fresh59 as isize) as *mut nk_font_bake_data;
                 let mut dst_font: *mut nk_baked_font = (*cfg_0).font;
-                let mut font_scale: libc::c_float =
+                let mut font_scale: f32 =
                     nk_tt_ScaleForPixelHeight(&mut (*tmp_0).info, (*cfg_0).size);
                 let mut unscaled_ascent: libc::c_int = 0;
                 let mut unscaled_descent: libc::c_int = 0;
@@ -28496,8 +28496,8 @@ unsafe fn nk_font_bake(
                 if 0 == (*cfg_0).merge_mode {
                     (*dst_font).ranges = (*cfg_0).range;
                     (*dst_font).height = (*cfg_0).size;
-                    (*dst_font).ascent = unscaled_ascent as libc::c_float * font_scale;
-                    (*dst_font).descent = unscaled_descent as libc::c_float * font_scale;
+                    (*dst_font).ascent = unscaled_ascent as f32 * font_scale;
+                    (*dst_font).descent = unscaled_descent as f32 * font_scale;
                     (*dst_font).glyph_offset = glyph_n
                 }
                 /* fill own baked font glyph array */
@@ -28508,8 +28508,8 @@ unsafe fn nk_font_bake(
                     char_idx = 0i32;
                     while char_idx < (*range).num_chars {
                         let mut codepoint: nk_rune = 0i32 as nk_rune;
-                        let mut dummy_x: libc::c_float = 0i32 as libc::c_float;
-                        let mut dummy_y: libc::c_float = 0i32 as libc::c_float;
+                        let mut dummy_x: f32 = 0i32 as f32;
+                        let mut dummy_y: f32 = 0i32 as f32;
                         let mut q: nk_tt_aligned_quad = nk_tt_aligned_quad {
                             x0: 0.,
                             y0: 0.,
@@ -28558,10 +28558,10 @@ unsafe fn nk_font_bake(
                             if (*cfg_0).coord_type as libc::c_uint
                                 == NK_COORD_PIXEL as libc::c_int as libc::c_uint
                             {
-                                (*glyph).u0 = q.s0 * width as libc::c_float;
-                                (*glyph).v0 = q.t0 * height as libc::c_float;
-                                (*glyph).u1 = q.s1 * width as libc::c_float;
-                                (*glyph).v1 = q.t1 * height as libc::c_float
+                                (*glyph).u0 = q.s0 * width as f32;
+                                (*glyph).v0 = q.t0 * height as f32;
+                                (*glyph).u1 = q.s1 * width as f32;
+                                (*glyph).v1 = q.t1 * height as f32
                             } else {
                                 (*glyph).u0 = q.s0;
                                 (*glyph).v0 = q.t0;
@@ -28571,7 +28571,7 @@ unsafe fn nk_font_bake(
                             (*glyph).xadvance = (*pc).xadvance + (*cfg_0).spacing.x;
                             if 0 != (*cfg_0).pixel_snap {
                                 (*glyph).xadvance =
-                                    ((*glyph).xadvance + 0.5f32) as libc::c_int as libc::c_float
+                                    ((*glyph).xadvance + 0.5f32) as libc::c_int as f32
                             }
                             glyph_count = glyph_count.wrapping_add(1)
                         }
@@ -28598,23 +28598,23 @@ unsafe fn nk_tt_GetPackedQuad(
     mut pw: libc::c_int,
     mut ph: libc::c_int,
     mut char_index: libc::c_int,
-    mut xpos: *mut libc::c_float,
-    mut ypos: *mut libc::c_float,
+    mut xpos: *mut f32,
+    mut ypos: *mut f32,
     mut q: *mut nk_tt_aligned_quad,
     mut align_to_integer: libc::c_int,
 ) -> () {
-    let mut x: libc::c_float = 0.;
+    let mut x: f32 = 0.;
     let mut tx: libc::c_int = 0;
     let mut ty: libc::c_int = 0;
-    let mut y: libc::c_float = 0.;
-    let mut ipw: libc::c_float = 1.0f32 / pw as libc::c_float;
-    let mut iph: libc::c_float = 1.0f32 / ph as libc::c_float;
+    let mut y: f32 = 0.;
+    let mut ipw: f32 = 1.0f32 / pw as f32;
+    let mut iph: f32 = 1.0f32 / ph as f32;
     let mut b: *mut nk_tt_packedchar = chardata.offset(char_index as isize);
     if 0 != align_to_integer {
         tx = nk_ifloorf(*xpos + (*b).xoff + 0.5f32);
         ty = nk_ifloorf(*ypos + (*b).yoff + 0.5f32);
-        x = tx as libc::c_float;
-        y = ty as libc::c_float;
+        x = tx as f32;
+        y = ty as f32;
         (*q).x0 = x;
         (*q).y0 = y;
         (*q).x1 = x + (*b).xoff2 - (*b).xoff;
@@ -28625,20 +28625,20 @@ unsafe fn nk_tt_GetPackedQuad(
         (*q).x1 = *xpos + (*b).xoff2;
         (*q).y1 = *ypos + (*b).yoff2
     }
-    (*q).s0 = (*b).x0 as libc::c_int as libc::c_float * ipw;
-    (*q).t0 = (*b).y0 as libc::c_int as libc::c_float * iph;
-    (*q).s1 = (*b).x1 as libc::c_int as libc::c_float * ipw;
-    (*q).t1 = (*b).y1 as libc::c_int as libc::c_float * iph;
+    (*q).s0 = (*b).x0 as libc::c_int as f32 * ipw;
+    (*q).t0 = (*b).y0 as libc::c_int as f32 * iph;
+    (*q).s1 = (*b).x1 as libc::c_int as f32 * ipw;
+    (*q).t1 = (*b).y1 as libc::c_int as f32 * iph;
     *xpos += (*b).xadvance;
 }
 unsafe fn nk_tt_ScaleForPixelHeight(
     mut info: *const nk_tt_fontinfo,
-    mut height: libc::c_float,
-) -> libc::c_float {
+    mut height: f32,
+) -> f32 {
     let mut fheight: libc::c_int =
         nk_ttSHORT((*info).data.offset((*info).hhea as isize).offset(4isize)) as libc::c_int
             - nk_ttSHORT((*info).data.offset((*info).hhea as isize).offset(6isize)) as libc::c_int;
-    return height / fheight as libc::c_float;
+    return height / fheight as f32;
 }
 unsafe fn nk_ttSHORT(mut p: *const nk_byte) -> nk_short {
     return (*p.offset(0isize) as libc::c_int * 256i32 + *p.offset(1isize) as libc::c_int)
@@ -28686,20 +28686,20 @@ unsafe fn nk_tt_PackFontRangesRenderIntoRects(
     k = 0i32;
     i = 0i32;
     while i < num_ranges {
-        let mut fh: libc::c_float = (*ranges.offset(i as isize)).font_size;
-        let mut recip_h: libc::c_float = 0.;
-        let mut recip_v: libc::c_float = 0.;
-        let mut sub_x: libc::c_float = 0.;
-        let mut sub_y: libc::c_float = 0.;
-        let mut scale: libc::c_float = if fh > 0i32 as libc::c_float {
+        let mut fh: f32 = (*ranges.offset(i as isize)).font_size;
+        let mut recip_h: f32 = 0.;
+        let mut recip_v: f32 = 0.;
+        let mut sub_x: f32 = 0.;
+        let mut sub_y: f32 = 0.;
+        let mut scale: f32 = if fh > 0i32 as f32 {
             nk_tt_ScaleForPixelHeight(info, fh)
         } else {
             nk_tt_ScaleForMappingEmToPixels(info, -fh)
         };
         (*spc).h_oversample = (*ranges.offset(i as isize)).h_oversample as libc::c_uint;
         (*spc).v_oversample = (*ranges.offset(i as isize)).v_oversample as libc::c_uint;
-        recip_h = 1.0f32 / (*spc).h_oversample as libc::c_float;
-        recip_v = 1.0f32 / (*spc).v_oversample as libc::c_float;
+        recip_h = 1.0f32 / (*spc).h_oversample as f32;
+        recip_v = 1.0f32 / (*spc).v_oversample as f32;
         sub_x = nk_tt__oversample_shift((*spc).h_oversample as libc::c_int);
         sub_y = nk_tt__oversample_shift((*spc).v_oversample as libc::c_int);
         j = 0i32;
@@ -28735,8 +28735,8 @@ unsafe fn nk_tt_PackFontRangesRenderIntoRects(
                 nk_tt_GetGlyphBitmapBox(
                     info,
                     glyph,
-                    scale * (*spc).h_oversample as libc::c_float,
-                    scale * (*spc).v_oversample as libc::c_float,
+                    scale * (*spc).h_oversample as f32,
+                    scale * (*spc).v_oversample as f32,
                     &mut x0,
                     &mut y0,
                     &mut x1,
@@ -28755,10 +28755,10 @@ unsafe fn nk_tt_PackFontRangesRenderIntoRects(
                         .wrapping_sub((*spc).v_oversample)
                         .wrapping_add(1i32 as libc::c_uint) as libc::c_int,
                     (*spc).stride_in_bytes,
-                    scale * (*spc).h_oversample as libc::c_float,
-                    scale * (*spc).v_oversample as libc::c_float,
-                    0i32 as libc::c_float,
-                    0i32 as libc::c_float,
+                    scale * (*spc).h_oversample as f32,
+                    scale * (*spc).v_oversample as f32,
+                    0i32 as f32,
+                    0i32 as f32,
                     glyph,
                     alloc,
                 );
@@ -28790,13 +28790,13 @@ unsafe fn nk_tt_PackFontRangesRenderIntoRects(
                 (*bc).y0 = (*r).y;
                 (*bc).x1 = ((*r).x as libc::c_int + (*r).w as libc::c_int) as nk_ushort;
                 (*bc).y1 = ((*r).y as libc::c_int + (*r).h as libc::c_int) as nk_ushort;
-                (*bc).xadvance = scale * advance as libc::c_float;
-                (*bc).xoff = x0 as libc::c_float * recip_h + sub_x;
-                (*bc).yoff = y0 as libc::c_float * recip_v + sub_y;
-                (*bc).xoff2 = (x0 as libc::c_float + (*r).w as libc::c_int as libc::c_float)
+                (*bc).xadvance = scale * advance as f32;
+                (*bc).xoff = x0 as f32 * recip_h + sub_x;
+                (*bc).yoff = y0 as f32 * recip_v + sub_y;
+                (*bc).xoff2 = (x0 as f32 + (*r).w as libc::c_int as f32)
                     * recip_h + sub_x;
                 (*bc).yoff2 =
-                    (y0 as libc::c_float + (*r).h as libc::c_int as libc::c_float) * recip_v + sub_y
+                    (y0 as f32 + (*r).h as libc::c_int as f32) * recip_v + sub_y
             } else {
                 return_value = 0i32
             }
@@ -28812,11 +28812,11 @@ unsafe fn nk_tt_PackFontRangesRenderIntoRects(
 }
 unsafe fn nk_tt_ScaleForMappingEmToPixels(
     mut info: *const nk_tt_fontinfo,
-    mut pixels: libc::c_float,
-) -> libc::c_float {
+    mut pixels: f32,
+) -> f32 {
     let mut unitsPerEm: libc::c_int =
         nk_ttUSHORT((*info).data.offset((*info).head as isize).offset(18isize)) as libc::c_int;
-    return pixels / unitsPerEm as libc::c_float;
+    return pixels / unitsPerEm as f32;
 }
 unsafe fn nk_ttUSHORT(mut p: *const nk_byte) -> nk_ushort {
     return (*p.offset(0isize) as libc::c_int * 256i32 + *p.offset(1isize) as libc::c_int)
@@ -29219,10 +29219,10 @@ unsafe fn nk_tt_MakeGlyphBitmapSubpixel(
     mut out_w: libc::c_int,
     mut out_h: libc::c_int,
     mut out_stride: libc::c_int,
-    mut scale_x: libc::c_float,
-    mut scale_y: libc::c_float,
-    mut shift_x: libc::c_float,
-    mut shift_y: libc::c_float,
+    mut scale_x: f32,
+    mut scale_y: f32,
+    mut shift_x: f32,
+    mut shift_y: f32,
     mut glyph: libc::c_int,
     mut alloc: *mut nk_allocator,
 ) -> () {
@@ -29554,16 +29554,16 @@ unsafe fn nk_tt_GetGlyphShape(
                 let mut i_0: libc::c_int = 0;
                 let mut comp_verts: *mut nk_tt_vertex = 0 as *mut nk_tt_vertex;
                 let mut tmp: *mut nk_tt_vertex = 0 as *mut nk_tt_vertex;
-                let mut mtx: [libc::c_float; 6] = [
-                    1i32 as libc::c_float,
-                    0i32 as libc::c_float,
-                    0i32 as libc::c_float,
-                    1i32 as libc::c_float,
-                    0i32 as libc::c_float,
-                    0i32 as libc::c_float,
+                let mut mtx: [f32; 6] = [
+                    1i32 as f32,
+                    0i32 as f32,
+                    0i32 as f32,
+                    1i32 as f32,
+                    0i32 as f32,
+                    0i32 as f32,
                 ];
-                let mut m_0: libc::c_float = 0.;
-                let mut n_0: libc::c_float = 0.;
+                let mut m_0: f32 = 0.;
+                let mut n_0: f32 = 0.;
                 flags_0 = nk_ttSHORT(comp) as nk_ushort;
                 comp = comp.offset(2isize);
                 gidx = nk_ttSHORT(comp) as nk_ushort;
@@ -29572,42 +29572,42 @@ unsafe fn nk_tt_GetGlyphShape(
                     /* XY values */
                     if 0 != flags_0 as libc::c_int & 1i32 {
                         /* shorts */
-                        mtx[4usize] = nk_ttSHORT(comp) as libc::c_float;
+                        mtx[4usize] = nk_ttSHORT(comp) as f32;
                         comp = comp.offset(2isize);
-                        mtx[5usize] = nk_ttSHORT(comp) as libc::c_float;
+                        mtx[5usize] = nk_ttSHORT(comp) as f32;
                         comp = comp.offset(2isize)
                     } else {
-                        mtx[4usize] = *(comp as *const libc::c_char) as libc::c_float;
+                        mtx[4usize] = *(comp as *const libc::c_char) as f32;
                         comp = comp.offset(1isize);
-                        mtx[5usize] = *(comp as *const libc::c_char) as libc::c_float;
+                        mtx[5usize] = *(comp as *const libc::c_char) as f32;
                         comp = comp.offset(1isize)
                     }
                 }
                 /* @TODO handle matching point */
                 if 0 != flags_0 as libc::c_int & 1i32 << 3i32 {
                     /* WE_HAVE_A_SCALE */
-                    mtx[3usize] = nk_ttSHORT(comp) as libc::c_int as libc::c_float / 16384.0f32;
+                    mtx[3usize] = nk_ttSHORT(comp) as libc::c_int as f32 / 16384.0f32;
                     mtx[0usize] = mtx[3usize];
                     comp = comp.offset(2isize);
-                    mtx[2usize] = 0i32 as libc::c_float;
+                    mtx[2usize] = 0i32 as f32;
                     mtx[1usize] = mtx[2usize]
                 } else if 0 != flags_0 as libc::c_int & 1i32 << 6i32 {
                     /* WE_HAVE_AN_X_AND_YSCALE */
-                    mtx[0usize] = nk_ttSHORT(comp) as libc::c_int as libc::c_float / 16384.0f32;
+                    mtx[0usize] = nk_ttSHORT(comp) as libc::c_int as f32 / 16384.0f32;
                     comp = comp.offset(2isize);
-                    mtx[2usize] = 0i32 as libc::c_float;
+                    mtx[2usize] = 0i32 as f32;
                     mtx[1usize] = mtx[2usize];
-                    mtx[3usize] = nk_ttSHORT(comp) as libc::c_int as libc::c_float / 16384.0f32;
+                    mtx[3usize] = nk_ttSHORT(comp) as libc::c_int as f32 / 16384.0f32;
                     comp = comp.offset(2isize)
                 } else if 0 != flags_0 as libc::c_int & 1i32 << 7i32 {
                     /* WE_HAVE_A_TWO_BY_TWO */
-                    mtx[0usize] = nk_ttSHORT(comp) as libc::c_int as libc::c_float / 16384.0f32;
+                    mtx[0usize] = nk_ttSHORT(comp) as libc::c_int as f32 / 16384.0f32;
                     comp = comp.offset(2isize);
-                    mtx[1usize] = nk_ttSHORT(comp) as libc::c_int as libc::c_float / 16384.0f32;
+                    mtx[1usize] = nk_ttSHORT(comp) as libc::c_int as f32 / 16384.0f32;
                     comp = comp.offset(2isize);
-                    mtx[2usize] = nk_ttSHORT(comp) as libc::c_int as libc::c_float / 16384.0f32;
+                    mtx[2usize] = nk_ttSHORT(comp) as libc::c_int as f32 / 16384.0f32;
                     comp = comp.offset(2isize);
-                    mtx[3usize] = nk_ttSHORT(comp) as libc::c_int as libc::c_float / 16384.0f32;
+                    mtx[3usize] = nk_ttSHORT(comp) as libc::c_int as f32 / 16384.0f32;
                     comp = comp.offset(2isize)
                 }
                 /* Find transformation scales. */
@@ -29626,19 +29626,19 @@ unsafe fn nk_tt_GetGlyphShape(
                         let mut y_0: libc::c_short = 0;
                         x_0 = (*v).x;
                         y_0 = (*v).y;
-                        (*v).x = (m_0 * (mtx[0usize] * x_0 as libc::c_int as libc::c_float
-                            + mtx[2usize] * y_0 as libc::c_int as libc::c_float
+                        (*v).x = (m_0 * (mtx[0usize] * x_0 as libc::c_int as f32
+                            + mtx[2usize] * y_0 as libc::c_int as f32
                             + mtx[4usize])) as libc::c_short;
-                        (*v).y = (n_0 * (mtx[1usize] * x_0 as libc::c_int as libc::c_float
-                            + mtx[3usize] * y_0 as libc::c_int as libc::c_float
+                        (*v).y = (n_0 * (mtx[1usize] * x_0 as libc::c_int as f32
+                            + mtx[3usize] * y_0 as libc::c_int as f32
                             + mtx[5usize])) as libc::c_short;
                         x_0 = (*v).cx;
                         y_0 = (*v).cy;
-                        (*v).cx = (m_0 * (mtx[0usize] * x_0 as libc::c_int as libc::c_float
-                            + mtx[2usize] * y_0 as libc::c_int as libc::c_float
+                        (*v).cx = (m_0 * (mtx[0usize] * x_0 as libc::c_int as f32
+                            + mtx[2usize] * y_0 as libc::c_int as f32
                             + mtx[4usize])) as libc::c_short;
-                        (*v).cy = (n_0 * (mtx[1usize] * x_0 as libc::c_int as libc::c_float
-                            + mtx[3usize] * y_0 as libc::c_int as libc::c_float
+                        (*v).cy = (n_0 * (mtx[1usize] * x_0 as libc::c_int as f32
+                            + mtx[3usize] * y_0 as libc::c_int as f32
                             + mtx[5usize])) as libc::c_short;
                         i_0 += 1
                     }
@@ -29709,7 +29709,7 @@ unsafe fn nk_tt_GetGlyphShape(
         return num_vertices;
     };
 }
-unsafe fn nk_sqrt(mut x: libc::c_float) -> libc::c_float {
+unsafe fn nk_sqrt(mut x: f32) -> f32 {
     return x * nk_inv_sqrt(x);
 }
 unsafe fn nk_tt__GetGlyfOffset(
@@ -29838,19 +29838,19 @@ unsafe fn nk_tt_setvertex(
 }
 unsafe fn nk_tt_Rasterize(
     mut result: *mut nk_tt__bitmap,
-    mut flatness_in_pixels: libc::c_float,
+    mut flatness_in_pixels: f32,
     mut vertices: *mut nk_tt_vertex,
     mut num_verts: libc::c_int,
-    mut scale_x: libc::c_float,
-    mut scale_y: libc::c_float,
-    mut shift_x: libc::c_float,
-    mut shift_y: libc::c_float,
+    mut scale_x: f32,
+    mut scale_y: f32,
+    mut shift_x: f32,
+    mut shift_y: f32,
     mut x_off: libc::c_int,
     mut y_off: libc::c_int,
     mut invert: libc::c_int,
     mut alloc: *mut nk_allocator,
 ) -> () {
-    let mut scale: libc::c_float = if scale_x > scale_y { scale_y } else { scale_x };
+    let mut scale: f32 = if scale_x > scale_y { scale_y } else { scale_x };
     let mut winding_count: libc::c_int = 0;
     let mut winding_lengths: *mut libc::c_int = 0 as *mut libc::c_int;
     let mut windings: *mut nk_tt__point = nk_tt_FlattenCurves(
@@ -29889,7 +29889,7 @@ unsafe fn nk_tt_Rasterize(
 unsafe fn nk_tt_FlattenCurves(
     mut vertices: *mut nk_tt_vertex,
     mut num_verts: libc::c_int,
-    mut objspace_flatness: libc::c_float,
+    mut objspace_flatness: f32,
     mut contour_lengths: *mut *mut libc::c_int,
     mut num_contours: *mut libc::c_int,
     mut alloc: *mut nk_allocator,
@@ -29898,7 +29898,7 @@ unsafe fn nk_tt_FlattenCurves(
     /* returns number of contours */
     let mut points: *mut nk_tt__point = 0 as *mut nk_tt__point;
     let mut num_points: libc::c_int = 0i32;
-    let mut objspace_flatness_squared: libc::c_float = objspace_flatness * objspace_flatness;
+    let mut objspace_flatness_squared: f32 = objspace_flatness * objspace_flatness;
     let mut i: libc::c_int = 0;
     let mut n: libc::c_int = 0i32;
     let mut start: libc::c_int = 0i32;
@@ -29931,8 +29931,8 @@ unsafe fn nk_tt_FlattenCurves(
                     current_block = 6483416627284290920;
                     break;
                 }
-                let mut x: libc::c_float = 0i32 as libc::c_float;
-                let mut y: libc::c_float = 0i32 as libc::c_float;
+                let mut x: f32 = 0i32 as f32;
+                let mut y: f32 = 0i32 as f32;
                 if pass == 1i32 {
                     points = (*alloc).alloc.expect("non-null function pointer")(
                         (*alloc).userdata,
@@ -29957,15 +29957,15 @@ unsafe fn nk_tt_FlattenCurves(
                             }
                             n += 1;
                             start = num_points;
-                            x = (*vertices.offset(i as isize)).x as libc::c_float;
-                            y = (*vertices.offset(i as isize)).y as libc::c_float;
+                            x = (*vertices.offset(i as isize)).x as f32;
+                            y = (*vertices.offset(i as isize)).y as f32;
                             let fresh72 = num_points;
                             num_points = num_points + 1;
                             nk_tt__add_point(points, fresh72, x, y);
                         }
                         2 => {
-                            x = (*vertices.offset(i as isize)).x as libc::c_float;
-                            y = (*vertices.offset(i as isize)).y as libc::c_float;
+                            x = (*vertices.offset(i as isize)).x as f32;
+                            y = (*vertices.offset(i as isize)).y as f32;
                             let fresh73 = num_points;
                             num_points = num_points + 1;
                             nk_tt__add_point(points, fresh73, x, y);
@@ -29976,15 +29976,15 @@ unsafe fn nk_tt_FlattenCurves(
                                 &mut num_points,
                                 x,
                                 y,
-                                (*vertices.offset(i as isize)).cx as libc::c_float,
-                                (*vertices.offset(i as isize)).cy as libc::c_float,
-                                (*vertices.offset(i as isize)).x as libc::c_float,
-                                (*vertices.offset(i as isize)).y as libc::c_float,
+                                (*vertices.offset(i as isize)).cx as f32,
+                                (*vertices.offset(i as isize)).cy as f32,
+                                (*vertices.offset(i as isize)).x as f32,
+                                (*vertices.offset(i as isize)).y as f32,
                                 objspace_flatness_squared,
                                 0i32,
                             );
-                            x = (*vertices.offset(i as isize)).x as libc::c_float;
-                            y = (*vertices.offset(i as isize)).y as libc::c_float
+                            x = (*vertices.offset(i as isize)).x as f32;
+                            y = (*vertices.offset(i as isize)).y as f32
                         }
                         _ => {}
                     }
@@ -30015,23 +30015,23 @@ unsafe fn nk_tt_FlattenCurves(
 unsafe fn nk_tt__tesselate_curve(
     mut points: *mut nk_tt__point,
     mut num_points: *mut libc::c_int,
-    mut x0: libc::c_float,
-    mut y0: libc::c_float,
-    mut x1: libc::c_float,
-    mut y1: libc::c_float,
-    mut x2: libc::c_float,
-    mut y2: libc::c_float,
-    mut objspace_flatness_squared: libc::c_float,
+    mut x0: f32,
+    mut y0: f32,
+    mut x1: f32,
+    mut y1: f32,
+    mut x2: f32,
+    mut y2: f32,
+    mut objspace_flatness_squared: f32,
     mut n: libc::c_int,
 ) -> libc::c_int {
     /* tesselate until threshold p is happy...
      * @TODO warped to compensate for non-linear stretching */
     /* midpoint */
-    let mut mx: libc::c_float = (x0 + 2i32 as libc::c_float * x1 + x2) / 4i32 as libc::c_float;
-    let mut my: libc::c_float = (y0 + 2i32 as libc::c_float * y1 + y2) / 4i32 as libc::c_float;
+    let mut mx: f32 = (x0 + 2i32 as f32 * x1 + x2) / 4i32 as f32;
+    let mut my: f32 = (y0 + 2i32 as f32 * y1 + y2) / 4i32 as f32;
     /* versus directly drawn line */
-    let mut dx: libc::c_float = (x0 + x2) / 2i32 as libc::c_float - mx;
-    let mut dy: libc::c_float = (y0 + y2) / 2i32 as libc::c_float - my;
+    let mut dx: f32 = (x0 + x2) / 2i32 as f32 - mx;
+    let mut dy: f32 = (y0 + y2) / 2i32 as f32 - my;
     /* 65536 segments on one curve better be enough! */
     if n > 16i32 {
         return 1i32;
@@ -30072,8 +30072,8 @@ unsafe fn nk_tt__tesselate_curve(
 unsafe fn nk_tt__add_point(
     mut points: *mut nk_tt__point,
     mut n: libc::c_int,
-    mut x: libc::c_float,
-    mut y: libc::c_float,
+    mut x: f32,
+    mut y: f32,
 ) -> () {
     if points.is_null() {
         /* during first pass, it's unallocated */
@@ -30089,16 +30089,16 @@ unsafe fn nk_tt__rasterize(
     mut pts: *mut nk_tt__point,
     mut wcount: *mut libc::c_int,
     mut windings: libc::c_int,
-    mut scale_x: libc::c_float,
-    mut scale_y: libc::c_float,
-    mut shift_x: libc::c_float,
-    mut shift_y: libc::c_float,
+    mut scale_x: f32,
+    mut scale_y: f32,
+    mut shift_x: f32,
+    mut shift_y: f32,
     mut off_x: libc::c_int,
     mut off_y: libc::c_int,
     mut invert: libc::c_int,
     mut alloc: *mut nk_allocator,
 ) -> () {
-    let mut y_scale_inv: libc::c_float = if 0 != invert { -scale_y } else { scale_y };
+    let mut y_scale_inv: f32 = if 0 != invert { -scale_y } else { scale_y };
     let mut e: *mut nk_tt__edge = 0 as *mut nk_tt__edge;
     let mut n: libc::c_int = 0;
     let mut i: libc::c_int = 0;
@@ -30148,10 +30148,10 @@ unsafe fn nk_tt__rasterize(
                     }
                     (*e.offset(n as isize)).x0 = (*p.offset(a as isize)).x * scale_x + shift_x;
                     (*e.offset(n as isize)).y0 = ((*p.offset(a as isize)).y * y_scale_inv + shift_y)
-                        * vsubsample as libc::c_float;
+                        * vsubsample as f32;
                     (*e.offset(n as isize)).x1 = (*p.offset(b as isize)).x * scale_x + shift_x;
                     (*e.offset(n as isize)).y1 = ((*p.offset(b as isize)).y * y_scale_inv + shift_y)
-                        * vsubsample as libc::c_float;
+                        * vsubsample as f32;
                     n += 1
                 }
                 let fresh74 = k;
@@ -30199,9 +30199,9 @@ unsafe fn nk_tt__rasterize_sorted_edges(
     let mut y: libc::c_int = 0;
     let mut j: libc::c_int = 0i32;
     let mut i: libc::c_int = 0;
-    let mut scanline_data: [libc::c_float; 129] = [0.; 129];
-    let mut scanline: *mut libc::c_float = 0 as *mut libc::c_float;
-    let mut scanline2: *mut libc::c_float = 0 as *mut libc::c_float;
+    let mut scanline_data: [f32; 129] = [0.; 129];
+    let mut scanline: *mut f32 = 0 as *mut f32;
+    let mut scanline2: *mut f32 = 0 as *mut f32;
     nk_zero(
         &mut hh as *mut nk_tt__hheap as *mut libc::c_void,
         ::std::mem::size_of::<nk_tt__hheap>() as libc::c_ulong,
@@ -30212,30 +30212,30 @@ unsafe fn nk_tt__rasterize_sorted_edges(
             (*alloc).userdata,
             0 as *mut libc::c_void,
             (((*result).w * 2i32 + 1i32) as nk_size)
-                .wrapping_mul(::std::mem::size_of::<libc::c_float>() as libc::c_ulong),
-        ) as *mut libc::c_float
+                .wrapping_mul(::std::mem::size_of::<f32>() as libc::c_ulong),
+        ) as *mut f32
     } else {
         scanline = scanline_data.as_mut_ptr()
     }
     scanline2 = scanline.offset((*result).w as isize);
     y = off_y;
-    (*e.offset(n as isize)).y0 = (off_y + (*result).h) as libc::c_float + 1i32 as libc::c_float;
+    (*e.offset(n as isize)).y0 = (off_y + (*result).h) as f32 + 1i32 as f32;
     while j < (*result).h {
         /* find center of pixel for this scanline */
-        let mut scan_y_top: libc::c_float = y as libc::c_float + 0.0f32;
-        let mut scan_y_bottom: libc::c_float = y as libc::c_float + 1.0f32;
+        let mut scan_y_top: f32 = y as f32 + 0.0f32;
+        let mut scan_y_bottom: f32 = y as f32 + 1.0f32;
         let mut step: *mut *mut nk_tt__active_edge = &mut active;
         nk_memset(
             scanline as *mut libc::c_void,
             0i32,
             ((*result).w as nk_size)
-                .wrapping_mul(::std::mem::size_of::<libc::c_float>() as libc::c_ulong),
+                .wrapping_mul(::std::mem::size_of::<f32>() as libc::c_ulong),
         );
         nk_memset(
             scanline2 as *mut libc::c_void,
             0i32,
             (((*result).w + 1i32) as nk_size)
-                .wrapping_mul(::std::mem::size_of::<libc::c_float>() as libc::c_ulong),
+                .wrapping_mul(::std::mem::size_of::<f32>() as libc::c_ulong),
         );
         /* update all active edges; */
         /* remove all active edges that terminate before the top of this scanline */
@@ -30244,7 +30244,7 @@ unsafe fn nk_tt__rasterize_sorted_edges(
             if (*z).ey <= scan_y_top {
                 /* delete from list */
                 *step = (*z).next;
-                (*z).direction = 0i32 as libc::c_float;
+                (*z).direction = 0i32 as f32;
                 nk_tt__hheap_free(&mut hh, z as *mut libc::c_void);
             } else {
                 step = &mut (**step).next as *mut *mut nk_tt__active_edge
@@ -30273,14 +30273,14 @@ unsafe fn nk_tt__rasterize_sorted_edges(
                 scan_y_top,
             );
         }
-        let mut sum: libc::c_float = 0i32 as libc::c_float;
+        let mut sum: f32 = 0i32 as f32;
         i = 0i32;
         while i < (*result).w {
-            let mut k: libc::c_float = 0.;
+            let mut k: f32 = 0.;
             let mut m: libc::c_int = 0;
             sum += *scanline2.offset(i as isize);
             k = *scanline.offset(i as isize) + sum;
-            k = if k < 0i32 as libc::c_float { -k } else { k } * 255.0f32 + 0.5f32;
+            k = if k < 0i32 as f32 { -k } else { k } * 255.0f32 + 0.5f32;
             m = k as libc::c_int;
             if m > 255i32 {
                 m = 255i32
@@ -30320,23 +30320,23 @@ unsafe fn nk_tt__hheap_cleanup(mut hh: *mut nk_tt__hheap) -> () {
     }
 }
 unsafe fn nk_tt__fill_active_edges_new(
-    mut scanline: *mut libc::c_float,
-    mut scanline_fill: *mut libc::c_float,
+    mut scanline: *mut f32,
+    mut scanline_fill: *mut f32,
     mut len: libc::c_int,
     mut e: *mut nk_tt__active_edge,
-    mut y_top: libc::c_float,
+    mut y_top: f32,
 ) -> () {
     let mut x: libc::c_int = 0;
-    let mut height: libc::c_float = 0.;
-    let mut t: libc::c_float = 0.;
-    let mut y_bottom: libc::c_float = y_top + 1i32 as libc::c_float;
+    let mut height: f32 = 0.;
+    let mut t: f32 = 0.;
+    let mut y_bottom: f32 = y_top + 1i32 as f32;
     while !e.is_null() {
         /* brute force every pixel */
         /* compute intersection points with top & bottom */
-        if (*e).fdx == 0i32 as libc::c_float {
-            let mut x0: libc::c_float = (*e).fx;
-            if x0 < len as libc::c_float {
-                if x0 >= 0i32 as libc::c_float {
+        if (*e).fdx == 0i32 as f32 {
+            let mut x0: f32 = (*e).fx;
+            if x0 < len as f32 {
+                if x0 >= 0i32 as f32 {
                     nk_tt__handle_clipped_edge(
                         scanline,
                         x0 as libc::c_int,
@@ -30368,14 +30368,14 @@ unsafe fn nk_tt__fill_active_edges_new(
                 }
             }
         } else {
-            let mut x0_0: libc::c_float = (*e).fx;
-            let mut dx: libc::c_float = (*e).fdx;
-            let mut xb: libc::c_float = x0_0 + dx;
-            let mut x_top: libc::c_float = 0.;
-            let mut x_bottom: libc::c_float = 0.;
-            let mut y0: libc::c_float = 0.;
-            let mut y1: libc::c_float = 0.;
-            let mut dy: libc::c_float = (*e).fdy;
+            let mut x0_0: f32 = (*e).fx;
+            let mut dx: f32 = (*e).fdx;
+            let mut xb: f32 = x0_0 + dx;
+            let mut x_top: f32 = 0.;
+            let mut x_bottom: f32 = 0.;
+            let mut y0: f32 = 0.;
+            let mut y1: f32 = 0.;
+            let mut dy: f32 = (*e).fdy;
             /* compute endpoints of line segment clipped to this scanline (if the */
             /* line segment starts on this scanline. x0 is the intersection of the */
             /* line with y_top, but that may be off the line segment. */
@@ -30393,10 +30393,10 @@ unsafe fn nk_tt__fill_active_edges_new(
                 x_bottom = xb;
                 y1 = y_bottom
             }
-            if x_top >= 0i32 as libc::c_float
-                && x_bottom >= 0i32 as libc::c_float
-                && x_top < len as libc::c_float
-                && x_bottom < len as libc::c_float
+            if x_top >= 0i32 as f32
+                && x_bottom >= 0i32 as f32
+                && x_top < len as f32
+                && x_bottom < len as f32
             {
                 /* from here on, we don't have to range check x values */
                 if x_top as libc::c_int == x_bottom as libc::c_int {
@@ -30406,7 +30406,7 @@ unsafe fn nk_tt__fill_active_edges_new(
                     height = y1 - y0;
                     *scanline.offset(x as isize) += (*e).direction
                         * (1.0f32
-                            - (x_top - x as libc::c_float + (x_bottom - x as libc::c_float))
+                            - (x_top - x as f32 + (x_bottom - x as f32))
                                 / 2.0f32)
                         * height;
                     /* everything right of this pixel is filled */
@@ -30415,10 +30415,10 @@ unsafe fn nk_tt__fill_active_edges_new(
                     let mut x_0: libc::c_int = 0;
                     let mut x1: libc::c_int = 0;
                     let mut x2: libc::c_int = 0;
-                    let mut y_crossing: libc::c_float = 0.;
-                    let mut step: libc::c_float = 0.;
-                    let mut sign: libc::c_float = 0.;
-                    let mut area: libc::c_float = 0.;
+                    let mut y_crossing: f32 = 0.;
+                    let mut step: f32 = 0.;
+                    let mut sign: f32 = 0.;
+                    let mut area: f32 = 0.;
                     /* covers 2+ pixels */
                     if x_top > x_bottom {
                         /* flip scanline vertically; signed area is the same */
@@ -30440,24 +30440,24 @@ unsafe fn nk_tt__fill_active_edges_new(
                     x1 = x_top as libc::c_int;
                     x2 = x_bottom as libc::c_int;
                     /* compute intersection with y axis at x1+1 */
-                    y_crossing = (x1 as libc::c_float + 1i32 as libc::c_float - x0_0) * dy + y_top;
+                    y_crossing = (x1 as f32 + 1i32 as f32 - x0_0) * dy + y_top;
                     sign = (*e).direction;
                     /* area of the rectangle covered from y0..y_crossing */
                     area = sign * (y_crossing - y0);
                     /* area of the triangle (x_top,y0), (x+1,y0), (x+1,y_crossing) */
                     *scanline.offset(x1 as isize) += area * (1.0f32
-                        - (x_top - x1 as libc::c_float + (x1 + 1i32 - x1) as libc::c_float)
+                        - (x_top - x1 as f32 + (x1 + 1i32 - x1) as f32)
                             / 2.0f32);
                     step = sign * dy;
                     x_0 = x1 + 1i32;
                     while x_0 < x2 {
-                        *scanline.offset(x_0 as isize) += area + step / 2i32 as libc::c_float;
+                        *scanline.offset(x_0 as isize) += area + step / 2i32 as f32;
                         area += step;
                         x_0 += 1
                     }
-                    y_crossing += dy * (x2 - (x1 + 1i32)) as libc::c_float;
+                    y_crossing += dy * (x2 - (x1 + 1i32)) as f32;
                     *scanline.offset(x2 as isize) += area + sign * (1.0f32
-                        - ((x2 - x2) as libc::c_float + (x_bottom - x2 as libc::c_float)) / 2.0f32)
+                        - ((x2 - x2) as f32 + (x_bottom - x2 as f32)) / 2.0f32)
                         * (y1 - y_crossing);
                     *scanline_fill.offset(x2 as isize) += sign * (y1 - y0)
                 }
@@ -30482,15 +30482,15 @@ unsafe fn nk_tt__fill_active_edges_new(
                     /* from the other y segment, and it might ignored as an empty segment. to avoid */
                     /* that, we need to explicitly produce segments based on x positions. */
                     /* rename variables to clear pairs */
-                    let mut ya: libc::c_float = y_top;
-                    let mut x1_0: libc::c_float = x_1 as libc::c_float;
-                    let mut x2_0: libc::c_float = (x_1 + 1i32) as libc::c_float;
-                    let mut x3: libc::c_float = xb;
-                    let mut y3: libc::c_float = y_bottom;
-                    let mut yb: libc::c_float = 0.;
-                    let mut y2: libc::c_float = 0.;
-                    yb = (x_1 as libc::c_float - x0_0) / dx + y_top;
-                    y2 = (x_1 as libc::c_float + 1i32 as libc::c_float - x0_0) / dx + y_top;
+                    let mut ya: f32 = y_top;
+                    let mut x1_0: f32 = x_1 as f32;
+                    let mut x2_0: f32 = (x_1 + 1i32) as f32;
+                    let mut x3: f32 = xb;
+                    let mut y3: f32 = y_bottom;
+                    let mut yb: f32 = 0.;
+                    let mut y2: f32 = 0.;
+                    yb = (x_1 as f32 - x0_0) / dx + y_top;
+                    y2 = (x_1 as f32 + 1i32 as f32 - x0_0) / dx + y_top;
                     if x0_0 < x1_0 && x3 > x2_0 {
                         /* three segments descending down-right */
                         nk_tt__handle_clipped_edge(scanline, x_1, e, x0_0, ya, x1_0, yb);
@@ -30529,13 +30529,13 @@ unsafe fn nk_tt__fill_active_edges_new(
     }
 }
 unsafe fn nk_tt__handle_clipped_edge(
-    mut scanline: *mut libc::c_float,
+    mut scanline: *mut f32,
     mut x: libc::c_int,
     mut e: *mut nk_tt__active_edge,
-    mut x0: libc::c_float,
-    mut y0: libc::c_float,
-    mut x1: libc::c_float,
-    mut y1: libc::c_float,
+    mut x0: f32,
+    mut y0: f32,
+    mut x1: f32,
+    mut y1: f32,
 ) -> () {
     if y0 == y1 {
         return;
@@ -30552,20 +30552,20 @@ unsafe fn nk_tt__handle_clipped_edge(
             x1 += (x1 - x0) * ((*e).ey - y1) / (y1 - y0);
             y1 = (*e).ey
         }
-        if !(x0 == x as libc::c_float) {
-            if !(x0 == (x + 1i32) as libc::c_float) {
-                if !(x0 <= x as libc::c_float) {
-                    assert!(x0 >= (x + 1i32) as libc::c_float);
+        if !(x0 == x as f32) {
+            if !(x0 == (x + 1i32) as f32) {
+                if !(x0 <= x as f32) {
+                    assert!(x0 >= (x + 1i32) as f32);
                 }
             }
         }
-        if x0 <= x as libc::c_float && x1 <= x as libc::c_float {
+        if x0 <= x as f32 && x1 <= x as f32 {
             *scanline.offset(x as isize) += (*e).direction * (y1 - y0)
-        } else if !(x0 >= (x + 1i32) as libc::c_float && x1 >= (x + 1i32) as libc::c_float) {
+        } else if !(x0 >= (x + 1i32) as f32 && x1 >= (x + 1i32) as f32) {
             /* coverage = 1 - average x position */
             *scanline.offset(x as isize) += (*e).direction
                 * (y1 - y0)
-                * (1.0f32 - (x0 - x as libc::c_float + (x1 - x as libc::c_float)) / 2.0f32)
+                * (1.0f32 - (x0 - x as f32 + (x1 - x as f32)) / 2.0f32)
         }
         return;
     };
@@ -30574,25 +30574,25 @@ unsafe fn nk_tt__new_active(
     mut hh: *mut nk_tt__hheap,
     mut e: *mut nk_tt__edge,
     mut off_x: libc::c_int,
-    mut start_point: libc::c_float,
+    mut start_point: f32,
 ) -> *mut nk_tt__active_edge {
     let mut z: *mut nk_tt__active_edge = nk_tt__hheap_alloc(
         hh,
         ::std::mem::size_of::<nk_tt__active_edge>() as libc::c_ulong,
     ) as *mut nk_tt__active_edge;
-    let mut dxdy: libc::c_float = ((*e).x1 - (*e).x0) / ((*e).y1 - (*e).y0);
+    let mut dxdy: f32 = ((*e).x1 - (*e).x0) / ((*e).y1 - (*e).y0);
     /*STBTT_assert(e->y0 <= start_point); */
     if z.is_null() {
         return z;
     } else {
         (*z).fdx = dxdy;
-        (*z).fdy = if dxdy != 0i32 as libc::c_float {
-            1i32 as libc::c_float / dxdy
+        (*z).fdy = if dxdy != 0i32 as f32 {
+            1i32 as f32 / dxdy
         } else {
-            0i32 as libc::c_float
+            0i32 as f32
         };
         (*z).fx = (*e).x0 + dxdy * (start_point - (*e).y0);
-        (*z).fx -= off_x as libc::c_float;
+        (*z).fx -= off_x as f32;
         (*z).direction = if 0 != (*e).invert { 1.0f32 } else { -1.0f32 };
         (*z).sy = (*e).y0;
         (*z).ey = (*e).y1;
@@ -30741,10 +30741,10 @@ unsafe fn nk_tt__sort_edges_quicksort(mut p: *mut nk_tt__edge, mut n: libc::c_in
 unsafe fn nk_tt_GetGlyphBitmapBoxSubpixel(
     mut font: *const nk_tt_fontinfo,
     mut glyph: libc::c_int,
-    mut scale_x: libc::c_float,
-    mut scale_y: libc::c_float,
-    mut shift_x: libc::c_float,
-    mut shift_y: libc::c_float,
+    mut scale_x: f32,
+    mut scale_y: f32,
+    mut shift_x: f32,
+    mut shift_y: f32,
     mut ix0: *mut libc::c_int,
     mut iy0: *mut libc::c_int,
     mut ix1: *mut libc::c_int,
@@ -30771,16 +30771,16 @@ unsafe fn nk_tt_GetGlyphBitmapBoxSubpixel(
     } else {
         /* move to integral bboxes (treating pixels as little squares, what pixels get touched)? */
         if !ix0.is_null() {
-            *ix0 = nk_ifloorf(x0 as libc::c_float * scale_x + shift_x)
+            *ix0 = nk_ifloorf(x0 as f32 * scale_x + shift_x)
         }
         if !iy0.is_null() {
-            *iy0 = nk_ifloorf(-y1 as libc::c_float * scale_y + shift_y)
+            *iy0 = nk_ifloorf(-y1 as f32 * scale_y + shift_y)
         }
         if !ix1.is_null() {
-            *ix1 = nk_iceilf(x1 as libc::c_float * scale_x + shift_x)
+            *ix1 = nk_iceilf(x1 as f32 * scale_x + shift_x)
         }
         if !iy1.is_null() {
-            *iy1 = nk_iceilf(-y0 as libc::c_float * scale_y + shift_y)
+            *iy1 = nk_iceilf(-y0 as f32 * scale_y + shift_y)
         }
     };
 }
@@ -30814,8 +30814,8 @@ unsafe fn nk_tt_GetGlyphBox(
 unsafe fn nk_tt_GetGlyphBitmapBox(
     mut font: *const nk_tt_fontinfo,
     mut glyph: libc::c_int,
-    mut scale_x: libc::c_float,
-    mut scale_y: libc::c_float,
+    mut scale_x: f32,
+    mut scale_y: f32,
     mut ix0: *mut libc::c_int,
     mut iy0: *mut libc::c_int,
     mut ix1: *mut libc::c_int,
@@ -30871,11 +30871,11 @@ unsafe fn nk_tt_GetGlyphHMetrics(
         }
     };
 }
-unsafe fn nk_tt__oversample_shift(mut oversample: libc::c_int) -> libc::c_float {
+unsafe fn nk_tt__oversample_shift(mut oversample: libc::c_int) -> f32 {
     if 0 == oversample {
         return 0.0f32;
     } else {
-        return -(oversample - 1i32) as libc::c_float / (2.0f32 * oversample as libc::c_float);
+        return -(oversample - 1i32) as f32 / (2.0f32 * oversample as f32);
     };
 }
 unsafe fn nk_tt_PackSetOversampling(
@@ -31485,8 +31485,8 @@ unsafe fn nk_tt_PackFontRangesGatherRects(
     k = 0i32;
     i = 0i32;
     while i < num_ranges {
-        let mut fh: libc::c_float = (*ranges.offset(i as isize)).font_size;
-        let mut scale: libc::c_float = if fh > 0i32 as libc::c_float {
+        let mut fh: f32 = (*ranges.offset(i as isize)).font_size;
+        let mut scale: f32 = if fh > 0i32 as f32 {
             nk_tt_ScaleForPixelHeight(info, fh)
         } else {
             nk_tt_ScaleForMappingEmToPixels(info, -fh)
@@ -31511,10 +31511,10 @@ unsafe fn nk_tt_PackFontRangesGatherRects(
             nk_tt_GetGlyphBitmapBoxSubpixel(
                 info,
                 glyph,
-                scale * (*spc).h_oversample as libc::c_float,
-                scale * (*spc).v_oversample as libc::c_float,
-                0i32 as libc::c_float,
-                0i32 as libc::c_float,
+                scale * (*spc).h_oversample as f32,
+                scale * (*spc).v_oversample as f32,
+                0i32 as f32,
+                0i32 as f32,
                 &mut x0,
                 &mut y0,
                 &mut x1,
@@ -31922,10 +31922,10 @@ pub unsafe fn nk_font_atlas_end(
     }
     if !null.is_null() {
         (*null).texture = texture;
-        (*null).uv.x = ((*atlas).custom.x as libc::c_int as libc::c_float + 0.5f32)
-            / (*atlas).tex_width as libc::c_float;
-        (*null).uv.y = ((*atlas).custom.y as libc::c_int as libc::c_float + 0.5f32)
-            / (*atlas).tex_height as libc::c_float
+        (*null).uv.x = ((*atlas).custom.x as libc::c_int as f32 + 0.5f32)
+            / (*atlas).tex_width as f32;
+        (*null).uv.y = ((*atlas).custom.y as libc::c_int as f32 + 0.5f32)
+            / (*atlas).tex_height as f32
     }
     font_iter = (*atlas).fonts;
     while !font_iter.is_null() {
@@ -32477,19 +32477,19 @@ pub unsafe fn nk_textedit_paste(
 #[no_mangle]
 pub unsafe fn nk_stroke_curve(
     mut b: *mut nk_command_buffer,
-    mut ax: libc::c_float,
-    mut ay: libc::c_float,
-    mut ctrl0x: libc::c_float,
-    mut ctrl0y: libc::c_float,
-    mut ctrl1x: libc::c_float,
-    mut ctrl1y: libc::c_float,
-    mut bx: libc::c_float,
-    mut by: libc::c_float,
-    mut line_thickness: libc::c_float,
+    mut ax: f32,
+    mut ay: f32,
+    mut ctrl0x: f32,
+    mut ctrl0y: f32,
+    mut ctrl1x: f32,
+    mut ctrl1y: f32,
+    mut bx: f32,
+    mut by: f32,
+    mut line_thickness: f32,
     mut col: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_curve = 0 as *mut nk_command_curve;
-    if b.is_null() || col.a as libc::c_int == 0i32 || line_thickness <= 0i32 as libc::c_float {
+    if b.is_null() || col.a as libc::c_int == 0i32 || line_thickness <= 0i32 as f32 {
         return;
     } else {
         cmd = nk_command_buffer_push(
@@ -32518,14 +32518,14 @@ pub unsafe fn nk_stroke_curve(
 pub unsafe fn nk_stroke_circle(
     mut b: *mut nk_command_buffer,
     mut r: nk_rect,
-    mut line_thickness: libc::c_float,
+    mut line_thickness: f32,
     mut c: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_circle = 0 as *mut nk_command_circle;
     if b.is_null()
-        || r.w == 0i32 as libc::c_float
-        || r.h == 0i32 as libc::c_float
-        || line_thickness <= 0i32 as libc::c_float
+        || r.w == 0i32 as f32
+        || r.h == 0i32 as f32
+        || line_thickness <= 0i32 as f32
     {
         return;
     } else {
@@ -32550,13 +32550,13 @@ pub unsafe fn nk_stroke_circle(
             (*cmd).line_thickness = line_thickness as libc::c_ushort;
             (*cmd).x = r.x as libc::c_short;
             (*cmd).y = r.y as libc::c_short;
-            (*cmd).w = (if r.w < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            (*cmd).w = (if r.w < 0i32 as f32 {
+                0i32 as f32
             } else {
                 r.w
             }) as libc::c_ushort;
-            (*cmd).h = (if r.h < 0i32 as libc::c_float {
-                0i32 as libc::c_float
+            (*cmd).h = (if r.h < 0i32 as f32 {
+                0i32 as f32
             } else {
                 r.h
             }) as libc::c_ushort;
@@ -32568,16 +32568,16 @@ pub unsafe fn nk_stroke_circle(
 #[no_mangle]
 pub unsafe fn nk_stroke_arc(
     mut b: *mut nk_command_buffer,
-    mut cx: libc::c_float,
-    mut cy: libc::c_float,
-    mut radius: libc::c_float,
-    mut a_min: libc::c_float,
-    mut a_max: libc::c_float,
-    mut line_thickness: libc::c_float,
+    mut cx: f32,
+    mut cy: f32,
+    mut radius: f32,
+    mut a_min: f32,
+    mut a_max: f32,
+    mut line_thickness: f32,
     mut c: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_arc = 0 as *mut nk_command_arc;
-    if b.is_null() || c.a as libc::c_int == 0i32 || line_thickness <= 0i32 as libc::c_float {
+    if b.is_null() || c.a as libc::c_int == 0i32 || line_thickness <= 0i32 as f32 {
         return;
     } else {
         cmd = nk_command_buffer_push(
@@ -32602,17 +32602,17 @@ pub unsafe fn nk_stroke_arc(
 #[no_mangle]
 pub unsafe fn nk_stroke_triangle(
     mut b: *mut nk_command_buffer,
-    mut x0: libc::c_float,
-    mut y0: libc::c_float,
-    mut x1: libc::c_float,
-    mut y1: libc::c_float,
-    mut x2: libc::c_float,
-    mut y2: libc::c_float,
-    mut line_thickness: libc::c_float,
+    mut x0: f32,
+    mut y0: f32,
+    mut x1: f32,
+    mut y1: f32,
+    mut x2: f32,
+    mut y2: f32,
+    mut line_thickness: f32,
     mut c: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_triangle = 0 as *mut nk_command_triangle;
-    if b.is_null() || c.a as libc::c_int == 0i32 || line_thickness <= 0i32 as libc::c_float {
+    if b.is_null() || c.a as libc::c_int == 0i32 || line_thickness <= 0i32 as f32 {
         return;
     } else {
         if 0 != (*b).use_clipping {
@@ -32653,15 +32653,15 @@ pub unsafe fn nk_stroke_triangle(
 #[no_mangle]
 pub unsafe fn nk_stroke_polyline(
     mut b: *mut nk_command_buffer,
-    mut points: *mut libc::c_float,
+    mut points: *mut f32,
     mut point_count: libc::c_int,
-    mut line_thickness: libc::c_float,
+    mut line_thickness: f32,
     mut col: nk_color,
 ) -> () {
     let mut i: libc::c_int = 0;
     let mut size: nk_size = 0i32 as nk_size;
     let mut cmd: *mut nk_command_polyline = 0 as *mut nk_command_polyline;
-    if b.is_null() || col.a as libc::c_int == 0i32 || line_thickness <= 0i32 as libc::c_float {
+    if b.is_null() || col.a as libc::c_int == 0i32 || line_thickness <= 0i32 as f32 {
         return;
     } else {
         size = (::std::mem::size_of::<nk_command_polyline>() as libc::c_ulong).wrapping_add(
@@ -32690,15 +32690,15 @@ pub unsafe fn nk_stroke_polyline(
 #[no_mangle]
 pub unsafe fn nk_stroke_polygon(
     mut b: *mut nk_command_buffer,
-    mut points: *mut libc::c_float,
+    mut points: *mut f32,
     mut point_count: libc::c_int,
-    mut line_thickness: libc::c_float,
+    mut line_thickness: f32,
     mut col: nk_color,
 ) -> () {
     let mut i: libc::c_int = 0;
     let mut size: nk_size = 0i32 as nk_size;
     let mut cmd: *mut nk_command_polygon = 0 as *mut nk_command_polygon;
-    if b.is_null() || col.a as libc::c_int == 0i32 || line_thickness <= 0i32 as libc::c_float {
+    if b.is_null() || col.a as libc::c_int == 0i32 || line_thickness <= 0i32 as f32 {
         return;
     } else {
         size = (::std::mem::size_of::<nk_command_polygon>() as libc::c_ulong).wrapping_add(
@@ -32727,11 +32727,11 @@ pub unsafe fn nk_stroke_polygon(
 #[no_mangle]
 pub unsafe fn nk_fill_arc(
     mut b: *mut nk_command_buffer,
-    mut cx: libc::c_float,
-    mut cy: libc::c_float,
-    mut radius: libc::c_float,
-    mut a_min: libc::c_float,
-    mut a_max: libc::c_float,
+    mut cx: f32,
+    mut cy: f32,
+    mut radius: f32,
+    mut a_min: f32,
+    mut a_max: f32,
     mut c: nk_color,
 ) -> () {
     let mut cmd: *mut nk_command_arc_filled = 0 as *mut nk_command_arc_filled;
@@ -32759,7 +32759,7 @@ pub unsafe fn nk_fill_arc(
 #[no_mangle]
 pub unsafe fn nk_fill_polygon(
     mut b: *mut nk_command_buffer,
-    mut points: *mut libc::c_float,
+    mut points: *mut f32,
     mut point_count: libc::c_int,
     mut col: nk_color,
 ) -> () {
@@ -32806,7 +32806,7 @@ pub unsafe fn nk_push_custom(
     } else {
         if 0 != (*b).use_clipping {
             let mut c: *const nk_rect = &mut (*b).clip as *mut nk_rect;
-            if (*c).w == 0i32 as libc::c_float || (*c).h == 0i32 as libc::c_float
+            if (*c).w == 0i32 as f32 || (*c).h == 0i32 as f32
                 || ((*c).x > r.x + r.w
                     || (*c).x + (*c).w < r.x
                     || (*c).y > r.y + r.h
@@ -32825,15 +32825,15 @@ pub unsafe fn nk_push_custom(
         } else {
             (*cmd).x = r.x as libc::c_short;
             (*cmd).y = r.y as libc::c_short;
-            (*cmd).w = (if (0i32 as libc::c_float) < r.w {
+            (*cmd).w = (if (0i32 as f32) < r.w {
                 r.w
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
-            (*cmd).h = (if (0i32 as libc::c_float) < r.h {
+            (*cmd).h = (if (0i32 as f32) < r.h {
                 r.h
             } else {
-                0i32 as libc::c_float
+                0i32 as f32
             }) as libc::c_ushort;
             (*cmd).callback_data = usr;
             (*cmd).callback = cb;
